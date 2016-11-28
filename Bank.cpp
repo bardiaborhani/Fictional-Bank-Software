@@ -1,3 +1,5 @@
+// ASSUMPTION: The data read in the ifstream that is passed through the readTransactions() function is assumed to be formate correctly (numbers and types of input)
+
 #include <sstream>
 #include <iterator>
 #include "Bank.h"
