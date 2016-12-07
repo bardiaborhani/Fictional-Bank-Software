@@ -96,6 +96,11 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
     <ClCompile Include="Bank.cpp" />
@@ -106,8 +111,10 @@
   <ItemGroup>
     <ClInclude Include="Account.h" />
     <ClInclude Include="Bank.h" />
+    <ClInclude Include="bankqueue.h" />
     <ClInclude Include="BST.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="transaction.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="testcommand1.txt" />
