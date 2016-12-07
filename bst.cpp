@@ -1,4 +1,4 @@
-#include "BST.h"
+#include "bst.h"
 #include <sstream>
 
 // This destructor calls the clear function which deletes all the nodes in the graph
