@@ -164,10 +164,20 @@ bool BST::search(BST::Node* subtree, int target) const {
     }
 }
 
+// The retreive function traverses through the tree
+// and finds a client node whose accountID matches int target that is passed through the parameter
+// This function calls the facade that allows the function to use recursion to traverse through the tree
+// Pre-condition: Passes in an int target that represents the accountID of a client (data of one of the nodes)
+// Post-condition: returns a reference to the data of the node that matches the value of the int target
 Client& BST::retrieve(int target) const {
     return retrieve(root, target);
 }
 
+// The function traverses the tree and finds the client node that has the accountID that matches the number held by "int target"
+// If it is found then the reference of the client that has the accountID that matches int target is returned
+// Pre-condition: Passes in a node, representing the root of the tree, 
+// and a int called target that contains a number matching the value of the accountId of a client
+// Post-condition: A reference to the client that contains the accountID matching the int target is returned
 Client& BST::retrieve(BST::Node* subtree, int target) const {
     if (subtree->data->getAccountNumber() == target) {
         return *subtree->data;
@@ -178,10 +188,18 @@ Client& BST::retrieve(BST::Node* subtree, int target) const {
     }
 }
 
+// Walks through the list in the style of an inorderWalk
+// Displays the left child then the parent node then the right child - starting with the root node
+// Pre-condition: The object for the BST needs to be made
+// Post-condition: Returns the data of the nodes (the client accountID)
 string BST::inorderWalk(){ 
     return inorderWalk(root);
 }
 
+// Uses a stringstream to store all of the data of the nodes (the client accountID) as it does an inorder walk though the tree
+// The facade uses recursion to walk through the tree
+// Pre-condition: Takes in a pointer to the root node (the top client in the tree)
+// Post-condition: Returns a string containting the accountID of all the clients displaying the left child node then the parent node then the right child node
 string BST::inorderWalk(BST::Node* subtree) {
     string retVal = "";
     stringstream ss;
