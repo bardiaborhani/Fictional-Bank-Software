@@ -22,6 +22,10 @@ class BST{
     };
 
 public:
+    
+    //BST(); the class already has a constructor - no need to explicitly create one - noting to initialize
+    ~BST();
+    
     void insert(Client* client);
     int height();
     int size();
@@ -30,7 +34,6 @@ public:
     bool search(int target) const;  //you MUST search before you retrieve in order to know if the tree is empty or not
                                     //as well as whether or not the target Client is in the tree
     Client& retrieve(int target) const;
-    ~BST();
 
 private:
     int height(BST::Node* subtree);
