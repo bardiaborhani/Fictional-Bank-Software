@@ -6,7 +6,7 @@ BST::~BST(){
 }
 
 void BST::clear(){
-	return clear(root);
+	return clear(root); // facade is created so recursion is able to happen (the function with a parameter can be used for recursion)
 }
 
 void BST::clear(BST::Node* subtree){
@@ -22,8 +22,17 @@ int BST::height(){
 	return height(root);
 }
 
+// The height of a tree is the length of the path from the root to the deepest node in the tree. 
+// A (rooted) tree with only a node (the root) has a height of zero
+//The height of a binary search tree is equal to number of layers - 1.
 int BST::height(BST::Node* subtree){
     return subtree == nullptr ? 0 : 1 + max(height(subtree->left), height(subtree->right));
+    /* if(subtree == nullptr){
+    	return 0;
+    } else {
+    	return 1 + max(height(subtree->left), height(subtree->right));
+    }
+    */
 }
 
 int BST::size(){ 
