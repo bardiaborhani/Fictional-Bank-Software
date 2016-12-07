@@ -21,6 +21,7 @@ class BST{
         Node* right = nullptr; // every node has a pointer to two nodes
         Node* left = nullptr;  // each node represents a child node of this node (one for left side and one for right side)
 
+        // constructor for the node struct- assigns all the members of the struct to what is passed through in the paraeter
         Node(Client* d, Node* l, Node* r) : data(d), left(l), right(r){}; 
     };
 
@@ -29,16 +30,17 @@ public:
     //BST(); the class already has a constructor - no need to explicitly create one - noting to initialize
     ~BST();
     
-    void insert(Client* client);
-    int height();
-    int size();
-    void clear();
-    string inorderWalk();
+    void insert(Client* client); //inserts a new node into the tree using a pointer to a client to set as the data of the new node
+    int height(); // finds the height of the tree - length from bottom-most node to the root
+    int size(); // finds number of nodes in tree
+    void clear(); // deletes all the nodes in the tree
+    string inorderWalk(); // does an inorder walk through the tree displaying all the clients
     bool search(int target) const;  //you MUST search before you retrieve in order to know if the tree is empty or not
                                     //as well as whether or not the target Client is in the tree
-    Client& retrieve(int target) const;
+    Client& retrieve(int target) const; // returns a reference to a client that is in the tree
 
 private:
+    //facade functions for functions above
     int height(BST::Node* subtree);
     int size(BST::Node* subtree);
     void clear(BST::Node* subtree);
