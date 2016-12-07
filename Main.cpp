@@ -1,32 +1,43 @@
-//
-// Created by Kevin on 11/20/2016.
-//
-#include "Bank.h"
+/*------------------------------------------------------------------------------------------------------
+
+	Main for Homework 5. Creates new BankManager object and passes two file streams to this object.
+	Then displays the clients built by the BankManager as well as the transactions that have been
+	completed.
+
+------------------------------------------------------------------------------------------------------*/
+
+
+#include "bankManager.h"
+#include "client.h"
+#include "transaction.h"
+#include "bankqueue.h"
+#include <iostream>
+#include <fstream>
+
 
 using namespace std;
 
 int main() {
-//    BST bst;
-//    Client client1("mickey", "mouse", 1234);
-//    Client client2("donald", "duck", 1338);
-//    Client client3("minnie", "mouse", 1110);
-//
-//    bst.insert(client1);
-//    bst.insert(client2);
-//    bst.insert(client3);
-//
-//    cout << bst.inorderWalk();
 
-    //BEGIN CORE MAIN - SHOULD NOT BE CHANGED
-    Bank bank;
-    ifstream clientStream("testdata2.txt");
+	BankManager bankManager;						//instantiates BankManager object
+	ifstream clientFile;							//creates new ifstream
+	clientFile.open("hw5data.txt");					//opens the data file
 
-    bank.readClients(clientStream);
+	bankManager.readClients(clientFile);			//passes the client data file to bankManger
+													//to construct the BST
 
-    ifstream transactionStream("testcommand2.txt");
-    bank.readTransactions(transactionStream);
-    //END CORE MAIN
+	ifstream transactionFile;						//creates new ifstream
+	transactionFile.open("hw5command.txt");			//opens the data file
 
-    cout << bank.output();
+	bankManager.readTransactions(transactionFile);	//passes the transaction data file stream
+													//to the bankManager to carry out transactions
 
-}
+	bankManager.displayClients();					//displays the clients in the bankManager
+	bankManager.displayTransactions();				//displays the transactions in the bankManager
+
+
+	//closes the ifstreams
+	clientFile.close();
+	transactionFile.close();
+	return 0;
+};
