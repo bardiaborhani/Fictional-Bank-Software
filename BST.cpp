@@ -178,7 +178,7 @@ Client& BST::retrieve(BST::Node* subtree, int target) const {
     }
 }
 
-string BST::inorderWalk(){
+string BST::inorderWalk(){ 
     return inorderWalk(root);
 }
 
