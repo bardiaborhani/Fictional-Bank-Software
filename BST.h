@@ -18,10 +18,10 @@ class BST{
 
     struct Node{
         Client* data; // every node contains a pointer to a client containing an accountID of type int
-        Node* right = nullptr; //
-        Node* left = nullptr;
+        Node* right = nullptr; // every node has a pointer to two nodes
+        Node* left = nullptr;  // each node represents a child node of this node (one for left side and one for right side)
 
-        Node(Client* d, Node* l, Node* r) : data(d), left(l), right(r){};
+        Node(Client* d, Node* l, Node* r) : data(d), left(l), right(r){}; 
     };
 
 public:
