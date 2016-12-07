@@ -5,13 +5,15 @@ BST::~BST(){
     clear(root);
 }
 
-void BST::clear(){ return clear(root);}
+void BST::clear(){
+	return clear(root);
+}
 
 void BST::clear(BST::Node* subtree){
     if(subtree!= nullptr){
         clear(subtree->right);
         clear(subtree->left);
-		delete subtree->data;
+	delete subtree->data;
         delete subtree;
     }
 }
