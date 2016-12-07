@@ -9,13 +9,16 @@
 #include <stdio.h>
 #include "Client.h"
 
+// PURPOSE: Create a binary search tree to contain all the clients in the bank. The clients are represented as nodes. 
+// Ordered from size of accountID
+
 using namespace std;
 
 class BST{
 
     struct Node{
-        Client* data;
-        Node* right = nullptr;
+        Client* data; // every node contains a pointer to a client containing an accountID of type int
+        Node* right = nullptr; //
         Node* left = nullptr;
 
         Node(Client* d, Node* l, Node* r) : data(d), left(l), right(r){};
