@@ -7,7 +7,7 @@
 
 #include <string>
 #include <stdio.h>
-#include "Client.h"
+#include "client.h"
 
 // PURPOSE: Create a binary search tree to contain all the clients in the bank. The clients are represented as nodes. 
 // Ordered from size of accountID
