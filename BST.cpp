@@ -132,21 +132,35 @@ BST::Node* BST::insert(Client* client, BST::Node* subtree) {
     return subtree;
 }
 
-bool BST::search(int target) const {
-    return search(root, target);
+// Searches through the tree to find a node that contains data that matches the int passed into the function
+// this function calls a facade that, in addition to the int parameter, takes in another parameter of type node 
+// That parameter represents the root of the function - the facade is created to be able to use recursion to search the tree
+// Pre-condition: A int, named "target", is passed into the parameter representing the accountID for the client trying to be found
+// Post-condition: A bool is returned (true or false) indicating whether or not the node was found in the tree
+// Search is created to be used in the retrieve function to see if the client wanting to be retreived is in the tree
+bool BST::search(int target) const {	
+    return search(root, target);	// facade is called passing in the accountID and the root of the tree
 }
 
+// The search function traverses through the tree trying to find a node whose client data matches the accountID represented by the int "target"
+// once a node is found whose data matches "target" then true is returned - if not then false is returned
+// If the end of the tree is reached and no matches have been found then false is returned
+// Pre-condition:A int, named "target", is passed into the parameter representing the accountID for the client trying to be found
+// and the root of the tree is passed into the parameter - the root and the tree do not need to have any information
+// the object for the tree does however need to be made before this function is called
+// Post-condition: A bool is returned (true or false) indicating whether or not the node was found in the tree
 bool BST::search(BST::Node* subtree, int target) const {
-    if (subtree == nullptr) {
+    if (subtree == nullptr) { // base case - if the pointer is pointing to a node that doesn't have any information - go back up the list
         return false;
     }
-
     if (subtree->data->getAccountNumber() == target) {
-        return true;
+        return true;	// if the node has the account id that matches the node then it has been found and true is returned
     } else if (target > subtree->data->getAccountNumber()) {
         return search(subtree->right, target);
+	// look at the right side of the parent node for the node if the target number is
+	// bigger than the account id of the parent node (parent client node)
     } else {
-        return search(subtree->left, target);
+        return search(subtree->left, target); // otherwise, look at the left side of the parent node for the node
     }
 }
 
