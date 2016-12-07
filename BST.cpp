@@ -18,13 +18,17 @@ void BST::clear(BST::Node* subtree){
     }
 }
 
-int BST::height(){return height(root);}
+int BST::height(){
+	return height(root);
+}
 
 int BST::height(BST::Node* subtree){
     return subtree == nullptr ? 0 : 1 + max(height(subtree->left), height(subtree->right));
 }
 
-int BST::size(){ return size(root);}
+int BST::size(){ 
+	return size(root);
+}
 
 int BST::size(BST::Node* subtree){
     return subtree == nullptr ? 0 : 1 + size(subtree->left) + size(subtree->right);
