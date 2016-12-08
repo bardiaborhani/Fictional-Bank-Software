@@ -37,6 +37,9 @@ POSTCONDITIONS:
 ------------------------------------------------------------------------------------------------*/
 
 void BankManager::readClients(ifstream& inFile){
+   clients.buildTree(inFile)  // calls the buildTree function in the BST class in bst.h
+  
+  /* This is what is in buildTree(ifstream&)
   Client* tempClient;
   string store;
 
@@ -54,6 +57,7 @@ void BankManager::readClients(ifstream& inFile){
   }
   inFile.close(); //close the file - good practice
   return true;
+  */
 }
 
 
