@@ -82,7 +82,15 @@ POSTCONDITIONS:
 ------------------------------------------------------------------------------------------------*/
 
 void BankManager::readTransactions(ifstream& inFile){
-  
+  string store;
+    if (inFile.is_open()) { //make sure the file is open
+        while (getline(inFile, store)) {
+            transactions.push(store);
+            if (inFile.eof()) break; //if we reach the eof finish the while
+        }
+    }
+    inFile.close(); //close the file - good practice
+   return parseTransactions();
 }
 
 /*------------------------------------------------------------------------------------------------
