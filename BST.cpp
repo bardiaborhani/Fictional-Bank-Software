@@ -4,6 +4,7 @@
 // This destructor calls the clear function which deletes all the nodes in the graph
 // The destructor is called when the delete operator is applied to a pointer to the object (delete *p where p is a pointer to this tree)
 // OR when the object goes out of scope
+
 //Pre-condition: Constructor has to already have been called (object has to have been made)
 //Post-condition: deletes the tree (deletes all the nodes in the tree) -- deletes all the clients
 BST::~BST(){
@@ -12,6 +13,7 @@ BST::~BST(){
 
 // The clear function deletes all the nodes in the tree
 // It calls a facade (that passes in the root of the tree) so it can use recursion to traverse the tree and delete all the nodes
+
 // Pre-condition: the object has to already have been made
 // Post-condition: the tree is empty - there are no more nodes
 void BST::clear(){
@@ -22,6 +24,7 @@ void BST::clear(){
 // The root is passed in as the parameter when the function is first called - if the root isn't empty then the left and right side of the tree are deleted as well as the root
 // The pointer to the data and the node are what is deleted -- all the clients are deleted
 // If the root is null (has no data as well as no left and right nodes) then nothing happens - the if loop is skipped and the end of the function is reached
+
 // Pre-condition: The root of the tree is passed in as a parameter - it can have a value or it can be null - either way it is okay
 // Post-condition: All the pointers to data and nodes are deleted -- all the clients are deleted from the tree
 void BST::clear(BST::Node* subtree){
@@ -35,6 +38,7 @@ void BST::clear(BST::Node* subtree){
 
 // This finds the height of the tree and returns a number representing the height of the tree
 // This function uses a facade to be able to use recursion to traverse through the list
+
 // Pre-condition: The object has to be already made
 // Post-condition: The facade is called and a int is returned representing the height of the tree
 int BST::height(){
@@ -44,6 +48,7 @@ int BST::height(){
 // This facade takes in a node - starting with the root- and traverses the tree using recursion
 // The tree steps through the nodes of the tree down until it reaches the leaf node
 // As it goes down, it counts the number of times it goes down - keeping track of the height of the tree
+
 // Pre-condition: A pointer to a node is passed into the parameter - doesn't have to have any value - can be set to null
 // Post-condition: An int is returned representing the height of the tree
 int BST::height(BST::Node* subtree){
@@ -68,6 +73,7 @@ int BST::height(BST::Node* subtree){
 
 // This function calls a facade that returns an int indicating the number of nodes in the tree
 // The facade function passes in the root of the tree so it can start there before traversing through the tree
+
 // Pre-condition: A object has to be created for this class
 // Post-condition: An int is returned indicating the number of nodes in the tree
 int BST::size(){ 
@@ -79,6 +85,7 @@ int BST::size(){
 // As the tree is traversed - int 1 is returned as every node is reached - this indicates how many nodes are in the tree
 // After the tree is tranversed, an int is returned indicating the number of nodes in the tree
 // In this case, it indicates the number of clients in our bankman manager
+
 // Pre-condition: Object for class has to be made - root of the tree is passed through as the parameter
 // Post-condition: An int is retuned indicating the number of nodes (clients) in the tree
 int BST::size(BST::Node* subtree){
@@ -101,6 +108,7 @@ int BST::size(BST::Node* subtree){
 // This insert function inserts a new node (new client) into the tree 
 // This function calls a facade that passes in the client (information for the new node) and the root of the tree
 // These are passed through so the facade can traverse recursively through the tree
+
 // Pre-condition: A pointer to a client object must be passed through this function
 // Post-condition: The pointer to the client object is inserted into the tree and the root of the tree is set to what the facade returns
 // indicating if there is a new root or if the root is the same
@@ -111,7 +119,8 @@ void BST::insert(Client* client){
 // The insert function facade passes in a pointer to a clident object and the root of the tree
 // The function uses recursion to traverse through the tree and insert the client pointer into the tree
 // Once the leaf of the binary search tree is reached, a new node is created as a child to that leaf node and it contains the data of the client pointer
-// Prec-condition: A pointer to a client object and a pointer to the root of the tree is passed into the function when it is first called
+
+// Pre-condition: A pointer to a client object and a pointer to the root of the tree is passed into the function when it is first called
 // Post-condition: The pointer to the client object is inserted into the tree and the root of the tree is returned
 BST::Node* BST::insert(Client* client, BST::Node* subtree) {
     if(subtree == nullptr){ // base case - a new node object is allocated and set as the subtree
@@ -135,6 +144,7 @@ BST::Node* BST::insert(Client* client, BST::Node* subtree) {
 // Searches through the tree to find a node that contains data that matches the int passed into the function
 // this function calls a facade that, in addition to the int parameter, takes in another parameter of type node 
 // That parameter represents the root of the function - the facade is created to be able to use recursion to search the tree
+
 // Pre-condition: A int, named "target", is passed into the parameter representing the accountID for the client trying to be found
 // Post-condition: A bool is returned (true or false) indicating whether or not the node was found in the tree
 // Search is created to be used in the retrieve function to see if the client wanting to be retreived is in the tree
@@ -145,6 +155,7 @@ bool BST::search(int target) const {
 // The search function traverses through the tree trying to find a node whose client data matches the accountID represented by the int "target"
 // once a node is found whose data matches "target" then true is returned - if not then false is returned
 // If the end of the tree is reached and no matches have been found then false is returned
+
 // Pre-condition:A int, named "target", is passed into the parameter representing the accountID for the client trying to be found
 // and the root of the tree is passed into the parameter - the root and the tree do not need to have any information
 // the object for the tree does however need to be made before this function is called
@@ -167,6 +178,7 @@ bool BST::search(BST::Node* subtree, int target) const {
 // The retreive function traverses through the tree
 // and finds a client node whose accountID matches int target that is passed through the parameter
 // This function calls the facade that allows the function to use recursion to traverse through the tree
+
 // Pre-condition: Passes in an int target that represents the accountID of a client (data of one of the nodes)
 // Post-condition: returns a reference to the data of the node that matches the value of the int target
 Client& BST::retrieve(int target) const {
@@ -175,6 +187,7 @@ Client& BST::retrieve(int target) const {
 
 // The function traverses the tree and finds the client node that has the accountID that matches the number held by "int target"
 // If it is found then the reference of the client that has the accountID that matches int target is returned
+
 // Pre-condition: Passes in a node, representing the root of the tree, 
 // and a int called target that contains a number matching the value of the accountId of a client
 // Post-condition: A reference to the client that contains the accountID matching the int target is returned
@@ -190,6 +203,7 @@ Client& BST::retrieve(BST::Node* subtree, int target) const {
 
 // Walks through the list in the style of an inorderWalk
 // Displays the left child then the parent node then the right child - starting with the root node
+
 // Pre-condition: The object for the BST needs to be made
 // Post-condition: Returns the data of the nodes (the client accountID)
 string BST::inorderWalk(){ 
@@ -198,6 +212,7 @@ string BST::inorderWalk(){
 
 // Uses a stringstream to store all of the data of the nodes (the client accountID) as it does an inorder walk though the tree
 // The facade uses recursion to walk through the tree
+
 // Pre-condition: Takes in a pointer to the root node (the top client in the tree)
 // Post-condition: Returns a string containting the accountID of all the clients displaying the left child node then the parent node then the right child node
 string BST::inorderWalk(BST::Node* subtree) {
