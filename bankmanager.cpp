@@ -82,15 +82,30 @@ POSTCONDITIONS:
 ------------------------------------------------------------------------------------------------*/
 
 void BankManager::readTransactions(ifstream& inFile){
+  Transaction* newTrans;  // make it a pointer or not a pointer?
+  if (inFile.is_open()) { //make sure the file is open
+      while (getline(inFile, store)) { //getline() from STL reads characters from an input stream and places them into a the store 
+          newTrans = new Transaction();
+          newTrans->setData(store);
+          if (inFile.eof()){
+            break; //if we reach the eof finish the while
+          }
+      }
+  }
+  inFile.close(); //close the file - good practice
+  return parseTransactions();
+  /*
   string store;
-    if (inFile.is_open()) { //make sure the file is open
-        while (getline(inFile, store)) {
-            transactions.push(store);
-            if (inFile.eof()) break; //if we reach the eof finish the while
-        }
-    }
-    inFile.close(); //close the file - good practice
-   return parseTransactions();
+  if (inFile.is_open()) { //make sure the file is open
+      while (getline(inFile, store)) { //getline() from STL reads characters from an input stream and places them into a the store 
+          pending.push(store);
+          if (inFile.eof()){
+            break; //if we reach the eof finish the while
+          }
+      }
+  }
+  inFile.close(); //close the file - good practice
+  return parseTransactions();*/
 }
 
 /*------------------------------------------------------------------------------------------------
