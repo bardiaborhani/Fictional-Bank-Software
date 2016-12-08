@@ -211,6 +211,12 @@ string BST::inorderWalk(BST::Node* subtree) {
     return ss.str();
 }
 
+// this function is called by the readClients function inside the BankManager class in BankManager.cpp
+// It intakes the file stream that reads the text file that contains information about clients and their information
+// The information from every line in the text is information to store in a Client class (information about each client)
+// Memory is allocated for a Client and information from the file is passed into the Client class using the client pointer
+// Pre-condition: File stream is passed through parameter that reads the text file that contains information about clients and their information
+// Post-condition: bool is returned indicating if the tree was successfully built or not
 bool buildTree(ifstream& inFile){   // creates the tree using the txt file that contains all of the clients and their information
   Client* tempClient;
   string store;
