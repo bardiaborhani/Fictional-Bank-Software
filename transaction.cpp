@@ -28,8 +28,8 @@ Transaction::~Transaction(){ // Destructor
 Pre-condition:
 Post-condition:
 */
-bool Transaction::setData(ifstream& inFile){ // Sets the transactin data from reading a filestream
-  inFile >> >> >>;
+bool Transaction::setData(ifstream& inFile){ // Sets the transaction data from reading a filestream
+  inFile >> transactionType >> firstAccountID >> firstClient >> amount >> secondAccountID >> secondClient;
 }
 
 /*
