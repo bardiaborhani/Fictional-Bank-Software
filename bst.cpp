@@ -210,3 +210,23 @@ string BST::inorderWalk(BST::Node* subtree) {
     }
     return ss.str();
 }
+
+bool buildTree(ifstream& inFile){   // creates the tree using the txt file that contains all of the clients and their information
+  Client* tempClient;
+  string store;
+
+  if (inFile.is_open()) { //make sure the file is open
+      while (inFile >> store) {
+          tempClient = new Client;
+          if(tempClient->setData(store, inFile)) {  //if we successfully create a Client, i.e. there was no bad data
+              tree.insert(tempClient); //insert the Client, whom we are assured is composed of good data
+          }else{
+              return false;
+          }
+
+          if (inFile.eof()) break; //if we reach the eof finish the while
+      }
+  }
+  inFile.close(); //close the file - good practice
+  return true;
+}
