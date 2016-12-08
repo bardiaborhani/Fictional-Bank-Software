@@ -14,7 +14,7 @@
 
 #include "client.h"
 #include "transaction.h"
-#include "binarysearchtree.h"
+#include "bst.h"
 #include "bankqueue.h"
 #include <stack>
 #include <queue>
@@ -27,7 +27,7 @@ class BankManager {
 
 	BankQueue<Transaction> pending;			//queue to hold Transactions that are pending
 	stack<Transaction> completed;			//stack to hold transactions that have been completed 
-	BinarySearchTree<Client> clients;		//Binary Search Tree to hold Clients
+	BST<Client> clients;		//Binary Search Tree to hold Clients
 
 	public:
 
