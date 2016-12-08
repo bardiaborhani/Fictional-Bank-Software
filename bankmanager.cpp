@@ -130,6 +130,38 @@ NOTE:
 
 void BankManager::transact(void){
   
+  /*string transaction;
+  char transactionType;
+  while(!transactions.empty()){ //while we still have transactions to process
+
+    transaction = transactions.front(); //get the next transaction
+
+    transactionType = transaction[0]; //get the first char of the transaction
+
+    istringstream iss(transaction);
+    vector<string> parsedTransaction{istream_iterator<string>{iss}, istream_iterator<string>{}}; //todo: error handling, in helper method?
+
+    switch (transactionType) { //perform the appropriate action based on the char
+        case 'D' :
+            depositOrWithdraw(parsedTransaction, transaction);
+            break;
+        case 'W' :
+            depositOrWithdraw(parsedTransaction, transaction);
+            break;
+        case 'M' :
+            move(parsedTransaction, transaction);
+            break;
+        case 'H' :
+            history(transaction);
+            break;
+        default :
+            cerr << "an error occurred"; //todo: yeah change this, actual exception here.
+    }
+
+    transactions.pop(); //todo: should there be error handling here? if so we should pop and not process in whatever case that is
+  }
+  return true; //todo: do actual returns
+  */
 }
 
 /*------------------------------------------------------------------------------------------------
