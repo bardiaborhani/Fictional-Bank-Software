@@ -7,7 +7,7 @@
 
 #include <string>
 #include <stdio.h>
-#include "Client.h"
+#include "client.h"
 
 // PURPOSE: Create a binary search tree to contain all the clients in the bank. The clients are represented as nodes. 
 // Ordered from size of accountID
@@ -38,6 +38,7 @@ public:
     bool search(int target) const;  //you MUST search before you retrieve in order to know if the tree is empty or not
                                     //as well as whether or not the target Client is in the tree
     Client& retrieve(int target) const; // returns a reference to a client that is in the tree
+    void buildTree(ifstream& inFile);   // creates the tree using the txt file that contains all of the clients and their information
 
 private:
     //facade functions for functions above

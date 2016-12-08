@@ -1,4 +1,4 @@
-#include "BST.h"
+#include "bst.h"
 #include <sstream>
 
 // This destructor calls the clear function which deletes all the nodes in the graph
@@ -224,4 +224,30 @@ string BST::inorderWalk(BST::Node* subtree) {
         ss << inorderWalk(subtree->right);
     }
     return ss.str();
+}
+
+// this function is called by the readClients function inside the BankManager class in BankManager.cpp
+// It intakes the file stream that reads the text file that contains information about clients and their information
+// The information from every line in the text is information to store in a Client class (information about each client)
+// Memory is allocated for a Client and information from the file is passed into the Client class using the client pointer
+// Pre-condition: File stream is passed through parameter that reads the text file that contains information about clients and their information
+// Post-condition: bool is returned indicating if the tree was successfully built or not
+bool buildTree(ifstream& inFile){   // creates the tree using the txt file that contains all of the clients and their information
+  Client* tempClient;
+  string store;
+
+  if (inFile.is_open()) { //make sure the file is open
+      while (inFile >> store) {
+          tempClient = new Client;
+          if(tempClient->setData(store, inFile)) {  //if we successfully create a Client, i.e. there was no bad data
+              tree.insert(tempClient); //insert the Client, whom we are assured is composed of good data
+          }else{
+              return false;
+          }
+
+          if (inFile.eof()) break; //if we reach the eof finish the while
+      }
+  }
+  inFile.close(); //close the file - good practice
+  return true;
 }

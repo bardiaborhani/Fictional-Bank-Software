@@ -1,7 +1,7 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include "Account.h"
+#include "account.h"
 #include <cstring>
 #include <queue>
 #include <array>
