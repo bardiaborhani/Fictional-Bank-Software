@@ -147,7 +147,7 @@ bool Transaction::transact()
 		history();
 		return true;
 	default:
-		cerr << "an error occurred"; //todo: yeah change this, actual exception here.
+		cerr << "The transaction type '" << transactionType << "' was not recognized" << endl;
 		return false;
 	}
 

@@ -43,7 +43,7 @@ class Transaction {
 
 		switch (transaction.transactionType) {
 		case 'D':
-			stream << "Deposited $" << transaction.amount << " from " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
+			stream << "Deposited $" << transaction.amount << " into " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
 				<< "'s " << (transaction.firstAccountID + 1) << endings[0] << " account.";
 			break;
 		case 'W':
@@ -59,7 +59,7 @@ class Transaction {
 			stream << "Displayed " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName() << "'s transaction history.";
 			break;
 		default:
-			cerr << "an error occurred"; //todo: yeah change this, actual exception here.
+			break;
 		}
 
 		return stream;

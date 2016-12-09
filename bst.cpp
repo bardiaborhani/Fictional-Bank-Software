@@ -265,7 +265,7 @@ bool BST::buildTree(ifstream& inFile) {   // creates the tree using the txt file
 		}
 	}
 	else {
-		cerr << "unable to open the transactions file" << endl;
+		cerr << "unable to open the clients file" << endl;
 		exit(-1);
 	}
 
