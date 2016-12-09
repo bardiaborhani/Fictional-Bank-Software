@@ -14,7 +14,7 @@ Client::Client() {
 	Account valueFund;
 	Account valueStockIndex;
 
-	accounts = { moneyMarket, primeMoneyMarket, shortTerm, longTerm,
+	accounts = { moneyMarket, primeMoneyMarket, longTerm, shortTerm,
 		indexFund, capitalValueFund, growthEquityFund,
 		growthIndexFund, valueFund, valueStockIndex };
 
