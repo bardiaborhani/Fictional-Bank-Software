@@ -26,7 +26,9 @@ Pre-condition:
 Post-condition:
 */
 bool Transaction::setData(string transaction) { // Sets the transaction data from reading a filestream
-	transactionType = transaction[0]; //get the first char of the transaction
+
+	//get the first char of the transaction
+	transactionType = toupper(transaction[0]);
 
 	istringstream iss(transaction);
 	parsedTransaction = { istream_iterator<string>{iss}, istream_iterator<string>{} };
@@ -147,7 +149,7 @@ bool Transaction::transact()
 		history();
 		return true;
 	default:
-		cerr << "The transaction type '" << transactionType << "' was not recognized" << endl;
+		cerr << "/////////// ERROR: The transaction type '" << transactionType << "' was not recognized   ///////////" << endl << endl;
 		return false;
 	}
 
@@ -223,3 +225,28 @@ void Transaction::history() {
 	cout << endl;
 }
 
+ostream & operator<<(ostream & stream, const Transaction & transaction)
+{
+	switch (transaction.transactionType) {
+	case 'D':
+		stream << "Deposited $" << transaction.amount << " into " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
+			<< "'s " << transaction.firstClient->getAccountName(transaction.firstAccountID) << " account.";
+		break;
+	case 'W':
+		stream << "Withdrew $" << transaction.amount << " from " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
+			<< "'s " << transaction.firstClient->getAccountName(transaction.firstAccountID) << " account.";
+		break;
+	case 'M':
+		stream << "Moved $" << transaction.amount << " from " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
+			<< "'s " << transaction.firstClient->getAccountName(transaction.firstAccountID) << " account and placed it in " << transaction.secondClient->getFirstName() << " "
+			<< transaction.secondClient->getLastName() << "'s " << transaction.secondClient->getAccountName(transaction.secondAccountID) << " account.";
+		break;
+	case 'H':
+		stream << "Displayed " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName() << "'s transaction history.";
+		break;
+	default:
+		break;
+	}
+
+	return stream;
+}

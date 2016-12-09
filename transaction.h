@@ -24,46 +24,7 @@ using namespace std;
 class Transaction {
 
 
-	friend ostream& operator<<(ostream& stream, const Transaction& transaction) { //<< operator overload
-
-		string firstEnding;
-		string secondEnding;
-
-		int accountIDs[2] = { transaction.firstAccountID, transaction.secondAccountID };
-		string endings[2] = { firstEnding, secondEnding };
-
-		for (int i = 0; i < 2; i++) {
-			switch (accountIDs[i]) {
-			case 0: endings[i] = "st"; break;
-			case 1: endings[i] = "nd"; break;
-			case 2:	endings[i] = "rd"; break;
-			default: endings[i] = "th"; break;
-			}
-		}
-
-		switch (transaction.transactionType) {
-		case 'D':
-			stream << "Deposited $" << transaction.amount << " into " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
-				<< "'s " << (transaction.firstAccountID + 1) << endings[0] << " account.";
-			break;
-		case 'W':
-			stream << "Withdrew $" << transaction.amount << " from " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
-				<< "'s " << (transaction.firstAccountID + 1) << endings[0] << " account.";
-			break;
-		case 'M':
-			stream << "Moved $" << transaction.amount << " from " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
-				<< "'s " << (transaction.firstAccountID + 1) << endings[0] << " account and placed it in " << transaction.secondClient->getFirstName() << " "
-				<< transaction.secondClient->getLastName() << "'s " << (transaction.secondAccountID + 1) << endings[1] << " account.";
-			break;
-		case 'H':
-			stream << "Displayed " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName() << "'s transaction history.";
-			break;
-		default:
-			break;
-		}
-
-		return stream;
-	}
+	friend ostream& operator<<(ostream& stream, const Transaction& transaction);
 
 
 private:

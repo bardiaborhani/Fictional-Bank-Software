@@ -3,6 +3,11 @@
 using namespace std;
 
 
+Account::Account()
+{
+	accountType = "uninitialized";
+}
+
 //----------------------------------------------------
 // Returns the account balance
 int Account::getAccountBalance() const {
@@ -82,6 +87,16 @@ ifstream& operator >> (ifstream& input, Account& obj) {
 
 int Account::getAccountID() const {
 	return accountID;
+}
+
+void Account::setAccountType(const string type)
+{
+	accountType = type;
+}
+
+string Account::getAccountType() const
+{
+	return accountType;
 }
 
 void Account::setAccountID(const int ID) {

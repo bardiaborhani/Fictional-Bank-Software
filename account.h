@@ -18,7 +18,9 @@ class Account {
 
 public:
 
-	Account(bool moneymarket = false, bool bond = false) : MoneyMarket(moneymarket), Bond(bond) {};
+	Account();
+
+	Account(string type, bool moneymarket = false, bool bond = false) : MoneyMarket(moneymarket), Bond(bond), accountType(type) {};
 
 	// Returns the account balance
 	int getAccountBalance() const;
@@ -29,6 +31,10 @@ public:
 	void setAccountID(const int ID);
 
 	int getAccountID() const;
+	
+	void setAccountType(const string type);
+
+	string getAccountType() const;
 
 	// Deposits money into account
 	void deposit(const int amount);
@@ -38,6 +44,8 @@ public:
 	bool withdraw(const int amount, array<Account, 10>& accounts);
 
 private:
+
+	string accountType;
 
 	bool transfer(const int accountID1, const int accountID2, int amount, array<Account, 10>& accounts);
 

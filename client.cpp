@@ -7,15 +7,9 @@ using namespace std;
 
 Client::Client() {
 
-	moneyMarket = Account(true, false);
- 	primeMoneyMarket = Account(true, false);
- 	shortTerm = Account(false, true);
- 	longTerm = Account(false, true);
-
 	accounts = { moneyMarket, primeMoneyMarket, longTerm, shortTerm,
-		indexFund, capitalValueFund, growthEquityFund,
-		growthIndexFund, valueFund, valueStockIndex };
-
+				indexFund, capitalValueFund, growthEquityFund, growthIndexFund,
+				valueFund, valueStockIndex };
 
 }
 
@@ -224,6 +218,11 @@ Post-condition:
 */
 int Client::getAccountNumber() const {
 	return accountID;
+}
+
+string Client::getAccountName(int ID) const
+{
+	return accounts[ID].getAccountType();
 }
 
 //--------------------------------------------------------------------------------------------
