@@ -18,6 +18,31 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="account.h" />
+    <ClInclude Include="bankmanager.h" />
+    <ClInclude Include="bankqueue.h" />
+    <ClInclude Include="bst.h" />
+    <ClInclude Include="client.h" />
+    <ClInclude Include="transaction.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="account.cpp" />
+    <ClCompile Include="bankmanager.cpp" />
+    <ClCompile Include="bankqueue.cpp" />
+    <ClCompile Include="bst.cpp" />
+    <ClCompile Include="client.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="transaction.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="testcommand1.txt" />
+    <Text Include="testcommand2.txt" />
+    <Text Include="testcommand3.txt" />
+    <Text Include="testdata1.txt" />
+    <Text Include="testdata2.txt" />
+    <Text Include="testdata3.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0D39F2F9-C279-420C-ADD4-CFE6AA441B1F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -101,27 +126,6 @@
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Account.cpp" />
-    <ClCompile Include="Bank.cpp" />
-    <ClCompile Include="BST.cpp" />
-    <ClCompile Include="Client.cpp" />
-    <ClCompile Include="Main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Account.h" />
-    <ClInclude Include="Bank.h" />
-    <ClInclude Include="bankqueue.h" />
-    <ClInclude Include="BST.h" />
-    <ClInclude Include="Client.h" />
-    <ClInclude Include="transaction.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="testcommand1.txt" />
-    <Text Include="testcommand2.txt" />
-    <Text Include="testdata1.txt" />
-    <Text Include="testdata2.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

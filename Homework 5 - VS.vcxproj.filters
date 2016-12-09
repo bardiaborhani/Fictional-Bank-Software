@@ -15,41 +15,47 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Account.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Bank.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BST.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Client.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Account.h">
+    <ClInclude Include="account.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Bank.h">
+    <ClInclude Include="bankmanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BST.h">
+    <ClInclude Include="bst.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Client.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="bankqueue.h">
+    <ClInclude Include="client.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="transaction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="bankqueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="account.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bankmanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bst.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="client.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="transaction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bankqueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="testcommand1.txt">
@@ -62,6 +68,12 @@
       <Filter>Source Files</Filter>
     </Text>
     <Text Include="testdata2.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="testcommand3.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="testdata3.txt">
       <Filter>Source Files</Filter>
     </Text>
   </ItemGroup>

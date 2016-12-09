@@ -1,10 +1,11 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include "account.h"
 #include <cstring>
 #include <queue>
 #include <array>
+
+#include "account.h"
 
 using namespace std;
 
@@ -14,8 +15,8 @@ class Client {
 
 public:
 
-    Client();
-    Client(string first, string last, int ID);
+	Client();
+	Client(string first, string last, int ID);
 
 
 	bool operator>(const Client& toCompare) const;
