@@ -32,7 +32,7 @@ private:
 public:
 
 	void readClients(ifstream& inFile); //passes in an ifstream that reads the client data file to and creates a BST of clients
-	void readTransactions(ifstream& inFile);
+	void readTransactions(ifstream& inFile); //
 	void transact(void);
 	void displayClients(void);
 	void displayTransactions(void);
