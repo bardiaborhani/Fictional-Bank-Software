@@ -31,24 +31,54 @@ bool Transaction::setData(string transaction) { // Sets the transaction data fro
 	istringstream iss(transaction);
 	parsedTransaction = { istream_iterator<string>{iss}, istream_iterator<string>{} };
 
-	if (parsedTransaction.size() != 0) {
+	//we must have at least a transaction type and a first client,
+	//otherwise there's nothing to do and we categorize this as 'bad data'
+	if (parsedTransaction.size() > 1) {
 
-		//this is always a given to exist, so it is independent of the cases
-		firstClientID = stoi(parsedTransaction[1].substr(0, 4));
-		firstAccountID = (parsedTransaction[1][4] - '0');
+		//this is always a given to exist, so it is independent of the cases.
+		//we do check for the correct size of the array and make sure that
+		//the Client ID + Account ID is not negative.
+		if (parsedTransaction[1].size() == 5 && stoi(parsedTransaction[1]) >= 0) {
+			firstClientID = stoi(parsedTransaction[1].substr(0, 4));
+			firstAccountID = (parsedTransaction[1][4] - '0');
+		}
+		else return false;
+
 
 		switch (parsedTransaction[0][0]) {
 		case 'D':
-			//continue on to W, they're the same
-		case 'W':
-			amount = stoi(parsedTransaction[2]);
-			break;
-		case 'M':
-			amount = stoi(parsedTransaction[2]);
 
-			secondClientID = stoi(parsedTransaction[3].substr(0, 4));
-			secondAccountID = (parsedTransaction[3][4] - '0');
+			//continue on to W, they're the same
+
+		case 'W':
+
+			//we don't allow negative amounts to be deposited or withdrawn, cause
+			//then customers might scam our bank. that would be bad
+			if (stoi(parsedTransaction[2]) >= 0) {
+				amount = abs(stoi(parsedTransaction[2]));
+			}
+			else return false;
+
 			break;
+
+		case 'M':
+
+			//as stated in case 'W'
+			if (stoi(parsedTransaction[2]) >= 0) {
+				amount = abs(stoi(parsedTransaction[2]));
+			}
+			else return false;
+
+			//check for the correct size of the array and make sure that
+			//the Client ID + Account ID is not negative.
+			if (parsedTransaction[3].size() == 5 && stoi(parsedTransaction[3]) >= 0) {
+				secondClientID = abs(stoi(parsedTransaction[3].substr(0, 4)));
+				secondAccountID = abs((parsedTransaction[3][4] - '0'));
+			}
+			else return false;
+
+			break;
+
 		}
 
 		return true;

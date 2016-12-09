@@ -107,9 +107,6 @@ bool BankQueue::buildQueue(ifstream& inFile)
 			if (newTransaction->setData(store)) {
 				push(newTransaction);
 			}
-			else {
-				return false;
-			}
 
 			if (inFile.eof()) {
 				break; //if we reach the eof finish the while
