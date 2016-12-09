@@ -101,6 +101,13 @@ void Client::displayHistory(const string transaction) {
 	transactionHistory.push(transaction);
 }
 
+string Client::toString()
+{
+	stringstream ss;
+	ss << *this;
+	return ss.str();
+}
+
 //--------------------------------------------------------------------------------------------
 bool Client::operator>(const Client& toCompare) const {
 	return accountID > toCompare.getAccountNumber();

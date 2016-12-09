@@ -97,9 +97,14 @@ void Transaction::setSecondClient(Client* client)
 
 bool Transaction::transact()
 {
-	stringstream ss;
-	ss << *this;
-	description = ss.str();
+	if (firstClient != nullptr && secondClient != nullptr) {
+		stringstream ss;
+		ss << *this;
+		description = ss.str();
+	}
+	else {
+		description = "clients not loaded into transaction properly";
+	}
 
 	switch (transactionType) { //perform the appropriate action based on the char
 	case 'D':

@@ -31,6 +31,7 @@ public:
 	void deposit(const int accountID, const int amount, const string transaction);
 	bool withdraw(const int accountID, const int amount, const string transaction);
 	void displayHistory(const string transaction);
+	string toString();
 
 private:
 

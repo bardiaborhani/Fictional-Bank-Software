@@ -22,13 +22,13 @@ int main() {
 
 	BankManager bankManager;						//instantiates BankManager object
 	ifstream clientFile;							//creates new ifstream
-	clientFile.open("testdata2.txt");					//opens the data file
+	clientFile.open("testdata3.txt");					//opens the data file
 
 	bankManager.readClients(clientFile);			//passes the client data file to bankManger
 													//to construct the BST
 
 	ifstream transactionFile;						//creates new ifstream
-	transactionFile.open("testcommand2.txt");			//opens the data file
+	transactionFile.open("testcommand3.txt");			//opens the data file
 
 	bankManager.readTransactions(transactionFile);	//passes the transaction data file stream
 													//to the bankManager to carry out transactions

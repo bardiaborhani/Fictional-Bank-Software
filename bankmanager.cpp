@@ -98,20 +98,28 @@ void BankManager::transact(void) {
 		int client1 = transaction.getFirstClientID();
 		int client2 = transaction.getSecondClientID();
 
+		bool success;
 		//find the clients involved in the operation, give them to the transaction
 		//so it can do its job
-		transaction.setFirstClient(clients.retrieve(client1));
-		transaction.setSecondClient(clients.retrieve(client2));
-
-		//tell the transaction to do its business (outside please, 
-		//goodness gracious)
-		transaction.transact();
+		success = clients.retrieve(client1);
+		if (success && transaction.getTransactionType() == 'M') {
+			success = clients.retrieve(client2);
+		}
 
 		//take the transaction off the pending queue and throw it away
 		pending.pop();
 
-		//put the transaction on the completed pile
-		completed.push(transaction);
+		if (success) {
+			transaction.setFirstClient(clients.retrieve(client1));
+			transaction.setSecondClient(clients.retrieve(client2));
+
+			//tell the transaction to do its business (outside please, 
+			//goodness gracious)
+			transaction.transact();
+
+			//put the transaction on the completed pile
+			completed.push(transaction);
+		}
 	}
 }
 
