@@ -53,7 +53,7 @@ class Transaction {
 		case 'M':
 			stream << "Moved $" << transaction.amount << " from " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
 				<< "'s " << (transaction.firstAccountID + 1) << endings[0] << " account and placed it in " << transaction.secondClient->getFirstName() << " "
-				<< transaction.secondClient->getLastName() << "'s" << (transaction.secondAccountID + 1) << endings[1] << " account.";
+				<< transaction.secondClient->getLastName() << "'s " << (transaction.secondAccountID + 1) << endings[1] << " account.";
 			break;
 		case 'H':
 			stream << "Displayed " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName() << "'s transaction history.";

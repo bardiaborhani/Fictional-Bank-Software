@@ -37,10 +37,25 @@ private:
 
 	string firstName = "undeclared";
 	string lastName = "undeclared";
+
 	int accountID = 0;
 	int overallBalance = 0;
+
 	queue<string> transactionHistory;
 	array<Account, 10> accounts;
+
+	Account indexFund;
+	Account capitalValueFund;
+	Account growthEquityFund;
+	Account growthIndexFund;
+	Account valueFund;
+	Account valueStockIndex;
+
+	Account moneyMarket;
+	Account primeMoneyMarket;
+
+	Account shortTerm;
+	Account longTerm;
 
 private:
 

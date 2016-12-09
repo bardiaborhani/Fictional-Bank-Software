@@ -7,22 +7,14 @@ using namespace std;
 
 Client::Client() {
 
-	Account indexFund;
-	Account capitalValueFund;
-	Account growthEquityFund;
-	Account growthIndexFund;
-	Account valueFund;
-	Account valueStockIndex;
+	moneyMarket = Account(true, false);
+	primeMoneyMarket = Account(true, false);
+	shortTerm = Account(false, true);
+	longTerm = Account(false, true);
 
-	Account moneyMarket(true, false);
-	Account primeMoneyMarket(true, false);
-
-	Account shortTerm(false, true);
-	Account longTerm(false, true);
-
-	accounts = { indexFund, capitalValueFund, growthEquityFund,
-		growthIndexFund, valueFund, valueStockIndex,
-		moneyMarket, primeMoneyMarket, shortTerm, longTerm };
+	accounts = { moneyMarket, primeMoneyMarket, shortTerm, longTerm,
+		indexFund, capitalValueFund, growthEquityFund,
+		growthIndexFund, valueFund, valueStockIndex };
 
 
 }

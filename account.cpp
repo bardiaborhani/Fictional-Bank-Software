@@ -33,12 +33,12 @@ bool Account::withdraw(const int amount, array<Account, 10>& accounts) {
 
 		if (MoneyMarket) { //if we're a moneymarket
 
-			return transfer(6, 7, amount, accounts);
+			return transfer(0, 1, amount, accounts);
 
 		}
 		else if (Bond) { //if we're a bond
 
-			return transfer(8, 9, amount, accounts);
+			return transfer(2, 3, amount, accounts);
 
 		}
 		else {
