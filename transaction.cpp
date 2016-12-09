@@ -97,7 +97,7 @@ void Transaction::setSecondClient(Client* client)
 
 bool Transaction::transact()
 {
-	if (firstClient != nullptr && secondClient != nullptr) {
+	if (firstClient != nullptr) {
 		stringstream ss;
 		ss << *this;
 		description = ss.str();

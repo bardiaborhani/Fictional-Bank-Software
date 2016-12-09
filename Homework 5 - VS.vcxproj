@@ -36,6 +36,8 @@
     <ClCompile Include="transaction.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="badcommand.txt" />
+    <Text Include="baddata.txt" />
     <Text Include="testcommand1.txt" />
     <Text Include="testcommand2.txt" />
     <Text Include="testcommand3.txt" />

@@ -76,5 +76,11 @@
     <Text Include="testdata3.txt">
       <Filter>Source Files</Filter>
     </Text>
+    <Text Include="badcommand.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="baddata.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
