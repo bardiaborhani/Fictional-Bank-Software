@@ -27,7 +27,7 @@ public:
 	string getFirstName() const;
 	int getAccountNumber() const;
 	int getOverallBalance() const;
-	bool setData(const string first, ifstream& inFile);
+	bool setData(const string last, ifstream& inFile);
 	void deposit(const int accountID, const int amount, const string transaction);
 	bool withdraw(const int accountID, const int amount, const string transaction);
 	void displayHistory(const string transaction);

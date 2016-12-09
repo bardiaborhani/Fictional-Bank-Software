@@ -26,7 +26,7 @@ Pre-condition:
 Post-condition:
 */
 bool Transaction::setData(string transaction) { // Sets the transaction data from reading a filestream
-	char transactionType = transaction[0]; //get the first char of the transaction
+	transactionType = transaction[0]; //get the first char of the transaction
 
 	istringstream iss(transaction);
 	parsedTransaction = { istream_iterator<string>{iss}, istream_iterator<string>{} };
@@ -59,6 +59,11 @@ bool Transaction::setData(string transaction) { // Sets the transaction data fro
 	}
 }
 
+char Transaction::getTransactionType() const
+{
+	return transactionType;
+}
+
 /*
 
 
@@ -80,12 +85,12 @@ int Transaction::getAmount(void) const { // Returns an int with transaction amou
 }
 
 
-void Transaction::setFirstClient(Client& client)
+void Transaction::setFirstClient(Client* client)
 {
 	firstClient = client;
 }
 
-void Transaction::setSecondClient(Client& client)
+void Transaction::setSecondClient(Client* client)
 {
 	secondClient = client;
 }
@@ -120,7 +125,7 @@ Pre-condition:
 Post-condition:
 */
 int Transaction::getFirstClientID(void) const { // Returns firstClientID
-	return firstAccountID;
+	return firstClientID;
 }
 
 /*
@@ -130,7 +135,7 @@ Pre-condition:
 Post-condition:
 */
 int Transaction::getSecondClientID(void) const { // Returns secondClientID
-	return secondAccountID;
+	return secondClientID;
 }
 
 /*
@@ -144,11 +149,15 @@ bool Transaction::depositOrWithdraw() {
 	//deposit, but not necessarily true if we withdraw.
 	bool success = true;
 
-	if (parsedTransaction[0][0] == 'D') {
-		firstClient.deposit(firstAccountID, amount, description);
+	if (transactionType == 'D') {
+		firstClient->deposit(firstAccountID, amount, description);
 	}
-	else { //must be withdraw
-		success = secondClient.withdraw(secondAccountID, amount, description);
+	else if (transactionType == 'W') { //must be withdraw
+		success = firstClient->withdraw(firstAccountID, amount, description);
+	}
+	else {
+		//something went very very wrong
+		success = false;
 	}
 
 	return success;
@@ -162,8 +171,8 @@ Post-condition:
 */
 bool Transaction::move() {
 
-	bool success = firstClient.withdraw(firstAccountID, amount, description);
-	if (success) secondClient.deposit(secondAccountID, amount, description);
+	bool success = firstClient->withdraw(firstAccountID, amount, description);
+	if (success) secondClient->deposit(secondAccountID, amount, description);
 
 	return success;
 }
@@ -175,6 +184,7 @@ Pre-condition:
 Post-condition:
 */
 void Transaction::history() {
-	firstClient.displayHistory(description);
+	firstClient->displayHistory(description);
+	cout << endl;
 }
 

@@ -26,20 +26,37 @@ class Transaction {
 
 	friend ostream& operator<<(ostream& stream, const Transaction& transaction) { //<< operator overload
 
+		string firstEnding;
+		string secondEnding;
+
+		int accountIDs[2] = { transaction.firstAccountID, transaction.secondAccountID };
+		string endings[2] = { firstEnding, secondEnding };
+
+		for (int i = 0; i < 2; i++) {
+			switch (accountIDs[i]) {
+			case 0: endings[i] = "st"; break;
+			case 1: endings[i] = "nd"; break;
+			case 2:	endings[i] = "rd"; break;
+			default: endings[i] = "th"; break;
+			}
+		}
+
 		switch (transaction.transactionType) {
 		case 'D':
-			stream << "Deposited $" << transaction.amount << " in acccount " << transaction.firstAccountID << ", which is owned by "
-				<< transaction.firstClient.getFirstName() << " " << transaction.firstClient.getLastName() << endl;
+			stream << "Deposited $" << transaction.amount << " from " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
+				<< "'s " << (transaction.firstAccountID + 1) << endings[0] << " account.";
 			break;
 		case 'W':
-			stream << "Withdrew " << transaction.amount << " from account " << transaction.firstAccountID << ", which is owned by "
-				<< transaction.firstClient.getFirstName() << " " << transaction.firstClient.getLastName() << endl;
+			stream << "Withdrew $" << transaction.amount << " from " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
+				<< "'s " << (transaction.firstAccountID + 1) << endings[0] << " account.";
 			break;
 		case 'M':
-			stream << "Moved " << transaction.amount << " from account " << transaction.firstAccountID << ", which is owned by "
-				<< transaction.firstClient.getFirstName() << " " << transaction.firstClient.getLastName() << " and placed it in account "
-				<< transaction.secondAccountID << ", which is owned by " << transaction.secondClient.getFirstName() << " "
-				<< transaction.secondClient.getLastName() << endl;
+			stream << "Moved $" << transaction.amount << " from " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
+				<< "'s " << (transaction.firstAccountID + 1) << endings[0] << " account and placed it in " << transaction.secondClient->getFirstName() << " "
+				<< transaction.secondClient->getLastName() << "'s" << (transaction.secondAccountID + 1) << endings[1] << " account.";
+			break;
+		case 'H':
+			stream << "Displayed " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName() << "'s transaction history.";
 			break;
 		default:
 			cerr << "an error occurred"; //todo: yeah change this, actual exception here.
@@ -58,11 +75,11 @@ private:
 
 	int amount; // Amount to be transacted
 
-	Client firstClient; // Integer represents firstClients account number
+	Client* firstClient; // Integer represents firstClients account number
 	int firstClientID;
 	int firstAccountID; //Integer representing the account ID of the first client
 
-	Client secondClient; // Integer represents secondClients account number
+	Client* secondClient; // Integer represents secondClients account number
 	int secondClientID;
 	int secondAccountID; //Integer representing the account ID of the second client
 
@@ -79,6 +96,8 @@ public:
 
 	bool setData(string transaction); // Sets the transaction data from reading a filestream
 
+	char getTransactionType() const;
+
 	string getDescription(void) const; // Returns a string of transaction description
 
 	int getAmount(void) const; // Returns an int with transaction amount
@@ -86,8 +105,8 @@ public:
 	int getFirstClientID(void) const; // Returns firstClient
 	int getSecondClientID(void) const; // Returns secondClient
 
-	void setFirstClient(Client& client); // Sets the account number for client one
-	void setSecondClient(Client& client); // Sets the account number for client two
+	void setFirstClient(Client* client); // Sets the account number for client one
+	void setSecondClient(Client* client); // Sets the account number for client two
 
 	bool transact();
 

@@ -35,10 +35,10 @@ public:
 	int height(); // finds the height of the tree - length from bottom-most node to the root
 	int size(); // finds number of nodes in tree
 	void clear(); // deletes all the nodes in the tree
-	string inorderWalk(); // does an inorder walk through the tree displaying all the clients
+	void inorderWalk(); // does an inorder walk through the tree displaying all the clients
 	bool search(int target) const;  //you MUST search before you retrieve in order to know if the tree is empty or not
 									//as well as whether or not the target Client is in the tree
-	Client& retrieve(int target) const; // returns a reference to a client that is in the tree
+	Client* retrieve(int target) const; // returns a reference to a client that is in the tree
 	bool buildTree(ifstream& inFile);   // creates the tree using the txt file that contains all of the clients and their information
 
 private:
@@ -48,7 +48,7 @@ private:
 	void clear(BST::Node* subtree);
 	Node* insert(Client* client, BST::Node* subtree);
 	bool search(BST::Node* subtree, int target) const;
-	Client& retrieve(BST::Node* subtree, int target) const;
+	Client* retrieve(BST::Node* subtree, int target) const;
 	string inorderWalk(BST::Node* subtree);
 
 	Node* root = nullptr;

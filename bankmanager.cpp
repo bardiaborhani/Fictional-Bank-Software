@@ -122,8 +122,8 @@ the Client's accounts. Clients will be printed in order by accountID.
 
 ------------------------------------------------------------------------------------------------*/
 
-string BankManager::displayClients(void) {
-	return clients.inorderWalk();
+void BankManager::displayClients(void) {
+	clients.inorderWalk();
 }
 
 /*------------------------------------------------------------------------------------------------
@@ -133,10 +133,18 @@ This function will print out all of the Transactions that have been completed.
 ------------------------------------------------------------------------------------------------*/
 
 void BankManager::displayTransactions(void) {
+	cout << "Displayed by most recent:" << endl;
+
 	stack<Transaction> stack;
 	while (!completed.empty()) {
 		Transaction store = completed.top();
-		cout << store;
+		cout << store << endl;
 		stack.push(store);
+		completed.pop();
 	}
+	while (!stack.empty()) {
+		completed.push(stack.top());
+		stack.pop();
+	}
+	cout << endl;
 }

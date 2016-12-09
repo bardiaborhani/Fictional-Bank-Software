@@ -34,7 +34,7 @@ public:
 	void readClients(ifstream& inFile);
 	void readTransactions(ifstream& inFile);
 	void transact(void);
-	string displayClients(void);
+	void displayClients(void);
 	void displayTransactions(void);
 };
 

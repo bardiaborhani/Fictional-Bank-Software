@@ -46,6 +46,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0D39F2F9-C279-420C-ADD4-CFE6AA441B1F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
+    <ProjectName>Homework 5 - VS - BardiaFork</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

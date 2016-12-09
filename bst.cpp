@@ -188,7 +188,7 @@ bool BST::search(BST::Node* subtree, int target) const {
 
 // Pre-condition: Passes in an int target that represents the accountID of a client (data of one of the nodes)
 // Post-condition: returns a reference to the data of the node that matches the value of the int target
-Client& BST::retrieve(int target) const {
+Client* BST::retrieve(int target) const {
 	return retrieve(root, target);
 }
 
@@ -198,14 +198,18 @@ Client& BST::retrieve(int target) const {
 // Pre-condition: Passes in a node, representing the root of the tree, 
 // and a int called target that contains a number matching the value of the accountId of a client
 // Post-condition: A reference to the client that contains the accountID matching the int target is returned
-Client& BST::retrieve(BST::Node* subtree, int target) const {
-	if (subtree->data->getAccountNumber() == target) {
-		return *subtree->data;
+Client* BST::retrieve(BST::Node* subtree, int target) const {
+
+	if (subtree == nullptr) {
+		return nullptr;
+	}
+	else if (subtree->data->getAccountNumber() == target) {
+		return subtree->data;
 	}
 	else if (target > subtree->data->getAccountNumber()) {
 		return retrieve(subtree->right, target);
 	}
-	else {
+	else if (target < subtree->data->getAccountNumber()) {
 		return retrieve(subtree->left, target);
 	}
 }
@@ -215,8 +219,8 @@ Client& BST::retrieve(BST::Node* subtree, int target) const {
 
 // Pre-condition: The object for the BST needs to be made
 // Post-condition: Returns the data of the nodes (the client accountID)
-string BST::inorderWalk() {
-	return inorderWalk(root);
+void BST::inorderWalk() {
+	cout << inorderWalk(root);
 }
 
 // Uses a stringstream to store all of the data of the nodes (the client accountID) as it does an inorder walk though the tree
@@ -229,7 +233,7 @@ string BST::inorderWalk(BST::Node* subtree) {
 	stringstream ss;
 	if (subtree != nullptr) {
 		ss << inorderWalk(subtree->left);
-		ss << *subtree->data;
+		ss << *subtree->data << endl;
 		ss << inorderWalk(subtree->right);
 	}
 	return ss.str();

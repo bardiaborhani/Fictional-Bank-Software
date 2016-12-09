@@ -38,25 +38,23 @@ Client::Client(string first, string last, int ID) {
 }
 
 //--------------------------------------------------------------------------------------------
-//this method is probably just for testing?
 ostream& operator<<(ostream& stream, const Client& client) {
 	stringstream ss;
-	ss << client.firstName << " " << client.lastName << " " << client.accountID << " ACCOUNTS:";
+	ss << "CLIENT NAME: " << client.firstName << " " << client.lastName << " " << "CLIENT ID: " << client.accountID << " ACCOUNTS:";
 	for (int i = 0; i < 10; i++) ss << " " << client.accounts[i].getAccountBalance();
-	ss << "\n";
 	stream << ss.str();
 	return stream;
 }
 
 //--------------------------------------------------------------------------------------------
-bool Client::setData(const string first, ifstream& inFile) {
+bool Client::setData(const string last, ifstream& inFile) {
 
 	bool success = true;
 	int accountBalance;
 
-	firstName = first;
+	lastName = last;
 
-	inFile >> lastName >> accountID;
+	inFile >> firstName >> accountID;
 	for (int i = 0; i<10; i++) {
 		inFile >> accountBalance;
 		if (accountBalance < 0) success = false;
@@ -85,7 +83,17 @@ bool Client::withdraw(const int accountID, const int amount, const string transa
 
 //--------------------------------------------------------------------------------------------
 void Client::displayHistory(const string transaction) {
+
 	queue<string> copy = transactionHistory;
+
+	cout << firstName << " " << lastName << "'s history:" << endl;
+
+	//if this client's history is empty to begin
+	//with, simply display a statement to that effect.
+	if (copy.empty()) {
+		cout << firstName << " " << lastName << " has no transaction history" << endl;
+	}
+
 	while (!copy.empty()) {
 		cout << copy.front() << endl;
 		copy.pop();
