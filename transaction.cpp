@@ -4,6 +4,26 @@
 
 using namespace std;
 
+
+//--------------------------------------------------------------------------------------------
+/*
+
+DEFAULT CONSTRUCTOR
+
+
+Description:
+
+creates a Transaction object with everything defaulted. this method intends that following the creation
+of the Transaction object, you then call setData(). otherwise, if you want to work with
+a Transaction object with these defaulted values you must handle all exceptions related to NULL ints and empty
+strings. if a transaction object is encountered with a non-standard transactionType, such as 'N', it will not be
+processed. so if you do not call setData this Transaction will not be processed.
+
+
+Pre-condition: a Transaction object is needed.
+
+Post-condition: a Transaction object has been created with all member variables defaulted.
+*/
 Transaction::Transaction()
 {
 	description = "";
@@ -19,11 +39,34 @@ Transaction::Transaction()
 	secondAccountID = NULL;
 }
 
+//--------------------------------------------------------------------------------------------
 /*
 
+SETDATA
 
-Pre-condition:
-Post-condition:
+
+Program Flow:
+
+		The first char of the passed string transaction is copied into transactionType as an uppercase char. an
+		istringstream called iss is then created and is given transaction. iss is then used with two iterators
+		to copy the transaction string into the member parsedTransaction vector, terminated by spaces.
+
+		A check is then made to make sure we have been given good data, in the form of having at least a transactionType
+		and a first Client to operate on (these basic elements are all that the deposit and displayHistory operations
+		need). If this check is passed, we then take in the first Client if it is good data. If it is not then we return false,
+		so the bankQueue in bankManager knows not to push this Transaction. after we set the first Client's ID and account #,
+		we then perform a switch to collect the remaining elements, depending on the transactionType. at most, we collect an
+		amount and a second client, which would be in the case of the move operation.
+
+		if all checks are passed throughout setData all data members have been set, then we return true.
+
+
+
+Pre-condition: the passed string transaction contains the data that we want to insert into this Transaction,
+				properly formatted.
+
+Post-condition: all data member fields that pertain to the transactionType, as well as the transactionType char
+				itself, have been set.
 */
 bool Transaction::setData(string transaction) { // Sets the transaction data from reading a filestream
 
@@ -91,42 +134,29 @@ bool Transaction::setData(string transaction) { // Sets the transaction data fro
 	}
 }
 
-char Transaction::getTransactionType() const
-{
-	return transactionType;
-}
-
+//--------------------------------------------------------------------------------------------
 /*
+TRANSACT
 
+the overall goal of this function is to perform whatever transaction we are between the
+specified clients stored in firstClient and secondClient or on the firstClient alone, depending
+on the transactionType char.
 
-Pre-condition:
-Post-condition:
+the first thing this function does is create an English description of this Transaction for later use
+when printing out the completed or pending transactions in BankManager, or displaying the transactions
+performed upon a certain Client. this description is created through the use of a stringstream which we
+then pipe ourselves into using the operator<< function.
+
+the second part of this function is to switch based on the transactionType char. there are five cases that
+can occur. We either deposit, withdraw, or move money, or we display the history of the specified client (stored
+in firstClient), or we have not been given a valid transactionType char, and we print that error to the cerr
+stream.
+
+Pre-condition: setData should be run before this function.
+
+Post-condition: the char contained in transactionType, or the lack
+thereof, has been returned to the user
 */
-string Transaction::getDescription(void) const { // Returns a string of transaction description
-	return description;
-}
-
-/*
-
-
-Pre-condition:
-Post-condition:
-*/
-int Transaction::getAmount(void) const { // Returns an int with transaction amount
-	return amount;
-}
-
-
-void Transaction::setFirstClient(Client* client)
-{
-	firstClient = client;
-}
-
-void Transaction::setSecondClient(Client* client)
-{
-	secondClient = client;
-}
-
 bool Transaction::transact()
 {
 	if (firstClient != nullptr) {
@@ -155,77 +185,224 @@ bool Transaction::transact()
 
 }
 
+//--------------------------------------------------------------------------------------------
 /*
+DEPOSITORWITHDRAW
+
+this function handles two separate but similar cases, withdraw and deposit. the reason
+this function can handle and should handle both cases is due to the fact that their structure
+is exactly the same. both deposit and withdraw depend on a Client and an amount, and nothing
+more. this method uses the transactionType char to decide which operation to perform.
+
+Pre-condition: none
+
+Post-condition: we either deposited or withdrew, or if we couldn't withdraw, we didn't.
+*/
+bool Transaction::depositOrWithdraw() {
+
+	//check the transaction type to see if we should withdraw or deposit
+	//the given amount.
+	if (transactionType == 'D') {
+		
+		if (firstClient != nullptr) {
+			//the type of this transaction is deposit, so do that.
+			firstClient->deposit(firstAccountID, amount, description);
+			return true;
+		}
+		else return false;
+
+	}
+
+	//the other case is withdraw.
+	else if (transactionType == 'W') { 
+		
+		//otherwise, though we still check, the transaction type must be withdraw.
+		bool success = firstClient->withdraw(firstAccountID, amount, description);
+
+		//win or lose, tell the coach what happened.
+		return success;
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/*
+MOVE
+
+moves the int amount specified in the data member amount variable from one Client to another.
+this is accomplished by attempting to withdraw from the first Client's account and, if successful,
+depositing it in the second Client's account. both accounts are specified in firstAccountID and
+secondAccountID, respectively. additionally, the description of this Transaction is passed as
+the third parameter of the withdraw and deposit methods.
+
+Pre-condition: none
+
+Post-condition: if possible, the correct amount determined by our private amount variable has been moved
+				from the first Client to the second Client.
+*/
+bool Transaction::move() {
+	bool success = false;
+
+	if (firstClient != nullptr) {
+		success = firstClient->withdraw(firstAccountID, amount, description);
+		if (success) secondClient->deposit(secondAccountID, amount, description);
+	}
+
+	return success;
+}
+
+//--------------------------------------------------------------------------------------------
+/*
+HISTORY
+
+displays the history of the firstClient data member. this is done by calling the
+displayHistory function of firstClient. this action is only carried out if the firstClient
+pointer is not == nullptr.
+
+Pre-condition: none
+
+Post-condition: the history of the firstClient has been printed out via the displayHistory method
+				of that Client.
+*/
+void Transaction::history() {
+	if (firstClient != nullptr) {
+		firstClient->displayHistory(description);
+		cout << endl;
+	}
+}
 
 
-Pre-condition:
-Post-condition:
+//--------------------------------------------------------------------------------------------
+/*
+GETRANSACTIONTYPE
+
+a simple getter function to return the transactionType char
+
+Pre-condition: none
+
+Post-condition: the char contained in transactionType, or the lack
+				thereof, has been returned to the user
+*/
+char Transaction::getTransactionType() const
+{
+	return transactionType;
+}
+
+//--------------------------------------------------------------------------------------------
+/*
+GETDESCRIPTION
+
+a simple getter function to return the description string
+
+Pre-condition: none
+
+Post-condition: the string stored in description has been returned to the user
+*/
+string Transaction::getDescription(void) const { 
+	
+	// Returns a string of transaction description
+	return description;
+
+}
+
+//--------------------------------------------------------------------------------------------
+/*
+GETAMOUNT
+
+a simple getter function to return the amount int
+
+Pre-condition: none
+
+Post-condition: the int contained in the amount data member has been returned to the user
+*/
+int Transaction::getAmount(void) const { 
+	
+	// Returns an int with transaction amount
+	return amount;
+
+}
+
+//--------------------------------------------------------------------------------------------
+/*
+SETFIRSTCLIENT
+
+a simple setter function to set the firstClient Client.
+
+Pre-condition: none
+
+Post-condition: the firstClient Client object now points to
+				a client, or is nullptr, i.e. has been "unpointed"
+*/
+void Transaction::setFirstClient(Client* client)
+{
+	firstClient = client;
+}
+
+//--------------------------------------------------------------------------------------------
+/*
+SETSECONDCLIENT
+
+a simple setter function to set the secondClient Client.
+
+Pre-condition: none
+
+Post-condition: the secondClient Client object now points to
+				a client, or is nullptr, i.e. has been "unpointed"
+*/
+void Transaction::setSecondClient(Client* client)
+{
+	secondClient = client;
+}
+
+//--------------------------------------------------------------------------------------------
+/*
+GETFIRSTCLIENTID
+
+a simple getter function to return the firstClientID int.
+
+Pre-condition: none
+
+Post-condition: the int stored in firstClientID has been returned to the user.
 */
 int Transaction::getFirstClientID(void) const { // Returns firstClientID
 	return firstClientID;
 }
 
+//--------------------------------------------------------------------------------------------
 /*
+GETSECONDCLIENTID
 
+a simple getter function to return the secondClientID int.
 
-Pre-condition:
-Post-condition:
+Pre-condition: none
+
+Post-condition: the int stored in secondClientID has been returned to the user.
 */
 int Transaction::getSecondClientID(void) const { // Returns secondClientID
 	return secondClientID;
 }
 
+
+//--------------------------------------------------------------------------------------------
 /*
+OPERATOR<<
 
+streams an English translation of a Transaction's function.
 
-Pre-condition:
-Post-condition:
+Program Flow:
+
+	A switch statement based on the transactionType char of transaction decides how this
+	Transaction should be represented. Then, based on the passed reference to the Transaction
+	that needs to be displayed, a translation of the operation performed when doing this
+	Transaction is created and streamed to the referenced ostream stream.
+
+Pre-condition: the passed transaction should have data members that have been filled by setData,
+				otherwise this method may not print a correct representation of the Transaction,
+				and formatting errors may occur.
+
+Post-condition: the English representation of transaction has been streamed to the provided
+				ostream.
 */
-bool Transaction::depositOrWithdraw() {
-	//assume that the operation will be a success, which will be true if we
-	//deposit, but not necessarily true if we withdraw.
-	bool success = true;
-
-	if (transactionType == 'D') {
-		firstClient->deposit(firstAccountID, amount, description);
-	}
-	else if (transactionType == 'W') { //must be withdraw
-		success = firstClient->withdraw(firstAccountID, amount, description);
-	}
-	else {
-		//something went very very wrong
-		success = false;
-	}
-
-	return success;
-}
-
-/*
-
-
-Pre-condition:
-Post-condition:
-*/
-bool Transaction::move() {
-
-	bool success = firstClient->withdraw(firstAccountID, amount, description);
-	if (success) secondClient->deposit(secondAccountID, amount, description);
-
-	return success;
-}
-
-/*
-
-
-Pre-condition:
-Post-condition:
-*/
-void Transaction::history() {
-	firstClient->displayHistory(description);
-	cout << endl;
-}
-
-ostream & operator<<(ostream & stream, const Transaction & transaction)
+ostream & operator<<(ostream & stream, const Transaction& transaction)
 {
 	switch (transaction.transactionType) {
 	case 'D':
