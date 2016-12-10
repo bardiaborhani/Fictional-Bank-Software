@@ -47,6 +47,8 @@ public:
 
 private:
 	//facade functions for functions above
+	// each facade, when first called, passes in the root of the tree
+	// then the facades use recursion to traveres through the tree
 	int height(BST::Node* subtree);
 	int size(BST::Node* subtree);
 	void clear(BST::Node* subtree);
