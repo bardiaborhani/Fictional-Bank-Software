@@ -24,7 +24,7 @@ using namespace std;
 class Transaction {
 
 
-	friend ostream& operator<<(ostream& stream, const Transaction& transaction);
+	friend ostream& operator<<(ostream& stream, const Transaction& transaction); //operator<<
 
 
 private:
@@ -44,11 +44,8 @@ private:
 	int secondClientID;
 	int secondAccountID; //Integer representing the account ID of the second client
 
-	vector<string> parsedTransaction;
+	vector<string> parsedTransaction; //vector to hold a parsed, segmented version of the string transaction that setData receives.
 
-	//unnecessary
-	//void setDescription(string); // Sets the transaction decription
-	//void setAmount(const int); // Sets the transaction amount
 
 
 public:
@@ -57,7 +54,7 @@ public:
 
 	bool setData(string transaction); // Sets the transaction data from reading a filestream
 
-	char getTransactionType() const;
+	char getTransactionType() const; //retrieve the type of transaction that this is
 
 	string getDescription(void) const; // Returns a string of transaction description
 
@@ -69,8 +66,20 @@ public:
 	void setFirstClient(Client* client); // Sets the account number for client one
 	void setSecondClient(Client* client); // Sets the account number for client two
 
-	bool transact();
+	bool transact(); //perform the specified transaction based on this Transaction's data members
 
+
+	/*
+		the three horsemen:
+
+		depositOrWithdraw is a composite of both deposit and withdraw, with the
+		case specified within.
+
+		move moves money between two clients or between a singular client's accounts. perhaps it might
+		find itself even moving money from the same account to itself.
+
+		history prints out a client's transaction history.
+	*/
 	bool depositOrWithdraw();
 	bool move();
 	void history();
