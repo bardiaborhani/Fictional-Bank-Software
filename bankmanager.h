@@ -32,10 +32,10 @@ private:
 public:
 
 	void readClients(ifstream& inFile); //passes in an ifstream that reads the client data file to and creates a BST of clients
-	void readTransactions(ifstream& inFile); //
-	void transact(void);
-	void displayClients(void);
-	void displayTransactions(void);
+	void readTransactions(ifstream& inFile); // passes in an ifstream that reads the command data file and puts each transaction in the pending BankQueue
+	void transact(void); // reads the transaction and completes the command
+	void displayClients(void); //displays all the clients in the bank
+	void displayTransactions(void); // displays all the transactions that were read in the command data file
 };
 
 #endif //BANKMANAGER_H
