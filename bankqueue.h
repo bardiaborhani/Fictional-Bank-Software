@@ -3,7 +3,7 @@
 The BankQueue class is a linked list styled object (in the way it has nodes and each node connects to the next node)
 that stores all the transaction objects. This class relies on the bankmanager class to call the 
 readTransactions function that intakes a file stream and passes it onto the buildQueue function in this class - this creates the BankQueue
-This class is used to organize and store the transactions in order so that they can be popped off in FIFO order
+This class is used to organize and store the transactions in order so that they can be popped off in order
 so that they can be read by the transact function the in the bankManager class
 
 ------------------------------------------------------------------------------------------------*/
