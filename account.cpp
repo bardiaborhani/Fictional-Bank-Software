@@ -2,14 +2,23 @@
 
 using namespace std;
 
-
+// Constructor used when creating an account object
+// Initializes accountType variable to "unitialized"
+// Pre-condition: Object for class has to be made
+// Post-condition: accountType variable is set to "uninitialized"
 Account::Account()
 {
 	accountType = "uninitialized";
 }
 
 //----------------------------------------------------
-// Returns the account balance
+/*
+Returns the balance of the account
+Only way for another class to get the account's balance
+Const is set to make sure the function does not change the balance
+Pre-condition: Object for class has to be made
+Post-condition:
+*/
 int Account::getAccountBalance() const {
 	return balance;
 }
