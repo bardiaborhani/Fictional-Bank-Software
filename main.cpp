@@ -83,7 +83,7 @@ int main() {
 	//prints out the output of the displayClients method in our BankManager object.
 	//this prints all the clients that have been stored in the BankManager, which
 	//were read in when we called readClients.
-	cout << "Clients:" << endl;
+	cout << "Clients:" << endl << endl;
 	bankManager.displayClients();
 
 	cout << endl;
@@ -93,6 +93,12 @@ int main() {
 	cout << "Transactions:" << endl;
 	bankManager.displayTransactions();
 
+	// Again we are out printing out all the clients - to show the ending balances of the clients
+	//prints out the output of the displayClients method in our BankManager object.
+	//this prints all the clients that have been stored in the BankManager, which
+	//were read in when we called readClients.
+	cout << "Clients:" << endl << endl;
+	bankManager.displayClients();
 
 	//closes the ifstreams
 	clientFile.close();
