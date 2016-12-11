@@ -56,9 +56,26 @@ and the client whose information is sought to be outputted
 Post-condition: the ostream variable is returned containing the client's first name, last name, accountID and account balances 
 */
 ostream& operator<<(ostream& stream, const Client& client) {
+
+	//create a stringstream
 	stringstream ss;
-	ss << "CLIENT NAME: " << client.firstName << " " << client.lastName << " " << "CLIENT ID: " << client.accountID << " ACCOUNTS:";
+
+	//stream the client name and ID
+	ss << "CLIENT NAME: " << client.firstName << " " << client.lastName << " " << "CLIENT ID: " << client.accountID;
+
+
+	//stream all the accounts' starting balances
+	ss << endl << "STARTING ACCOUNTS:" << endl;
+	for (int i = 0; i < 10; i++) ss << " " << client.startingAccounts[i].getAccountBalance();
+
+	//stream all the accounts' ending balances
+	ss << endl << "ENDING ACCOUNTS:" << endl;
 	for (int i = 0; i < 10; i++) ss << " " << client.accounts[i].getAccountBalance();
+
+	ss << endl;
+
+	//stream the string representation of the ss stringstream to the passed ostream and return the
+	//ostream to the calling function for further use.
 	stream << ss.str();
 	return stream;
 }

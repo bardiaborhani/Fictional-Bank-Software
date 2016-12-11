@@ -35,21 +35,29 @@ int main() {
  	bankManager.readClients(clientFile);			//passes the client data file to bankManger
 													//to construct the BST
 
-	ifstream transactionFile;						//creates new ifstream
-	transactionFile.open("testcommand2.txt");			//opens the data file
+	//create and open an ifstream in order
+	ifstream transactionFile;
+	transactionFile.open("testcommand2.txt");
 
-	bankManager.readTransactions(transactionFile);	//passes the transaction data file stream
-													//to the bankManager to carry out transactions
+	//passes the transaction data file stream
+	//to the bankManager to carry out transactions
+	bankManager.readTransactions(transactionFile);
+
+	//prints out the output of the displayClients method in our BankManager object.
+	//this prints all the clients that have been stored in the BankManager, which
+	//were read in when we called readClients.
 	cout << "Clients:" << endl;
-	bankManager.displayClients();					//displays the clients in the bankManager
+	bankManager.displayClients();
 
 	cout << endl;
 
+	//prints out the output of the displayTransactions method in our BankManager object.
+	//this will print out all transactions that were completed during readTransactions.
 	cout << "Transactions:" << endl;
-	bankManager.displayTransactions();				//displays the transactions in the bankManager
+	bankManager.displayTransactions();
 
 
-													//closes the ifstreams
+	//closes the ifstreams
 	clientFile.close();
 	transactionFile.close();
 	return 0;
