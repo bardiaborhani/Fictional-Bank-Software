@@ -46,20 +46,19 @@ SETDATA
 
 Program Flow:
 
-		The first char of the passed string transaction is copied into transactionType as an uppercase char. an
-		istringstream called iss is then created and is given transaction. iss is then used with two iterators
-		to copy the transaction string into the member parsedTransaction vector, terminated by spaces.
+		the first char of the passed string transaction is copied into transactionType as an uppercase char.
 
-		A check is then made to make sure we have been given good data, in the form of having at least a transactionType
-		and a first Client to operate on (these basic elements are all that the deposit and displayHistory operations
-		need). If this check is passed, we then take in the first Client if it is good data. If it is not then we return false,
-		so the bankQueue in bankManager knows not to push this Transaction. after we set the first Client's ID and account #,
-		we then perform a switch to collect the remaining elements, depending on the transactionType. at most, we collect an
-		amount and a second client, which would be in the case of the move operation.
+		a store string is created in order to separate Client IDs and account IDs, which are combined
+		initially when read in from the ifstream.
 
-		if all checks are passed throughout setData all data members have been set, then we return true.
+		the first case that occurs is if the transactionType we just read in is 'H', signalling that it
+		is a history display operation. in this case all we receive is a Client ID, minus an account ID, as
+		it prints out all accounts. if this is not the case then we read in the basics of all three other
+		operations ('D', 'W', 'M'), which is a Client ID, account ID, and an amount. then, if we find that
+		we have 'M' as the transactionType, which simply means we have a second Client, which we read in.
 
-
+		if all data is good and within bounds, both upper and lower, then we return true to indicate
+		that all data was set without a problem.
 
 Pre-condition: the passed string transaction contains the data that we want to insert into this Transaction,
 				properly formatted.
@@ -72,8 +71,12 @@ bool Transaction::setData(const string type, ifstream& inFile) { // Sets the tra
 	//get the first char of the transaction
 	transactionType = toupper(type[0]);
 
+	//create a string to temporarily store the 5 digit Client ID + account ID,
+	//as we need to separate it into the two.
 	string store;
 
+	//first case is if we have a display history operation
+	//on our hands
 	if (transactionType == 'H'){
 		
 		//if we just need to display the history of a client,
@@ -100,14 +103,20 @@ bool Transaction::setData(const string type, ifstream& inFile) { // Sets the tra
 
 	}
 
+	//success depends on the correctness and formatting of all the data
+	//fields. check all and store in success bool
 	bool success = firstClientID < 10000 && firstClientID >= 0 && secondClientID < 10000 &&
 		secondClientID >= 0 && amount < 2147483648 && amount >= 0;
 
+	//print an error message if we received any bad data, which
+	//will cause us to not store this transaction in BankManager.
 	if (!success) cerr << "/////////////////////" << endl << "ERROR: misformatted transaction data:" << endl  << endl
 		 << "\"" << transactionType << " " << firstClientID << " " << firstAccountID << " " <<
 		amount << " " << secondClientID << " " << secondAccountID << "\"" <<
 		endl << endl << "please try again with correct data" << endl << "/////////////////////" << endl << endl;
 
+	//return the boolean success of setting the data fields
+	//of this object.
 	return success;
 }
 
