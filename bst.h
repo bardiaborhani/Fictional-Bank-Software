@@ -1,12 +1,12 @@
 /*
 A binary search tree (BST) is created to contain all the clients in the bank. The nodes in the tree each have a pointer to a client object
-The tree is ordered from smallest to largest according to the number of the accountID
+The tree is ordered from smallest to largest according to the number of the clientID
 The BankManager contains the BST 
 The driver (main.cpp) passes in an ifstream (that reads the client data file) to the BankManager
 The BankManager passes the ifstream to this class' buildTree function 
 The function reads the client data file and creates new nodes - creating the tree
 The BankManager transact function then uses the tree's retreive functionto find a client  
-and the tree's inorderWalk function to display the Client's accountID
+and the tree's inorderWalk function to display the Client's clientID
 */
 
 #ifndef BST_H
@@ -22,7 +22,7 @@ using namespace std;
 class BST {
 
 	struct Node {
-		Client* data; // every node contains a pointer to a client containing an accountID of type int
+		Client* data; // every node contains a pointer to a client containing an clientID of type int
 		Node* right = nullptr; // every node has a pointer to two nodes
 		Node* left = nullptr;  // each node represents a child node of this node (one for left side and one for right side)
 

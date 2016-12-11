@@ -125,7 +125,7 @@ void BankManager::transact(void) {
 /*------------------------------------------------------------------------------------------------
 
 This function will print all Clients with beginning and ending account balances of each of
-the Client's accounts. Clients will be printed in order by accountID.
+the Client's accounts. Clients will be printed in order by clientID.
 
 PRECONDITION: The object has to already be made
 

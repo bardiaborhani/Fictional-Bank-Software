@@ -150,18 +150,18 @@ BST::Node* BST::insert(Client* client, BST::Node* subtree) {
 // this function calls a facade that, in addition to the int parameter, takes in another parameter of type node 
 // That parameter represents the root of the function - the facade is created to be able to use recursion to search the tree
 
-// Pre-condition: A int, named "target", is passed into the parameter representing the accountID for the client trying to be found
+// Pre-condition: A int, named "target", is passed into the parameter representing the clientID for the client trying to be found
 // Post-condition: A bool is returned (true or false) indicating whether or not the node was found in the tree
 // Search is created to be used in the retrieve function to see if the client wanting to be retreived is in the tree
 bool BST::search(int target) const {
-	return search(root, target);	// facade is called passing in the accountID and the root of the tree
+	return search(root, target);	// facade is called passing in the clientID and the root of the tree
 }
 
-// The search function traverses through the tree trying to find a node whose client data matches the accountID represented by the int "target"
+// The search function traverses through the tree trying to find a node whose client data matches the clientID represented by the int "target"
 // once a node is found whose data matches "target" then true is returned - if not then false is returned
 // If the end of the tree is reached and no matches have been found then false is returned
 
-// Pre-condition:A int, named "target", is passed into the parameter representing the accountID for the client trying to be found
+// Pre-condition:A int, named "target", is passed into the parameter representing the clientID for the client trying to be found
 // and the root of the tree is passed into the parameter - the root and the tree do not need to have any information
 // the object for the tree does however need to be made before this function is called
 // Post-condition: A bool is returned (true or false) indicating whether or not the node was found in the tree
@@ -169,10 +169,10 @@ bool BST::search(BST::Node* subtree, int target) const {
 	if (subtree == nullptr) { // base case - if the pointer is pointing to a node that doesn't have any information - go back up the list
 		return false;
 	}
-	if (subtree->data->getAccountNumber() == target) {
+	if (subtree->data->getClientID() == target) {
 		return true;	// if the node has the account id that matches the node then it has been found and true is returned
 	}
-	else if (target > subtree->data->getAccountNumber()) {
+	else if (target > subtree->data->getClientID()) {
 		return search(subtree->right, target);
 		// look at the right side of the parent node for the node if the target number is
 		// bigger than the account id of the parent node (parent client node)
@@ -183,33 +183,33 @@ bool BST::search(BST::Node* subtree, int target) const {
 }
 
 // The retreive function traverses through the tree
-// and finds a client node whose accountID matches int target that is passed through the parameter
+// and finds a client node whose clientID matches int target that is passed through the parameter
 // This function calls the facade that allows the function to use recursion to traverse through the tree
 
-// Pre-condition: Passes in an int target that represents the accountID of a client (data of one of the nodes)
+// Pre-condition: Passes in an int target that represents the clientID of a client (data of one of the nodes)
 // Post-condition: returns a reference to the data of the node that matches the value of the int target
 Client* BST::retrieve(int target) const {
 	return retrieve(root, target);
 }
 
-// The function traverses the tree and finds the client node that has the accountID that matches the number held by "int target"
-// If it is found then the reference of the client that has the accountID that matches int target is returned
+// The function traverses the tree and finds the client node that has the clientID that matches the number held by "int target"
+// If it is found then the reference of the client that has the clientID that matches int target is returned
 
 // Pre-condition: Passes in a node, representing the root of the tree, 
 // and a int called target that contains a number matching the value of the accountId of a client
-// Post-condition: A reference to the client that contains the accountID matching the int target is returned
+// Post-condition: A reference to the client that contains the clientID matching the int target is returned
 Client* BST::retrieve(BST::Node* subtree, int target) const {
 
 	if (subtree == nullptr) {	// if the client is not found..
 		return nullptr;	// then return nullptr indicating the client was not found
 	}
-	else if (subtree->data->getAccountNumber() == target) {	// if we found the node that contains the client whose accountID matches that int specfied by the parameter...
+	else if (subtree->data->getClientID() == target) {	// if we found the node that contains the client whose clientID matches that int specfied by the parameter...
 		return subtree->data;	//.. then we need to return a pointer to that client (we are "retriving" the client)
 	}
-	else if (target > subtree->data->getAccountNumber()) {	// traverse the right side of the parent node if the node's client accountID is smaller than the number indicated by "target"
+	else if (target > subtree->data->getClientID()) {	// traverse the right side of the parent node if the node's client clientID is smaller than the number indicated by "target"
 		return retrieve(subtree->right, target);	
 	}
-	else if (target < subtree->data->getAccountNumber()) { // traverse the left side of the parent node if the node's client accountID is bigger than the number indicated by "target"
+	else if (target < subtree->data->getClientID()) { // traverse the left side of the parent node if the node's client clientID is bigger than the number indicated by "target"
 		return retrieve(subtree->left, target);
 	}
 }
@@ -218,24 +218,24 @@ Client* BST::retrieve(BST::Node* subtree, int target) const {
 // Displays the left child then the parent node then the right child - starting with the root node
 
 // Pre-condition: The object for the BST needs to be made
-// Post-condition: Returns the data of the nodes (the client accountID)
+// Post-condition: Returns the data of the nodes (the client clientID)
 void BST::inorderWalk() {
 	cout << inorderWalk(root);	// call the facade down below
 }
 
-// Uses a stringstream to store all of the data of the nodes (the client accountID) as it does an inorder walk though the tree
+// Uses a stringstream to store all of the data of the nodes (the client clientID) as it does an inorder walk though the tree
 // The facade uses recursion to walk through the tree
 // Does an in-order walk through the tree
 
 // Pre-condition: Takes in a pointer to the root node (the top client in the tree)
-// Post-condition: Returns a string containting the accountID of all the clients displaying the left child node then the parent node then the right child node
+// Post-condition: Returns a string containting the clientID of all the clients displaying the left child node then the parent node then the right child node
 string BST::inorderWalk(BST::Node* subtree) {
 	string retVal = "";
 	stringstream ss;
 	if (subtree != nullptr) {
 		ss << inorderWalk(subtree->left);	// traverse through left side of tree
 		// the client pointer contained by the node in the tree is dereferenced 
-		// and the stringstream intakes the accountID of the client
+		// and the stringstream intakes the clientID of the client
 		ss << *subtree->data << endl;	
 		ss << inorderWalk(subtree->right);	// traverse through right side of tree
 	}
