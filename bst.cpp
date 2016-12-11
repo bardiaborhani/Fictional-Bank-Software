@@ -189,7 +189,9 @@ bool BST::search(BST::Node* subtree, int target) const {
 // Pre-condition: Passes in an int target that represents the clientID of a client (data of one of the nodes)
 // Post-condition: returns a reference to the data of the node that matches the value of the int target
 Client* BST::retrieve(int target) const {
-	return retrieve(root, target);
+	Client* client = retrieve(root, target);
+	if (client == nullptr && target != 0) cerr << "/////////// ERROR: Unable to find the specified client with the ID of: " << target << "   ///////////" << endl << endl;
+	return client;
 }
 
 // The function traverses the tree and finds the client node that has the clientID that matches the number held by "int target"
@@ -200,8 +202,8 @@ Client* BST::retrieve(int target) const {
 // Post-condition: A reference to the client that contains the clientID matching the int target is returned
 Client* BST::retrieve(BST::Node* subtree, int target) const {
 
-	if (subtree == nullptr) {	// if the client is not found..
-		return nullptr;	// then return nullptr indicating the client was not found
+	if (subtree == nullptr) {	// if we find an empty leaf
+		return nullptr;	// then return nullptr
 	}
 	else if (subtree->data->getClientID() == target) {	// if we found the node that contains the client whose clientID matches that int specfied by the parameter...
 		return subtree->data;	//.. then we need to return a pointer to that client (we are "retriving" the client)
