@@ -38,9 +38,26 @@ Pre-condition:
 Post-condition:
 */
 ostream& operator<<(ostream& stream, const Client& client) {
+
+	//create a stringstream
 	stringstream ss;
-	ss << "CLIENT NAME: " << client.firstName << " " << client.lastName << " " << "CLIENT ID: " << client.accountID << " ACCOUNTS:";
+
+	//stream the client name and ID
+	ss << "CLIENT NAME: " << client.firstName << " " << client.lastName << " " << "CLIENT ID: " << client.accountID;
+
+
+	//stream all the accounts' starting balances
+	ss << endl << "STARTING ACCOUNTS:" << endl;
+	for (int i = 0; i < 10; i++) ss << " " << client.startingAccounts[i].getAccountBalance();
+	
+	//stream all the accounts' ending balances
+	ss << endl << "ENDING ACCOUNTS:" << endl;
 	for (int i = 0; i < 10; i++) ss << " " << client.accounts[i].getAccountBalance();
+
+	ss << endl;
+
+	//stream the string representation of the ss stringstream to the passed ostream and return the
+	//ostream to the calling function for further use.
 	stream << ss.str();
 	return stream;
 }
@@ -67,10 +84,21 @@ bool Client::setData(const string last, ifstream& inFile) {
 
 	inFile >> firstName >> accountID;
 	for (int i = 0; i<10; i++) {
+
 		inFile >> accountBalance;
-		if (accountBalance < 0) success = false;	// if the balance of an account is read as below 0 then there is something wrong about the client data file - should never be below 0 - an account does start below 0
+
+		//if the balance of an account is read as below 0 then there is something wrong about the client data file.
+		//accounts should never be below 0
+		if (accountBalance < 0) success = false;
+
 		accounts[i].setAccountBalance(accountBalance); // Set the balance of this type of account by passing in the amount that is written in the client data file
 		accounts[i].setAccountID(i);	// number 0-9 representing the client's type of account- ex. 0 = Money Market account
+	}
+
+	//if we successfully created all 10 accounts, then copy those values into the starting
+	//accounts array to keep track of the starting values of all the accounts - used when printing this Client.
+	if (success) {
+		startingAccounts = accounts;
 	}
 
 	return accountID >= 0 && success;

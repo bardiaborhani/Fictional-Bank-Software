@@ -48,6 +48,7 @@ private:
 	int overallBalance = 0;
 
 	queue<string> transactionHistory;
+	array<Account, 10> startingAccounts;
 	array<Account, 10> accounts;
 
 	Account indexFund = Account("500 Index Fund", false, false);
