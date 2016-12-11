@@ -50,7 +50,7 @@ public:
 	string getAccountName(int ID) const;
 
 	// returns the client's overall balance
-	int getOverallBalance() const;
+	//int getOverallBalance() const;
 
 	//the information from the parameters is inputted into the variables in the client object
 	//the client's last name is set to the value of the first parameter
@@ -74,7 +74,7 @@ private:
 	string lastName = "undeclared"; //  contains the client's last name
 
 	int accountID = 0; // contains a unique 4-digit account number that belongs to the client - used to look up the client in the bank
-	int overallBalance = 0;	// the balance of all of the client's accounts
+	//int overallBalance = 0;	// the balance of all of the client's accounts
 
 	queue<string> transactionHistory;	// keeps track of all the transactions the client has completed
 	array<Account, 10> accounts;	// holds all ten of the client's accounts
@@ -112,7 +112,7 @@ private:
 	void setAccountNumber(int input);
 	
 	//Assigns the private data member "overallBalance" to the value of the int parameter passed through  
-	void setOverallBalance(int input);
+	//void setOverallBalance(int input);
 };
 
 #endif //CLIENT_H
