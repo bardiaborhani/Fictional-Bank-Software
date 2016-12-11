@@ -68,7 +68,7 @@ int main() {
 	//create an ifstream and open the data text file to read into
 	//the BankManager object.
 	ifstream clientFile;
-	clientFile.open("testdata2.txt");
+	clientFile.open("hw5data.txt");
 
 	//passes the client data file to bankManger
 	//to construct the BST
@@ -77,7 +77,7 @@ int main() {
 	//create an ifstream and open the commands text file to read into
 	//the BankManager object.
 	ifstream transactionFile;
-	transactionFile.open("testcommand2.txt");
+	transactionFile.open("hw5command.txt");
 
 	//passes the transaction data file stream
 	//to the bankManager to carry out transactions
