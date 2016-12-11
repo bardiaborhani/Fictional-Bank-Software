@@ -1,15 +1,4 @@
-/*------------------------------------------------------------------------------------------------
-
-The BankManager class is a high level class that manages the interactions between
-Binary Search Tree of Clients and a queue of Transactions. This class will also log
-the Transactions that have been completed so that they can be undone if necessary.
-Note that this class manages interactions, and relies on the BinarySearchTree, Client,
-and Transaction classes to throw any errors pertaining to the suitability of data.
-
-------------------------------------------------------------------------------------------------*/
-
-
-#include "bankmanager.h"
+#include "bankmanager.h" 
 
 using namespace std;
 
@@ -39,7 +28,7 @@ POSTCONDITIONS:
 void BankManager::readClients(ifstream& inFile) {
 	bool success = clients.buildTree(inFile);  // calls the buildTree function in the BST class in bst.h
 
-	if (!success) exit(-1);
+	if (!success) exit(-1);	// if the client had an account whose balance was less than 0 then there was something wrong with the client data- end program
 }
 
 
@@ -61,10 +50,16 @@ POSTCONDITIONS:
 
 void BankManager::readTransactions(ifstream& inFile) {
 
-	bool success = pending.buildQueue(inFile);
+	// transactions are read from the file stream that reads the transaction (command) data file
+	// True is returned if the commands were properly formatted and read
+	// false is returned if commands were not properly formatted - if there was something wrong with the command
+	// For example, if would return a false if the command, that is being read, did not state account number of the client 
+	bool success = pending.buildQueue(inFile);	
 
-	if (!success) exit(-1);
+	if (!success) exit(-1); // if the command was not read properly then exit the program
 
+	// the transactions were properly read and the bankmanager object now has a BankQueue filled with Transactions that are pending
+	// the transact function is called to complete all the Transactions in the transaction queue ("pending")
 	transact();
 }
 
@@ -86,12 +81,16 @@ Flow of Program:
 NOTE:
 - this class is not responsible for handling errors pertaining to Transactions
 
+PRECONDITION: The transactinos were read from the command data file
+
+POSTCONDITION: The transactions were read and action was taken according to what was stated by the command
+
 ------------------------------------------------------------------------------------------------*/
 
 void BankManager::transact(void) {
-
+	// All the transactions in the pending BankQueue are read (all the commands that were stated in the command data file)
 	while (!pending.isEmpty()) {
-		Transaction transaction = pending.top();
+		Transaction transaction = pending.top();	// completes the transactions one by one in order that they were read from the command data file
 
 		//get all necessary information from the transaction
 		//class so we can do our job
@@ -102,7 +101,7 @@ void BankManager::transact(void) {
 		//find the clients involved in the operation, give them to the transaction
 		//so it can do its job
 		success = clients.retrieve(client1);
-		if (success && transaction.getTransactionType() == 'M') {
+		if (success && transaction.getTransactionType() == 'M') {	// If the command is a Move command then it requires information about two accounts
 			success = clients.retrieve(client2);
 		}
 
@@ -128,31 +127,43 @@ void BankManager::transact(void) {
 This function will print all Clients with beginning and ending account balances of each of
 the Client's accounts. Clients will be printed in order by accountID.
 
+PRECONDITION: The object has to already be made
+
+POSTCONDITION: The clients are displayed in the console
+
 ------------------------------------------------------------------------------------------------*/
 
 void BankManager::displayClients(void) {
-	clients.inorderWalk();
+	clients.inorderWalk();	// the inorderWalk function in the BST class is called
 }
 
 /*------------------------------------------------------------------------------------------------
 
 This function will print out all of the Transactions that have been completed.
+A stack is created to be used to bring the transaction objects out of the completed stack to be displayed one by one
+After they are displayed, the transaction are put back into the completed stack so the completed stack is the same as it was before this
+function was called
+PRECONDITION: Object has to already be made
+
+POSTCONDITION: The transactions are displayed in the console
 
 ------------------------------------------------------------------------------------------------*/
 
 void BankManager::displayTransactions(void) {
 	cout << "Displayed by most recent:" << endl;
 
-	stack<Transaction> stack;
+	// stack created to be used to bring the transaction objects out of the completed stack to be displayed one by one
+	// after they are displayed, the transaction are put back into the completed stack
+	stack<Transaction> displayStack;	
 	while (!completed.empty()) {
-		Transaction store = completed.top();
-		cout << store << endl;
-		stack.push(store);
-		completed.pop();
-	}
-	while (!stack.empty()) {
-		completed.push(stack.top());
-		stack.pop();
+		Transaction store = completed.top();	// looks at the most recently completed transaction
+		cout << store << endl;	// that transaction is outputted to the console
+		displayStack.push(store); // the new stack now inserts the transaction that was just displayed	
+		completed.pop(); // the transaction is popped off so the next transaction can be seen in the completed stack
+	} 
+	while (!displayStack.empty()) {	// now the transactions are put back into the "completed" stack
+		completed.push(displayStack.top());
+		displayStack.pop();	// the transaction is popped off so the next transaction can be seen in the stack used to display the transactions
 	}
 	cout << endl;
 }

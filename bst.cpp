@@ -120,7 +120,7 @@ int BST::size(BST::Node* subtree) {
 void BST::insert(Client* client) {
 	root = insert(client, root);	// the facade returns a pointer to a node representing the root of the tree
 };
-
+ 
 // The insert function facade passes in a pointer to a clident object and the root of the tree
 // The function uses recursion to traverse through the tree and insert the client pointer into the tree
 // Once the leaf of the binary search tree is reached, a new node is created as a child to that leaf node and it contains the data of the client pointer
@@ -200,16 +200,16 @@ Client* BST::retrieve(int target) const {
 // Post-condition: A reference to the client that contains the accountID matching the int target is returned
 Client* BST::retrieve(BST::Node* subtree, int target) const {
 
-	if (subtree == nullptr) {
-		return nullptr;
+	if (subtree == nullptr) {	// if the client is not found..
+		return nullptr;	// then return nullptr indicating the client was not found
 	}
-	else if (subtree->data->getAccountNumber() == target) {
-		return subtree->data;
+	else if (subtree->data->getAccountNumber() == target) {	// if we found the node that contains the client whose accountID matches that int specfied by the parameter...
+		return subtree->data;	//.. then we need to return a pointer to that client (we are "retriving" the client)
 	}
-	else if (target > subtree->data->getAccountNumber()) {
-		return retrieve(subtree->right, target);
+	else if (target > subtree->data->getAccountNumber()) {	// traverse the right side of the parent node if the node's client accountID is smaller than the number indicated by "target"
+		return retrieve(subtree->right, target);	
 	}
-	else if (target < subtree->data->getAccountNumber()) {
+	else if (target < subtree->data->getAccountNumber()) { // traverse the left side of the parent node if the node's client accountID is bigger than the number indicated by "target"
 		return retrieve(subtree->left, target);
 	}
 }
@@ -220,11 +220,12 @@ Client* BST::retrieve(BST::Node* subtree, int target) const {
 // Pre-condition: The object for the BST needs to be made
 // Post-condition: Returns the data of the nodes (the client accountID)
 void BST::inorderWalk() {
-	cout << inorderWalk(root);
+	cout << inorderWalk(root);	// call the facade down below
 }
 
 // Uses a stringstream to store all of the data of the nodes (the client accountID) as it does an inorder walk though the tree
 // The facade uses recursion to walk through the tree
+// Does an in-order walk through the tree
 
 // Pre-condition: Takes in a pointer to the root node (the top client in the tree)
 // Post-condition: Returns a string containting the accountID of all the clients displaying the left child node then the parent node then the right child node
@@ -232,9 +233,11 @@ string BST::inorderWalk(BST::Node* subtree) {
 	string retVal = "";
 	stringstream ss;
 	if (subtree != nullptr) {
-		ss << inorderWalk(subtree->left);
-		ss << *subtree->data << endl;
-		ss << inorderWalk(subtree->right);
+		ss << inorderWalk(subtree->left);	// traverse through left side of tree
+		// the client pointer contained by the node in the tree is dereferenced 
+		// and the stringstream intakes the accountID of the client
+		ss << *subtree->data << endl;	
+		ss << inorderWalk(subtree->right);	// traverse through right side of tree
 	}
 	return ss.str();
 }
@@ -247,13 +250,13 @@ string BST::inorderWalk(BST::Node* subtree) {
 // Pre-condition: File stream is passed through parameter that reads the text file that contains information about clients and their information
 // Post-condition: bool is returned indicating if the tree was successfully built or not
 bool BST::buildTree(ifstream& inFile) {   // creates the tree using the txt file that contains all of the clients and their information
-	Client* tempClient;
+	Client* tempClient;	// decalre a pointer to a new Client but do not initialize yet
 
 	string store;
 
-	if (inFile.is_open()) {
-		while (inFile >> store) {
-			tempClient = new Client;
+	if (inFile.is_open()) {	// check if the file that the ifstream is reading is opened
+		while (inFile >> store) { // store the last name of the client into the variable store - later passed onto the Client's setData function
+			tempClient = new Client;	// allocate memory for a new client
 			if (tempClient->setData(store, inFile)) {  //if we successfully create a Client, i.e. there was no bad data
 				insert(tempClient); //insert the Client, whom we are assured is composed of good data
 			}
@@ -265,8 +268,10 @@ bool BST::buildTree(ifstream& inFile) {   // creates the tree using the txt file
 		}
 	}
 	else {
+		// end the program if the file that is meant to be read cannot be opened
+		// If the file can't be opened then we cannot make new clients
 		cerr << "unable to open the clients file" << endl;
-		exit(-1);
+		exit(-1);	
 	}
 
 	return true;
