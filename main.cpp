@@ -1,5 +1,13 @@
 /*------------------------------------------------------------------------------------------------------
 
+Program created by:
+Kevin Ulrich
+Bardia Borhani
+
+PURPOSE: Write software to handle transactinos for a local financial firm called Lots of Savings Earned (LOSE)
+LOST wishes to be able to display the contents of the firm at any time and allow clients to perfom transactinos on their various accounts
+ASSUMPTION: It is assumed that the format (number and types of input items) is correct for the data file containing the commands
+
 Main for Homework 5. Creates new BankManager object and passes two file streams to this object.
 Then displays the clients built by the BankManager as well as the transactions that have been
 completed.
