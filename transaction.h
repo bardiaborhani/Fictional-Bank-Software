@@ -30,7 +30,7 @@ class Transaction {
 private:
 
 
-	string description; // Decription of the transaction //todo: remove this, we print instead of storing an english translation
+	string description; // Decription of the transaction
 
 	char transactionType; // Char representing the type of transaction
 
