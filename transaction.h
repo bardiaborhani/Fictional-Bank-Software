@@ -52,7 +52,7 @@ public:
 
 	Transaction();
 
-	bool setData(string transaction); // Sets the transaction data from reading a filestream
+	bool setData(const string type, ifstream& inFile); // Sets the transaction data from reading a filestream
 
 	char getTransactionType() const; //retrieve the type of transaction that this is
 

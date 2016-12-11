@@ -22,7 +22,7 @@ ASSUMPTIONS:
 		* lastName firstName account1 account2 account3 account4 account5 account6 account7 account8 account9 account10
 
 		where all 10 accounts are accounted for, are integers and no chars occur after the client's first name and last name.
-		The accounts should be in correct order as specified in the design document (i.e. account1 is Money Market, account2
+		The accounts should be inli correct order as specified in the design document (i.e. account1 is Money Market, account2
 		is Prime Money Market, etc). All data for a single client should be one one line of the text file.
 
 	For command files, the transactions should be formatted in one of the four ways:
@@ -79,12 +79,6 @@ int main() {
 	//passes the transaction data file stream
 	//to the bankManager to carry out transactions
 	bankManager.readTransactions(transactionFile);
-
-	//prints out the output of the displayClients method in our BankManager object.
-	//this prints all the clients that have been stored in the BankManager, which
-	//were read in when we called readClients.
-	cout << "Clients:" << endl << endl;
-	bankManager.displayClients();
 
 	cout << endl;
 

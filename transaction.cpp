@@ -67,70 +67,41 @@ Pre-condition: the passed string transaction contains the data that we want to i
 Post-condition: all data member fields that pertain to the transactionType, as well as the transactionType char
 				itself, have been set.
 */
-bool Transaction::setData(string transaction) { // Sets the transaction data from reading a filestream
+bool Transaction::setData(const string type, ifstream& inFile) { // Sets the transaction data from reading a filestream
 
 	//get the first char of the transaction
-	transactionType = toupper(transaction[0]);
+	transactionType = toupper(type[0]);
 
-	istringstream iss(transaction);
-	parsedTransaction = { istream_iterator<string>{iss}, istream_iterator<string>{} };
+	string store;
 
-	//we must have at least a transaction type and a first client,
-	//otherwise there's nothing to do and we categorize this as 'bad data'
-	if (parsedTransaction.size() > 1) {
-
-		//this is always a given to exist, so it is independent of the cases.
-		//we do check for the correct size of the array and make sure that
-		//the Client ID + Account ID is not negative.
-		if (parsedTransaction[1].size() == 5 && stoi(parsedTransaction[1]) >= 0) {
-			firstClientID = stoi(parsedTransaction[1].substr(0, 4));
-			firstAccountID = (parsedTransaction[1][4] - '0');
-		}
-		else return false;
-
-
-		switch (parsedTransaction[0][0]) {
-		case 'D':
-
-			//continue on to W, they're the same
-
-		case 'W':
-
-			//we don't allow negative amounts to be deposited or withdrawn, cause
-			//then customers might scam our bank. that would be bad
-			if (stoi(parsedTransaction[2]) >= 0) {
-				amount = abs(stoi(parsedTransaction[2]));
-			}
-			else return false;
-
-			break;
-
-		case 'M':
-
-			//as stated in case 'W'
-			if (stoi(parsedTransaction[2]) >= 0) {
-				amount = abs(stoi(parsedTransaction[2]));
-			}
-			else return false;
-
-			//check for the correct size of the array and make sure that
-			//the Client ID + Account ID is not negative.
-			if (parsedTransaction[3].size() == 5 && stoi(parsedTransaction[3]) >= 0) {
-				secondClientID = abs(stoi(parsedTransaction[3].substr(0, 4)));
-				secondAccountID = abs((parsedTransaction[3][4] - '0'));
-			}
-			else return false;
-
-			break;
-
-		}
-
-		return true;
-
+	if (transactionType == 'H'){
+		
+		//if we just need to display the history of a client,
+		//then all we need to read in is the the client's ID
+		inFile >> firstClientID;
 	}
 	else {
-		return false;
+
+		//read in the first client
+		inFile >> store;
+		firstClientID = stoi(store.substr(0, store.size() - 1));
+		firstAccountID = store[store.size() - 1] - '0';
+
+		//read in the amount
+		inFile >> amount;
 	}
+
+	if (transactionType == 'M'){
+
+		//if our operation is to move money, we need a second client
+		inFile >> store;
+		secondClientID = stoi(store.substr(0, store.size() - 1));
+		secondAccountID = store[store.size() - 1] - '0';
+
+	}
+
+	return firstClientID < 10000 && firstClientID >= 0 && secondClientID < 10000 && 
+		secondClientID >= 0 && amount < 2147483648 && amount >= 0;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -417,26 +388,26 @@ ostream & operator<<(ostream & stream, const Transaction& transaction)
 		// Prints out a sentence that describes how much money was deposited
 		// into a client's account - specifying the account name
 		stream << "Deposited $" << transaction.amount << " into " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
-			<< "'s " << transaction.firstClient->getAccountName(transaction.firstAccountID) << " account.";
+			<< "'s " << transaction.firstClient->getAccountName(transaction.firstAccountID) << " account";
 		break;
 	case 'W':
 		// Prints out a sentence that describes how much money was successfully
 		// subtracted from the balance of an account (withdrawen)
 		// also specifying the accouunt name
 		stream << "Withdrew $" << transaction.amount << " from " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
-			<< "'s " << transaction.firstClient->getAccountName(transaction.firstAccountID) << " account.";
+			<< "'s " << transaction.firstClient->getAccountName(transaction.firstAccountID) << " account";
 		break;
 	case 'M':
 		// Prints out a sentence that describes how much money was successfully 
 		// moved from one account to another specifying both accounts
 		stream << "Moved $" << transaction.amount << " from " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
 			<< "'s " << transaction.firstClient->getAccountName(transaction.firstAccountID) << " account and placed it in " << transaction.secondClient->getFirstName() << " "
-			<< transaction.secondClient->getLastName() << "'s " << transaction.secondClient->getAccountName(transaction.secondAccountID) << " account.";
+			<< transaction.secondClient->getLastName() << "'s " << transaction.secondClient->getAccountName(transaction.secondAccountID) << " account";
 		break;
 	case 'H':
 		// Prints out a sentence that describes that the client's transaction history was displayed
 		// indicating the client by first and last name
-		stream << "Displayed " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName() << "'s transaction history.";
+		stream << "Displayed " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName() << "'s transaction history";
 		break;
 	default:
 		break;

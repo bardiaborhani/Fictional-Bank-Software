@@ -218,7 +218,7 @@ void Client::displayHistory(const string transaction) {
 	// then pop off the transaction to reveal the next transaction
 	// this is done until all the transactions are outputted and the copy queue is empty
 	while (!copy.empty()) {
-		cout << copy.front() << endl;
+		cout << copy.front() << "." << endl;
 		copy.pop();
 	}
 	 
@@ -287,19 +287,6 @@ string Client::getAccountName(int ID) const
 {
 	return accounts[ID].getAccountType();
 }
-
-//--------------------------------------------------------------------------------------------
-/*
-returns the overallBalance of all the client's accounts
-
-Pre-condition: none
-Post-condition: returns an int with the value of the client's overallBalance
-*/
-/*
-int Client::getOverallBalance() const {
-	return overallBalance;
-}
-*/
 
 //--------------------------------------------------------------------------------------------
 /*

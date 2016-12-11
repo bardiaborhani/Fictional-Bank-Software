@@ -116,11 +116,11 @@ bool BankQueue::buildQueue(ifstream& inFile)
 	string store;
 
 	if (inFile.is_open()) { //make sure the file is open
- 		while (getline(inFile, store)) { //getline() from STL reads characters from an input stream and places them into a the store 
+ 		while (inFile >> store) { //getline() from STL reads characters from an input stream and places them into a the store 
 			newTransaction = new Transaction();	// a new Transaction object is made
 			// the command that is stored by "store" is passed through to the setData function in the Transaction class
 			// the function reads the string store and sets information about the command in the newly created transaction object
-			if (newTransaction->setData(store)) {	
+			if (newTransaction->setData(store, inFile)) {	
 				push(newTransaction);	// if the data was properly read and set into the new transaction object, then push the object into the BankQueue
 			}
 
