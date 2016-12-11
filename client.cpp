@@ -108,7 +108,7 @@ bool Client::setData(const string last, ifstream& inFile) {
 
 //--------------------------------------------------------------------------------------------
 /*
-This function deposists money intoone of the client's accounts
+This function deposists money into one of the client's accounts
 In addition, the transaction description is added to the client's transactionHistory queue
 Pre-condition: Three parameters are passed into the function. The first is an int representing the clients accountID
 the second int represents the amount that must be despoited intothe accountID
