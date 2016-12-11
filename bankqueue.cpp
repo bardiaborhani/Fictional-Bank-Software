@@ -125,9 +125,14 @@ bool BankQueue::buildQueue(ifstream& inFile)
  		while (inFile >> store) { //getline() from STL reads characters from an input stream and places them into a the store 
 
 			if (store.length() != 1) {
+				
+				// print out an message stating that the transaction type was not correct
 				cout << "/////////////////////" << endl << "ERROR: misformatted transaction data:" << endl << endl 
 					<< "\"" << store << " is not a correct type of transaction" <<  "\"" <<
 					endl << endl << "please try again with correct data" << endl << "/////////////////////" << endl << endl;
+
+				// skips the inFile stream to look at the next line in the command data file
+				inFile.ignore(1000, '\n');
 
 				if (inFile.eof()) {
 					break; //if we reach the eof finish the while
