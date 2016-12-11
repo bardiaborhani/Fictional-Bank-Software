@@ -5,6 +5,7 @@
 
 /*****************************
 Destructor. Calls makeEmpty()
+
 Pre-condition: The object needs to have already been made
 Post-condition: the BankQueue object now holds no Nodes and Transactions
 *****************************/
@@ -18,6 +19,7 @@ Adds a Transaction to the queue. Adds
 all new nodes to the end of the list.
 New node is created for every transaction that is pushed
 The function iterates though to the end of the bankQueue - looks at the last node and creates a new node to place after the last node
+
 Pre-condition: Intakes a pointer to a Transaction object through the parameter which is pushed into the BankQueue
 Post-condition: A new node is created at the end of the BankQueue containing a pointer to the lastest transaction read
 *********************************************/
@@ -42,6 +44,7 @@ void BankQueue::push(Transaction* toAdd)
 /**************************************************
 Removes a Transaction from the list. Preforms this in a
 first in, first out manner.
+
 Pre-condition: The object has to have already been made
 Post-condition: the last node is deleted
 **************************************************/
@@ -57,6 +60,7 @@ void BankQueue::pop()
 
 /*
 The top function returns the Transaction that is held by the Transaction pointer in the first node in the BankQueue
+
 Pre-condition: The object has to have already been made
 Post-condition:	returns the transaction that is first in the BankQueue
 */
@@ -88,6 +92,7 @@ void BankQueue::makeEmpty(void)
 
 /**********************************
 Returns true if our list is empty
+
 Precondition: the object has to have already been made
 Post-condition: returns a bool indicating whethere or not the bankQueue is empty - true if it is empty and false if it is not empty
 ***********************************/
@@ -101,6 +106,7 @@ bool BankQueue::isEmpty(void) const
 /************************************************************************
 Preconditions: Assumes that the filestream data is properly
 formatted.
+
 Note: It is the responsibility of the Transaction to properly handle
 the filestream.
 Takes in a filestream as a parameter. Creates a new Transaction type.
@@ -117,7 +123,9 @@ bool BankQueue::buildQueue(ifstream& inFile)
 
 	if (inFile.is_open()) { //make sure the file is open
  		while (inFile >> store) { //getline() from STL reads characters from an input stream and places them into a the store 
+
 			newTransaction = new Transaction();	// a new Transaction object is made
+
 			// the command that is stored by "store" is passed through to the setData function in the Transaction class
 			// the function reads the string store and sets information about the command in the newly created transaction object
 			if (newTransaction->setData(store, inFile)) {	
@@ -130,7 +138,9 @@ bool BankQueue::buildQueue(ifstream& inFile)
 		}
 	}
 	else {
-		cerr << "unable to open the transactions file" << endl;	// If unable to open the transaction to read the commands then we cannot read any commands
+
+		// If unable to open the transaction to read the commands then we cannot read any commands
+		cerr << "/////// ERROR: unable to open the transactions file    ///////" << endl;
 		exit(-1);	// so there is nothing to do but to exit the program
 	}
 

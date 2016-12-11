@@ -100,8 +100,15 @@ bool Transaction::setData(const string type, ifstream& inFile) { // Sets the tra
 
 	}
 
-	return firstClientID < 10000 && firstClientID >= 0 && secondClientID < 10000 && 
+	bool success = firstClientID < 10000 && firstClientID >= 0 && secondClientID < 10000 &&
 		secondClientID >= 0 && amount < 2147483648 && amount >= 0;
+
+	if (!success) cerr << "/////////////////////" << endl << "ERROR: misformatted transaction data:" << endl  << endl
+		 << "\"" << transactionType << " " << firstClientID << " " << firstAccountID << " " <<
+		amount << " " << secondClientID << " " << secondAccountID << "\"" <<
+		endl << endl << "please try again with correct data" << endl << "/////////////////////" << endl << endl;
+
+	return success;
 }
 
 //--------------------------------------------------------------------------------------------

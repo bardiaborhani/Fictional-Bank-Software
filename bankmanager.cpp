@@ -124,8 +124,10 @@ void BankManager::transact(void) {
 				completed.push(transaction);
 			}
 			else {
-				cerr << "/////////// ERROR: The transaction: \"" << transaction.getDescription() <<  "\"" << endl 
-					<< "was not able to be completed due to insufficient funds   ///////////" << endl << endl;
+				cerr << "/////////////////////" << endl << "ERROR: The transaction:"  
+					<< endl << "\"" << transaction.getDescription() <<  "\"" << endl
+					<< "was not able to be completed due to insufficient funds" 
+					<< endl << "//////////////////" << endl << endl;
 			}
 		}
 	}
