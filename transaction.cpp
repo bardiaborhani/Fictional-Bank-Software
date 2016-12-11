@@ -28,13 +28,12 @@ Transaction::Transaction()
 {
 	description = "";
 
-	transactionType = 'N';
+	transactionType = 'N';	// N is not a real transaction type - it is just here to be initialized before reassigned
 
+	// Setting all of these variables to NULL so that they do not contain another value until they are reassigned
 	amount = NULL;
-
 	firstClientID = NULL;
 	firstAccountID = NULL;
-
 	secondClientID = NULL;
 	secondAccountID = NULL;
 }
@@ -165,20 +164,23 @@ bool Transaction::transact()
 		description = ss.str();
 	}
 	else {
+		// if the client has not been read properly in the command data file - cannot identify which client to work on
 		description = "clients not loaded into transaction properly";
 	}
 
 	switch (transactionType) { //perform the appropriate action based on the char
-	case 'D':
+	case 'D':	// if the transaction type indicates that we need to do a deposit
+		return depositOrWithdraw(); // call the depositOrWithdraw function to deposit money
+	case 'W': // if the transaction type indicates that we need to do a withdrawal
 		return depositOrWithdraw();
-	case 'W':
-		return depositOrWithdraw();
-	case 'M':
+	case 'M': // if the transaction type indicates that we need to do a move money from one account to another
 		return move();
-	case 'H':
+	case 'H':	// if the transaction type indicates that we need to do display the history of a client
 		history();
 		return true;
 	default:
+		// An error is printed if the transaction type is not one of the above - command cannot be completed if transaction
+		// type doesnt represent any action
 		cerr << "/////////// ERROR: The transaction type '" << transactionType << "' was not recognized   ///////////" << endl << endl;
 		return false;
 	}
@@ -243,6 +245,8 @@ bool Transaction::move() {
 	bool success = false;
 
 	if (firstClient != nullptr) {
+		// in order to move money, money from one account must be withdrawed
+		// and then deposited into the account the money needs to move intop
 		success = firstClient->withdraw(firstAccountID, amount, description);
 		if (success) secondClient->deposit(secondAccountID, amount, description);
 	}
@@ -265,7 +269,11 @@ Post-condition: the history of the firstClient has been printed out via the disp
 */
 void Transaction::history() {
 	if (firstClient != nullptr) {
-		firstClient->displayHistory(description);
+		// displays the clients transaction history
+		// by calling the displayHistory function in the client class
+		// the functino displays the client's first and last name then prints all the 
+		// transactions that were succesfully completed by the client
+		firstClient->displayHistory(description);	
 		cout << endl;
 	}
 }
@@ -406,19 +414,28 @@ ostream & operator<<(ostream & stream, const Transaction& transaction)
 {
 	switch (transaction.transactionType) {
 	case 'D':
+		// Prints out a sentence that describes how much money was deposited
+		// into a client's account - specifying the account name
 		stream << "Deposited $" << transaction.amount << " into " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
 			<< "'s " << transaction.firstClient->getAccountName(transaction.firstAccountID) << " account.";
 		break;
 	case 'W':
+		// Prints out a sentence that describes how much money was successfully
+		// subtracted from the balance of an account (withdrawen)
+		// also specifying the accouunt name
 		stream << "Withdrew $" << transaction.amount << " from " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
 			<< "'s " << transaction.firstClient->getAccountName(transaction.firstAccountID) << " account.";
 		break;
 	case 'M':
+		// Prints out a sentence that describes how much money was successfully 
+		// moved from one account to another specifying both accounts
 		stream << "Moved $" << transaction.amount << " from " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
 			<< "'s " << transaction.firstClient->getAccountName(transaction.firstAccountID) << " account and placed it in " << transaction.secondClient->getFirstName() << " "
 			<< transaction.secondClient->getLastName() << "'s " << transaction.secondClient->getAccountName(transaction.secondAccountID) << " account.";
 		break;
 	case 'H':
+		// Prints out a sentence that describes that the client's transaction history was displayed
+		// indicating the client by first and last name
 		stream << "Displayed " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName() << "'s transaction history.";
 		break;
 	default:
