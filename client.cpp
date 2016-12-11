@@ -157,13 +157,19 @@ bool Client::withdraw(const int accountID, const int amount, const string transa
 //--------------------------------------------------------------------------------------------
 /*
 The transactions completed by the client are displayed in order of when they were completed - the lastest transaction is displayed last
-Pre-condition:
-Post-condition:
+A copy of the transactionHistory is made so transactinos can be popped out of the copied queue and displayed without
+changing the original displayHistory queue
+Pre-condition: One parameter is passed into the function and it contains the command that was read from the command data file
+which told the program to display the client's history
+Post-condition: The transactions completed by the client are outputted onto the console
 */
 void Client::displayHistory(const string transaction) {
 
-	queue<string> copy = transactionHistory;
+	// a copy of the transactionHistory queue is made for the purpose of popping the transactions (string form) out of the queue 
+	// and displaying them one by one without changing the structure of the transactionHistory queue
+	queue<string> copy = transactionHistory;	
 
+	// we output the first name and last name of the client whose transaction history is sought to be displayed
 	cout << firstName << " " << lastName << "'s history:" << endl;
 
 	//if this client's history is empty to begin
@@ -172,37 +178,40 @@ void Client::displayHistory(const string transaction) {
 		cout << firstName << " " << lastName << " has no transaction history" << endl;
 	}
 
+	// one by one display the transactions in the copied transaction history queue
+	// then pop off the transaction to reveal the next transaction
+	// this is done until all the transactions are outputted and the copy queue is empty
 	while (!copy.empty()) {
 		cout << copy.front() << endl;
 		copy.pop();
 	}
-
+	 
 	// displaying the transaction itself is a transaction - so it is also pushed into the transa
 	transactionHistory.push(transaction);	
 }
 
 //--------------------------------------------------------------------------------------------
 /*
-
-
-
-Pre-condition:
-Post-condition:
+the toString() function returns this client's information
+by dereferencing this object
+Pre-condition: none
+Post-condition: returns a string that shows the client's information
 */
 string Client::toString()
 {
-	stringstream ss;
-	ss << *this;
+	stringstream ss;	// create a stringstream variable to contiain the client's info
+	ss << *this;	// dereferences the client and puts it into the string stream
 	return ss.str();
 }
 
 //--------------------------------------------------------------------------------------------
 /*
-
-
-
-Pre-condition:
-Post-condition:
+Compares two client objects' account numbers
+returns true if the object to the left of the > operator has an accountID that is a larger number
+than the accountID of the account object to the right of the operator - false if otherwise
+Pre-condition: Passes in the client that is compared to - the client object that is passed through is one
+placed to the right side of the operator
+Post-condition: Returns true if left object's accountID is larger than the right one's accountID
 */
 bool Client::operator>(const Client& toCompare) const {
 	return accountID > toCompare.getAccountNumber();
@@ -210,11 +219,12 @@ bool Client::operator>(const Client& toCompare) const {
 
 //--------------------------------------------------------------------------------------------
 /*
-
-
-
-Pre-condition:
-Post-condition:
+Compares two client objects' account numbers
+returns true if the object to the left of the < operator has an accountID that is a smaller number
+than the accountID of the account object to the right of the operator - false if otherwise
+Pre-condition: Passes in the client that is compared to - the client object that is passed through is one
+placed to the right side of the operator
+Post-condition: Returns true if left object's accountID is smaller than the right one's accountID
 */
 bool Client::operator<(const Client& toCompare) const {
 	return accountID < toCompare.getAccountNumber();
@@ -222,11 +232,11 @@ bool Client::operator<(const Client& toCompare) const {
 
 //--------------------------------------------------------------------------------------------
 /*
-
-
-
-Pre-condition:
-Post-condition:
+Compares two client objects to see if they have the same accountID
+if they have the same accountID then they are the same client
+Pre-condition: Passes in the client that is compared to - the client object that is passed through is one
+placed to the right side of the operator
+Post-condition: returns true if the clients have the same accountID
 */
 bool Client::operator==(const Client& toCompare) const {
 	return accountID == toCompare.getAccountNumber();
@@ -234,11 +244,9 @@ bool Client::operator==(const Client& toCompare) const {
 
 //--------------------------------------------------------------------------------------------
 /*
-
-
-
-Pre-condition:
-Post-condition:
+returns the last name of the client
+Pre-condition: none
+Post-condition: a string is returned containg the client's last name
 */
 string Client::getLastName() const {
 	return lastName;
@@ -246,11 +254,9 @@ string Client::getLastName() const {
 
 //--------------------------------------------------------------------------------------------
 /*
-
-
-
-Pre-condition:
-Post-condition:
+returns the first name of the client
+Pre-condition: none
+Post-condition: a string is returned containg the client's first name
 */
 string Client::getFirstName() const {
 	return firstName;
@@ -258,16 +264,22 @@ string Client::getFirstName() const {
 
 //--------------------------------------------------------------------------------------------
 /*
-
-
-
-Pre-condition:
-Post-condition:
+returns the accountID of the client
+Pre-condition: none 
+Post-condition: an int is returned containing the client's accountID
 */
 int Client::getAccountNumber() const {
 	return accountID;
 }
 
+//--------------------------------------------------------------------------------------------
+/*
+The function takes in a int parameter and uses that to find one of the client's account
+The number is used to look up an account using an index value
+returns the type of account that is looked at
+Pre-condition: the function takes in an int valued between 0-9 that is used to look up a account in the accounts array
+Post-condition: the type of account is returned
+*/
 string Client::getAccountName(int ID) const
 {
 	return accounts[ID].getAccountType();
@@ -275,11 +287,9 @@ string Client::getAccountName(int ID) const
 
 //--------------------------------------------------------------------------------------------
 /*
-
-
-
-Pre-condition:
-Post-condition:
+returns the overallBalance of all the client's accounts
+Pre-condition: none
+Post-condition: returns an int with the value of the client's overallBalance
 */
 int Client::getOverallBalance() const {
 	return overallBalance;
@@ -288,10 +298,8 @@ int Client::getOverallBalance() const {
 //--------------------------------------------------------------------------------------------
 /*
 Assigns the private data member "lastName" to the value of the string parameter passed through
-
-
-Pre-condition:
-Post-condition:
+Pre-condition: a string that is used to be assigned to the client's last name
+Post-condition: none
 */
 void Client::setLastName(string input) {
 	lastName = input;
@@ -299,31 +307,28 @@ void Client::setLastName(string input) {
 
 //--------------------------------------------------------------------------------------------
 /*Assigns the private data member "firstName" to the value of the string parameter passed through 
-
-
-Pre-condition:
-Post-condition:
+Pre-condition: a string that is used to be assigned to the client's first name
+Post-condition: none
 */
 void Client::setFirstName(string input) {
 	firstName = input;
 }
 
 //--------------------------------------------------------------------------------------------
-/* Assigns the private data member "accountID" to the value of the int parameter passed through
-
-
-Pre-condition:
-Post-condition:
+/* 
+Assigns the private data member "accountID" to the value of the int parameter passed through
+Pre-condition: a int that is used to be assigned to the client's accountID
+Post-condition: none
 */
 void Client::setAccountNumber(int input) {
 	accountID = input;
 }
 
 //--------------------------------------------------------------------------------------------
-/* Assigns the private data member "overallBalance" to the value of the int parameter passed through 
-
-Pre-condition:
-Post-condition:
+/* 
+Assigns the private data member "overallBalance" to the value of the int parameter passed through 
+Pre-condition: a int that is used to be assigned to the client's overallBalance
+Post-condition: none
 */
 void Client::setOverallBalance(int input) {
 	overallBalance = input;
