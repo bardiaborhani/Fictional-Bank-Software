@@ -14,7 +14,7 @@ PURPOSE:
 
 ASSUMPTIONS: 
 
-	It is assumed that all data text files are formatted correctly. All text files, if this program is being run
+	It is assumed that all data text files are formatted correctly - all data files will be provided. All text files, if this program is being run
 	on the Windows OS, must contain a line after the data for EOF purposes.
 
 	For data files, the clients should be formatted as follows: 
@@ -39,6 +39,9 @@ ASSUMPTIONS:
 
 	any ints used in the data files must not exceed 2147483647, which is the max of an integer. over this amount, erroneous behaviour
 	will occur.
+
+	A clientID can be 1-4 digits long - no more than 4 digits long
+	Message for correctly outputted transactions are not outputted - only error messages for incorrect transactions are displayed
 
 DESCRIPTION:
 
@@ -65,7 +68,7 @@ int main() {
 	//create an ifstream and open the data text file to read into
 	//the BankManager object.
 	ifstream clientFile;
-	clientFile.open("testdata2.txt");
+	clientFile.open("hw5data.txt");
 
 	//passes the client data file to bankManger
 	//to construct the BST
@@ -74,7 +77,7 @@ int main() {
 	//create an ifstream and open the commands text file to read into
 	//the BankManager object.
 	ifstream transactionFile;
-	transactionFile.open("testcommand2.txt");
+	transactionFile.open("hw5command.txt");
 
 	//passes the transaction data file stream
 	//to the bankManager to carry out transactions
