@@ -124,16 +124,27 @@ bool BankQueue::buildQueue(ifstream& inFile)
 	if (inFile.is_open()) { //make sure the file is open
  		while (inFile >> store) { //getline() from STL reads characters from an input stream and places them into a the store 
 
-			newTransaction = new Transaction();	// a new Transaction object is made
+			if (store.length() != 1) {
+				cout << "/////////////////////" << endl << "ERROR: misformatted transaction data:" << endl << endl 
+					<< "\"" << store << " is not a correct type of transaction" <<  "\"" <<
+					endl << endl << "please try again with correct data" << endl << "/////////////////////" << endl << endl;
 
-			// the command that is stored by "store" is passed through to the setData function in the Transaction class
-			// the function reads the string store and sets information about the command in the newly created transaction object
-			if (newTransaction->setData(store, inFile)) {	
-				push(newTransaction);	// if the data was properly read and set into the new transaction object, then push the object into the BankQueue
+				if (inFile.eof()) {
+					break; //if we reach the eof finish the while
+				}
 			}
+			else {
+				newTransaction = new Transaction();	// a new Transaction object is made
 
-			if (inFile.eof()) {
-				break; //if we reach the eof finish the while
+													// the command that is stored by "store" is passed through to the setData function in the Transaction class
+													// the function reads the string store and sets information about the command in the newly created transaction object
+				if (newTransaction->setData(store, inFile)) {
+					push(newTransaction);	// if the data was properly read and set into the new transaction object, then push the object into the BankQueue
+				}
+
+				if (inFile.eof()) {
+					break; //if we reach the eof finish the while
+				}
 			}
 		}
 	}
