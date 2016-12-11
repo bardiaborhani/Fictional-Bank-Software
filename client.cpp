@@ -291,9 +291,11 @@ returns the overallBalance of all the client's accounts
 Pre-condition: none
 Post-condition: returns an int with the value of the client's overallBalance
 */
+/*
 int Client::getOverallBalance() const {
 	return overallBalance;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /*
@@ -330,6 +332,8 @@ Assigns the private data member "overallBalance" to the value of the int paramet
 Pre-condition: a int that is used to be assigned to the client's overallBalance
 Post-condition: none
 */
+/* 
 void Client::setOverallBalance(int input) {
 	overallBalance = input;
 }
+*/
