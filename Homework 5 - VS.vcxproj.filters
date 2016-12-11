@@ -82,5 +82,11 @@
     <Text Include="baddata.txt">
       <Filter>Source Files</Filter>
     </Text>
+    <Text Include="hw5command.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="hw5data.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
