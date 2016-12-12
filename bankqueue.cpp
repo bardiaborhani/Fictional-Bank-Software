@@ -132,7 +132,7 @@ bool BankQueue::buildQueue(ifstream& inFile)
 					endl << endl << "please try again with correct data" << endl << "/////////////////////" << endl << endl;
 
 				// skips the inFile stream to look at the next line in the command data file
-				inFile.ignore(1000, '\n');
+				inFile.ignore(numeric_limits<streamsize>::max(), '\n'); 
 
 				if (inFile.eof()) {
 					break; //if we reach the eof finish the while
