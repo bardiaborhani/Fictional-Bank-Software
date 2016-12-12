@@ -62,26 +62,30 @@ Post-condition: the ostream variable is returned containing the client's first n
 */
 ostream& operator<<(ostream& stream, const Client& client) {
 
-	//create a stringstream
-	stringstream ss;
+	if (client.clientID < 9999) {
 
-	//stream the client name and ID
-	ss << "CLIENT NAME: " << client.firstName << " " << client.lastName << " " << "CLIENT ID: " << client.clientID;
+		//create a stringstream 
+		stringstream ss;
+
+		//stream the client name and ID
+		ss << "CLIENT NAME: " << client.firstName << " " << client.lastName << " " << "CLIENT ID: " << client.clientID;
 
 
-	//stream all the accounts' starting balances
-	ss << endl << "STARTING ACCOUNTS:" << endl;
-	for (int i = 0; i < 10; i++) ss << " " << client.startingAccounts[i].getAccountBalance();
+		//stream all the accounts' starting balances
+		ss << endl << "STARTING ACCOUNTS:" << endl;
+		for (int i = 0; i < 10; i++) ss << " " << client.startingAccounts[i].getAccountBalance();
 
-	//stream all the accounts' ending balances
-	ss << endl << "ENDING ACCOUNTS:" << endl;
-	for (int i = 0; i < 10; i++) ss << " " << client.accounts[i].getAccountBalance();
+		//stream all the accounts' ending balances
+		ss << endl << "ENDING ACCOUNTS:" << endl;
+		for (int i = 0; i < 10; i++) ss << " " << client.accounts[i].getAccountBalance();
 
-	ss << endl;
+		ss << endl;
 
-	//stream the string representation of the ss stringstream to the passed ostream and return the
-	//ostream to the calling function for further use.
-	stream << ss.str();
+		//stream the string representation of the ss stringstream to the passed ostream and return the
+		//ostream to the calling function for further use.
+		stream << ss.str();
+		return stream;
+	}
 	return stream;
 }
 
