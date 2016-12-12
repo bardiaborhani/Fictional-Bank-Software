@@ -262,9 +262,6 @@ bool BST::buildTree(ifstream& inFile) {   // creates the tree using the txt file
 			if (tempClient->setData(store, inFile)) {  //if we successfully create a Client, i.e. there was no bad data
 				insert(tempClient); //insert the Client, whom we are assured is composed of good data
 			}
-			else {
-				return false;
-			}
 
 			if (inFile.eof()) break; //if we reach the eof finish the while
 		}
@@ -273,7 +270,7 @@ bool BST::buildTree(ifstream& inFile) {   // creates the tree using the txt file
 		// end the program if the file that is meant to be read cannot be opened
 		// If the file can't be opened then we cannot make new clients
 		cerr << "unable to open the clients file" << endl;
-		exit(-1);	
+		return false;
 	}
 
 	return true;

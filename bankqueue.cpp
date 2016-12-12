@@ -157,7 +157,7 @@ bool BankQueue::buildQueue(ifstream& inFile)
 
 		// If unable to open the transaction to read the commands then we cannot read any commands
 		cerr << "/////// ERROR: unable to open the transactions file    ///////" << endl;
-		exit(-1);	// so there is nothing to do but to exit the program
+		return false;
 	}
 
 	return true;
