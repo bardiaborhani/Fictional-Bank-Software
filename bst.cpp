@@ -260,7 +260,9 @@ bool BST::buildTree(ifstream& inFile) {   // creates the tree using the txt file
 		while (inFile >> store) { // store the last name of the client into the variable store - later passed onto the Client's setData function
 			tempClient = new Client;	// allocate memory for a new client
 			if (tempClient->setData(store, inFile)) {  //if we successfully create a Client, i.e. there was no bad data
-				insert(tempClient); //insert the Client, whom we are assured is composed of good data
+				if (!search(tempClient->getClientID())) {
+					insert(tempClient); //insert the Client, whom we are assured is composed of good data
+				}
 			}
 
 			if (inFile.eof()) break; //if we reach the eof finish the while
