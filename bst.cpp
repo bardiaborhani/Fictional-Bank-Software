@@ -14,6 +14,7 @@
 //Post-condition: deletes the tree (deletes all the nodes in the tree) -- deletes all the clients
 BST::~BST() {
 	clear(root);
+	root = nullptr;
 }
 
 // The clear function deletes all the nodes in the tree
@@ -37,7 +38,9 @@ void BST::clear(BST::Node* subtree) {
 		clear(subtree->right);	// traverse the right side of the tree
 		clear(subtree->left);	// traverse the left side of the tree
 		delete subtree->data;	// for every node, delete the data
+		subtree->data = nullptr;
 		delete subtree;		// delete all the nodes
+		subtree = nullptr;
 	}
 }
 
@@ -263,6 +266,15 @@ bool BST::buildTree(ifstream& inFile) {   // creates the tree using the txt file
 				if (!search(tempClient->getClientID())) {
 					insert(tempClient); //insert the Client, whom we are assured is composed of good data
 				}
+				else {
+					cerr << "//////////////////// " << endl << "duplicate client ID: " << tempClient->getClientID()
+						<< endl << "//////////////////" << endl << endl;
+				}
+			}
+			else {
+				cerr << "//////////////////// " << endl << "did not insert \"" << store << "\""
+					<< endl << "//////////////////" << endl << endl;
+				delete tempClient;
 			}
 
 			if (inFile.eof()) break; //if we reach the eof finish the while

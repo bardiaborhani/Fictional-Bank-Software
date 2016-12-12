@@ -125,18 +125,14 @@ bool BankQueue::buildQueue(ifstream& inFile)
  		while (inFile >> store) { //getline() from STL reads characters from an input stream and places them into a the store 
 
 			if (store.length() != 1) {
-				
+
 				// print out an message stating that the transaction type was not correct
-				cout << "/////////////////////" << endl << "ERROR: misformatted transaction data:" << endl << endl 
-					<< "\"" << store << " is not a correct type of transaction" <<  "\"" <<
+				cout << "/////////////////////" << endl << "ERROR: misformatted transaction data:" << endl << endl
+					<< "\"" << store << " is not a correct type of transaction" << "\"" <<
 					endl << endl << "please try again with correct data" << endl << "/////////////////////" << endl << endl;
 
 				// skips the inFile stream to look at the next line in the command data file
-				inFile.ignore(numeric_limits<streamsize>::max(), '\n'); 
-
-				if (inFile.eof()) {
-					break; //if we reach the eof finish the while
-				}
+				inFile.ignore(numeric_limits<streamsize>::max(), '\n');
 			}
 			else {
 				newTransaction = new Transaction();	// a new Transaction object is made
@@ -146,10 +142,15 @@ bool BankQueue::buildQueue(ifstream& inFile)
 				if (newTransaction->setData(store, inFile)) {
 					push(newTransaction);	// if the data was properly read and set into the new transaction object, then push the object into the BankQueue
 				}
-
-				if (inFile.eof()) {
-					break; //if we reach the eof finish the while
+				else {
+					cerr << "//////////////////// " << endl << "did not insert transaction: \"" << store << "\""
+						<< endl << "//////////////////" << endl << endl;
+					delete newTransaction;
 				}
+			}
+
+			if (inFile.eof()) {
+				break; //if we reach the eof finish the while
 			}
 		}
 	}
