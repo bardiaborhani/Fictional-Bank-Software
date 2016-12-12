@@ -16,8 +16,6 @@ and Transaction classes to throw any errors pertaining to the suitability of dat
 #include <iostream>
 #include <string>
 
-#include "client.h"
-#include "transaction.h"
 #include "bst.h"
 #include "bankqueue.h"
 

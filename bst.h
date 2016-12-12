@@ -35,27 +35,29 @@ public:
 	//BST(); the class already has a constructor - no need to explicitly create one - noting to initialize
 	~BST();
 
-	void insert(Client* client); //inserts a new node into the tree using a pointer to a client to set as the data of the new node
-	int height(); // finds the height of the tree - length from bottom-most node to the root
-	int size(); // finds number of nodes in tree
-	void clear(); // deletes all the nodes in the tree
-	void inorderWalk(); // does an inorder walk through the tree displaying all the clients
-	bool search(int target) const;  //you MUST search before you retrieve in order to know if the tree is empty or not
-									//as well as whether or not the target Client is in the tree
-	Client* retrieve(int target) const; // returns a reference to a client that is in the tree
+	// facade functions for the private functions that reflect these
+	// each facade, when first called, passes in the root of the tree
+	// then the real functions use recursion to traveres through the tree
+	void insert(Client* client); 
+	int height(); 
+	int size(); 
+	void clear(); 
+	void inorderWalk(); 
+	bool search(int target) const;  
+	Client* retrieve(int target) const; 
+
 	bool buildTree(ifstream& inFile);   // creates the tree using the txt file that contains all of the clients and their information
 
 private:
-	//facade functions for functions above
-	// each facade, when first called, passes in the root of the tree
-	// then the facades use recursion to traveres through the tree
-	int height(BST::Node* subtree);
-	int size(BST::Node* subtree);
-	void clear(BST::Node* subtree);
-	Node* insert(Client* client, BST::Node* subtree);
-	bool search(BST::Node* subtree, int target) const;
-	Client* retrieve(BST::Node* subtree, int target) const;
-	string inorderWalk(BST::Node* subtree);
+	
+	int height(BST::Node* subtree); // finds the height of the tree - length from bottom-most node to the root
+	int size(BST::Node* subtree); // finds number of nodes in tree
+	void clear(BST::Node* subtree); // deletes all the nodes in the tree
+	Node* insert(Client* client, BST::Node* subtree); //inserts a new node into the tree using a pointer to a client to set as the data of the new node
+	bool search(BST::Node* subtree, int target) const;//you MUST search before you retrieve in order to know if the tree is empty or not
+														//as well as whether or not the target Client is in the tree
+	Client* retrieve(BST::Node* subtree, int target) const; // returns a pointer to a client that is in the tree
+	string inorderWalk(BST::Node* subtree); // does an inorder walk through the tree displaying all the clients
 
 	Node* root = nullptr;
 };
