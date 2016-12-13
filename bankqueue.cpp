@@ -1,6 +1,8 @@
 
+#include <limits>
 
 #include "bankqueue.h"
+
 
 
 /*****************************
@@ -23,11 +25,11 @@ The function iterates though to the end of the bankQueue - looks at the last nod
 Pre-condition: Intakes a pointer to a Transaction object through the parameter which is pushed into the BankQueue
 Post-condition: A new node is created at the end of the BankQueue containing a pointer to the lastest transaction read
 *********************************************/
-void BankQueue::push(Transaction* toAdd)
+void BankQueue::push(Transaction& toAdd)
 {
-	if (toAdd == nullptr) { // Error check if Transaction is null
-		return;
-	}
+	//if (toAdd == nullptr) { // Error check if Transaction is null
+	//	return;
+	//}
 	if (head == nullptr) { // First condition, empty list
 		head = new Node(toAdd, nullptr);
 	}
@@ -68,7 +70,7 @@ Transaction BankQueue::top() const
 {
 	Transaction store; // to temporarly store the Transaction
 	if (head != nullptr) {
-		store = *head->data;	// dereferences the Transaction pointer in the head node and stores it in the variable "store" 
+		store = head->data;	// dereferences the Transaction pointer in the head node and stores it in the variable "store" 
 	}
 	return store; // return the transaction object
 };
@@ -84,7 +86,7 @@ void BankQueue::makeEmpty(void)
 	while (head != nullptr) { // Traverse the list
 		store = head; // Prepares to delete head
 		head = head->next; // Moves the pointer
-		delete store->data;
+		//delete store.data;
 		delete store; // Deletes head
 	}
 	head = nullptr; // Removes head's pointer
@@ -117,7 +119,7 @@ setData().
 ************************************************************************/
 bool BankQueue::buildQueue(ifstream& inFile)
 {
-	Transaction* newTransaction;  // make it a pointer or not a pointer?
+	Transaction newTransaction;  // make it a pointer or not a pointer?
 
 	string store;
 
@@ -135,17 +137,14 @@ bool BankQueue::buildQueue(ifstream& inFile)
 				inFile.ignore(numeric_limits<streamsize>::max(), '\n');
 			}
 			else {
-				newTransaction = new Transaction();	// a new Transaction object is made
-
 													// the command that is stored by "store" is passed through to the setData function in the Transaction class
 													// the function reads the string store and sets information about the command in the newly created transaction object
-				if (newTransaction->setData(store, inFile)) {
+				if (newTransaction.setData(store, inFile)) {
 					push(newTransaction);	// if the data was properly read and set into the new transaction object, then push the object into the BankQueue
 				}
 				else {
 					cerr << "//////////////////// " << endl << "did not insert transaction: \"" << store << "\""
 						<< endl << "//////////////////" << endl << endl;
-					delete newTransaction;
 				}
 			}
 
