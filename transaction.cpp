@@ -328,7 +328,7 @@ Pre-condition: none
 Post-condition: the firstClient Client object now points to
 				a client, or is nullptr, i.e. has been "unpointed"
 */
-void Transaction::setFirstClient(Client client)
+void Transaction::setFirstClient(Client& client)
 {
 	firstClient = client;
 }
@@ -344,7 +344,7 @@ Pre-condition: none
 Post-condition: the secondClient Client object now points to
 				a client, or is nullptr, i.e. has been "unpointed"
 */
-void Transaction::setSecondClient(Client client)
+void Transaction::setSecondClient(Client& client)
 {
 	secondClient = client;
 }

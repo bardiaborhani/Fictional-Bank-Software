@@ -44,7 +44,7 @@ public:
 	void clear(); 
 	void inorderWalk(); 
 	bool search(int target) const;  
-	Client retrieve(int target) const; 
+	Client& retrieve(int target) const; 
 
 	bool buildTree(ifstream& inFile);   // creates the tree using the txt file that contains all of the clients and their information
 
@@ -56,7 +56,7 @@ private:
 	Node* insert(Client client, BST::Node* subtree); //inserts a new node into the tree using a pointer to a client to set as the data of the new node
 	bool search(BST::Node* subtree, int target) const;//you MUST search before you retrieve in order to know if the tree is empty or not
 														//as well as whether or not the target Client is in the tree
-	Client retrieve(BST::Node* subtree, int target) const; // returns a pointer to a client that is in the tree
+	Client& retrieve(BST::Node* subtree, int target) const; // returns a pointer to a client that is in the tree
 	string inorderWalk(BST::Node* subtree); // does an inorder walk through the tree displaying all the clients
 
 	Node* root = nullptr;
