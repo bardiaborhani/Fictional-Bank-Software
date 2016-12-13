@@ -6,6 +6,7 @@
 
 
 
+
 // This destructor calls the clear function which deletes all the nodes in the graph
 // The destructor is called when the delete operator is applied to a pointer to the object (delete *p where p is a pointer to this tree)
 // OR when the object goes out of scope
@@ -37,8 +38,6 @@ void BST::clear(BST::Node* subtree) {
 	if (subtree != nullptr) {	// if the subtree isn't empty then go through the tree and delete what is there
 		clear(subtree->right);	// traverse the right side of the tree
 		clear(subtree->left);	// traverse the left side of the tree
-		delete subtree->data;	// for every node, delete the data
-		subtree->data = nullptr;
 		delete subtree;		// delete all the nodes
 		subtree = nullptr;
 	}
@@ -120,7 +119,7 @@ int BST::size(BST::Node* subtree) {
 // Pre-condition: A pointer to a client object must be passed through this function
 // Post-condition: The pointer to the client object is inserted into the tree and the root of the tree is set to what the facade returns
 // indicating if there is a new root or if the root is the same
-void BST::insert(Client* client) {
+void BST::insert(Client client) {
 	root = insert(client, root);	// the facade returns a pointer to a node representing the root of the tree
 };
  
@@ -130,11 +129,11 @@ void BST::insert(Client* client) {
 
 // Pre-condition: A pointer to a client object and a pointer to the root of the tree is passed into the function when it is first called
 // Post-condition: The pointer to the client object is inserted into the tree and the root of the tree is returned
-BST::Node* BST::insert(Client* client, BST::Node* subtree) {
+BST::Node* BST::insert(Client client, BST::Node* subtree) {
 	if (subtree == nullptr) { // base case - a new node object is allocated and set as the subtree
 		subtree = new Node(client, nullptr, nullptr);
 	}
-	else if (*client < *subtree->data) {
+	else if (client < subtree->data) {
 		// if the client's account number is less than the account number of the client node being looked at, 
 		// then traverse through the left side of the parent node until you reach a leaf node to then reach the base case
 		// the left child of the subtree is assigned to what the recursive call returns - this keeps the tree intact
@@ -172,10 +171,10 @@ bool BST::search(BST::Node* subtree, int target) const {
 	if (subtree == nullptr) { // base case - if the pointer is pointing to a node that doesn't have any information - go back up the list
 		return false;
 	}
-	if (subtree->data->getClientID() == target) {
+	if (subtree->data.getClientID() == target) {
 		return true;	// if the node has the account id that matches the node then it has been found and true is returned
 	}
-	else if (target > subtree->data->getClientID()) {
+	else if (target > subtree->data.getClientID()) {
 		return search(subtree->right, target);
 		// look at the right side of the parent node for the node if the target number is
 		// bigger than the account id of the parent node (parent client node)
@@ -191,9 +190,9 @@ bool BST::search(BST::Node* subtree, int target) const {
 
 // Pre-condition: Passes in an int target that represents the clientID of a client (data of one of the nodes)
 // Post-condition: returns a reference to the data of the node that matches the value of the int target
-Client* BST::retrieve(int target) const {
-	Client* client = retrieve(root, target);
-	if (client == nullptr && target != 0) cerr << "/////////// ERROR: Unable to find the specified client with the ID of: " << target << "   ///////////" << endl << endl;
+Client BST::retrieve(int target) const {
+	Client client = retrieve(root, target);
+	if (target != 0) cerr << "/////////// ERROR: Unable to find the specified client with the ID of: " << target << "   ///////////" << endl << endl;
 	return client;
 }
 
@@ -203,18 +202,20 @@ Client* BST::retrieve(int target) const {
 // Pre-condition: Passes in a node, representing the root of the tree, 
 // and a int called target that contains a number matching the value of the accountId of a client
 // Post-condition: A reference to the client that contains the clientID matching the int target is returned
-Client* BST::retrieve(BST::Node* subtree, int target) const {
+Client BST::retrieve(BST::Node* subtree, int target) const {
 
 	if (subtree == nullptr) {	// if we find an empty leaf
-		return nullptr;	// then return nullptr
+		Client ret;
+		ret.setClientID(-1);
+		return ret;	// then return nullptr
 	}
-	else if (subtree->data->getClientID() == target) {	// if we found the node that contains the client whose clientID matches that int specfied by the parameter...
+	else if (subtree->data.getClientID() == target) {	// if we found the node that contains the client whose clientID matches that int specfied by the parameter...
 		return subtree->data;	//.. then we need to return a pointer to that client (we are "retriving" the client)
 	}
-	else if (target > subtree->data->getClientID()) {	// traverse the right side of the parent node if the node's client clientID is smaller than the number indicated by "target"
+	else if (target > subtree->data.getClientID()) {	// traverse the right side of the parent node if the node's client clientID is smaller than the number indicated by "target"
 		return retrieve(subtree->right, target);	
 	}
-	else if (target < subtree->data->getClientID()) { // traverse the left side of the parent node if the node's client clientID is bigger than the number indicated by "target"
+	else if (target < subtree->data.getClientID()) { // traverse the left side of the parent node if the node's client clientID is bigger than the number indicated by "target"
 		return retrieve(subtree->left, target);
 	}
 }
@@ -255,26 +256,24 @@ string BST::inorderWalk(BST::Node* subtree) {
 // Pre-condition: File stream is passed through parameter that reads the text file that contains information about clients and their information
 // Post-condition: bool is returned indicating if the tree was successfully built or not
 bool BST::buildTree(ifstream& inFile) {   // creates the tree using the txt file that contains all of the clients and their information
-	Client* tempClient;	// decalre a pointer to a new Client but do not initialize yet
+	Client tempClient;	// decalre a pointer to a new Client but do not initialize yet
 
 	string store;
 
 	if (inFile.is_open()) {	// check if the file that the ifstream is reading is opened
 		while (inFile >> store) { // store the last name of the client into the variable store - later passed onto the Client's setData function
-			tempClient = new Client;	// allocate memory for a new client
-			if (tempClient->setData(store, inFile)) {  //if we successfully create a Client, i.e. there was no bad data
-				if (!search(tempClient->getClientID())) {
+			if (tempClient.setData(store, inFile)) {  //if we successfully create a Client, i.e. there was no bad data
+				if (!search(tempClient.getClientID())) {
 					insert(tempClient); //insert the Client, whom we are assured is composed of good data
 				}
 				else {
-					cerr << "//////////////////// " << endl << "duplicate client ID: " << tempClient->getClientID()
+					cerr << "//////////////////// " << endl << "duplicate client ID: " << tempClient.getClientID()
 						<< endl << "//////////////////" << endl << endl;
 				}
 			}
 			else {
 				cerr << "//////////////////// " << endl << "did not insert \"" << store << "\""
 					<< endl << "//////////////////" << endl << endl;
-				delete tempClient;
 			}
 
 			if (inFile.eof()) break; //if we reach the eof finish the while
