@@ -97,12 +97,13 @@ void BankManager::transact(void) {
 		int client1 = transaction.getFirstClientID();
 		int client2 = transaction.getSecondClientID();
 
-		bool success;
+		bool success = false;
+		bool secondSuccess = false;
 		//find the clients involved in the operation, give them to the transaction
 		//so it can do its job
 		success = clients.search(client1);
 		if (success && transaction.getTransactionType() == 'M') {	// If the command is a Move command then it requires information about two accounts
-			success = clients.search(client2);
+			secondSuccess = clients.search(client2);
 		}
 
 		//take the transaction off the pending queue and throw it away
@@ -110,7 +111,7 @@ void BankManager::transact(void) {
 
 		if (success) {
 			transaction.setFirstClient(clients.retrieve(client1));
-			transaction.setSecondClient(clients.retrieve(client2));
+			if(secondSuccess) transaction.setSecondClient(clients.retrieve(client2));
 
 			// only push transaction into the completed stack of transactions if the transaction was able to be completed
 			bool successTrans; 
