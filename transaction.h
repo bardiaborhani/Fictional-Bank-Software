@@ -36,11 +36,11 @@ private:
 
 	int amount; // Amount to be transacted
 
-	Client* firstClient; // Integer represents firstClients account number
+	Client firstClient; // Integer represents firstClients account number
 	int firstClientID;
 	int firstAccountID; //Integer representing the account ID of the first client
 
-	Client* secondClient; // Integer represents secondClients account number
+	Client secondClient; // Integer represents secondClients account number
 	int secondClientID;
 	int secondAccountID; //Integer representing the account ID of the second client
 
@@ -63,8 +63,8 @@ public:
 	int getFirstClientID(void) const; // Returns firstClient
 	int getSecondClientID(void) const; // Returns secondClient
 
-	void setFirstClient(Client* client); // Sets the account number for client one
-	void setSecondClient(Client* client); // Sets the account number for client two
+	void setFirstClient(Client client); // Sets the account number for client one
+	void setSecondClient(Client client); // Sets the account number for client two
 
 	bool transact(); //perform the specified transaction based on this Transaction's data members
 

@@ -145,7 +145,7 @@ thereof, has been returned to the user
 */
 bool Transaction::transact()
 {
-	if (firstClient != nullptr) {
+	if (firstClient.getClientID() != -1) {
 		stringstream ss;
 		ss << *this;
 		description = ss.str();
@@ -193,9 +193,9 @@ bool Transaction::depositOrWithdraw() {
 	//the given amount.
 	if (transactionType == 'D') {
 		
-		if (firstClient != nullptr) {
+		if (firstClient.getClientID() != -1) {
 			//the type of this transaction is deposit, so do that.
-			firstClient->deposit(firstAccountID, amount, description);
+			firstClient.deposit(firstAccountID, amount, description);
 			return true;
 		}
 		else return false;
@@ -206,7 +206,7 @@ bool Transaction::depositOrWithdraw() {
 	else if (transactionType == 'W') { 
 		
 		//otherwise, though we still check, the transaction type must be withdraw.
-		bool success = firstClient->withdraw(firstAccountID, amount, description);
+		bool success = firstClient.withdraw(firstAccountID, amount, description);
 
 		//win or lose, tell the coach what happened.
 		return success;
@@ -234,8 +234,8 @@ bool Transaction::move() {
 	if (firstClient != nullptr) {
 		// in order to move money, money from one account must be withdrawed
 		// and then deposited into the account the money needs to move intop
-		success = firstClient->withdraw(firstAccountID, amount, description);
-		if (success) secondClient->deposit(secondAccountID, amount, description);
+		success = firstClient.withdraw(firstAccountID, amount, description);
+		if (success) secondClient.deposit(secondAccountID, amount, description);
 	}
 
 	return success;
@@ -255,12 +255,12 @@ Post-condition: the history of the firstClient has been printed out via the disp
 				of that Client.
 */
 void Transaction::history() {
-	if (firstClient != nullptr) {
+	if (firstClient.getClientID() != -1) {
 		// displays the clients transaction history
 		// by calling the displayHistory function in the client class
 		// the functino displays the client's first and last name then prints all the 
 		// transactions that were succesfully completed by the client
-		firstClient->displayHistory(description);	
+		firstClient.displayHistory(description);	
 		cout << endl;
 	}
 }
@@ -327,7 +327,7 @@ Pre-condition: none
 Post-condition: the firstClient Client object now points to
 				a client, or is nullptr, i.e. has been "unpointed"
 */
-void Transaction::setFirstClient(Client* client)
+void Transaction::setFirstClient(Client client)
 {
 	firstClient = client;
 }
@@ -343,7 +343,7 @@ Pre-condition: none
 Post-condition: the secondClient Client object now points to
 				a client, or is nullptr, i.e. has been "unpointed"
 */
-void Transaction::setSecondClient(Client* client)
+void Transaction::setSecondClient(Client client)
 {
 	secondClient = client;
 }
@@ -403,27 +403,27 @@ ostream & operator<<(ostream & stream, const Transaction& transaction)
 	case 'D':
 		// Prints out a sentence that describes how much money was deposited
 		// into a client's account - specifying the account name
-		stream << "Deposited $" << transaction.amount << " into " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
-			<< "'s " << transaction.firstClient->getAccountName(transaction.firstAccountID) << " account";
+		stream << "Deposited $" << transaction.amount << " into " << transaction.firstClient.getFirstName() << " " << transaction.firstClient.getLastName()
+			<< "'s " << transaction.firstClient.getAccountName(transaction.firstAccountID) << " account";
 		break;
 	case 'W':
 		// Prints out a sentence that describes how much money was successfully
 		// subtracted from the balance of an account (withdrawen)
 		// also specifying the accouunt name
-		stream << "Withdrew $" << transaction.amount << " from " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
-			<< "'s " << transaction.firstClient->getAccountName(transaction.firstAccountID) << " account";
+		stream << "Withdrew $" << transaction.amount << " from " << transaction.firstClient.getFirstName() << " " << transaction.firstClient.getLastName()
+			<< "'s " << transaction.firstClient.getAccountName(transaction.firstAccountID) << " account";
 		break;
 	case 'M':
 		// Prints out a sentence that describes how much money was successfully 
 		// moved from one account to another specifying both accounts
-		stream << "Moved $" << transaction.amount << " from " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName()
-			<< "'s " << transaction.firstClient->getAccountName(transaction.firstAccountID) << " account and placed it in " << transaction.secondClient->getFirstName() << " "
-			<< transaction.secondClient->getLastName() << "'s " << transaction.secondClient->getAccountName(transaction.secondAccountID) << " account";
+		stream << "Moved $" << transaction.amount << " from " << transaction.firstClient.getFirstName() << " " << transaction.firstClient.getLastName()
+			<< "'s " << transaction.firstClient.getAccountName(transaction.firstAccountID) << " account and placed it in " << transaction.secondClient.getFirstName() << " "
+			<< transaction.secondClient.getLastName() << "'s " << transaction.secondClient.getAccountName(transaction.secondAccountID) << " account";
 		break;
 	case 'H':
 		// Prints out a sentence that describes that the client's transaction history was displayed
 		// indicating the client by first and last name
-		stream << "Displayed " << transaction.firstClient->getFirstName() << " " << transaction.firstClient->getLastName() << "'s transaction history";
+		stream << "Displayed " << transaction.firstClient.getFirstName() << " " << transaction.firstClient.getLastName() << "'s transaction history";
 		break;
 	default:
 		break;

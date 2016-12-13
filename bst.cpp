@@ -206,7 +206,6 @@ Client BST::retrieve(BST::Node* subtree, int target) const {
 
 	if (subtree == nullptr) {	// if we find an empty leaf
 		Client ret;
-		ret.setClientID(-1);
 		return ret;	// then return nullptr
 	}
 	else if (subtree->data.getClientID() == target) {	// if we found the node that contains the client whose clientID matches that int specfied by the parameter...
@@ -242,7 +241,7 @@ string BST::inorderWalk(BST::Node* subtree) {
 		ss << inorderWalk(subtree->left);	// traverse through left side of tree
 		// the client pointer contained by the node in the tree is dereferenced 
 		// and the stringstream intakes the clientID of the client
-		ss << *subtree->data << endl;	
+		ss << subtree->data << endl;	
 		ss << inorderWalk(subtree->right);	// traverse through right side of tree
 	}
 	return ss.str();

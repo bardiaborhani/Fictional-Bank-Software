@@ -24,6 +24,7 @@ Client::Client() {
 				indexFund, capitalValueFund, growthEquityFund, growthIndexFund,
 				valueFund, valueStockIndex };	
 
+	clientID = -1;
 }
 
 //--------------------------------------------------------------------------------------------
