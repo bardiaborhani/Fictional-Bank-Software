@@ -190,7 +190,7 @@ bool BST::search(BST::Node* subtree, int target) const {
 
 // Pre-condition: Passes in an int target that represents the clientID of a client (data of one of the nodes)
 // Post-condition: returns a reference to the data of the node that matches the value of the int target
-Client& BST::retrieve(int target) const {
+Client BST::retrieve(int target) const {
 	Client client = retrieve(root, target);
 	if (client.getClientID() == -1) cerr << "/////////// ERROR: Unable to find the specified client with the ID of: " << target << "   ///////////" << endl << endl;
 	return client;
@@ -202,7 +202,7 @@ Client& BST::retrieve(int target) const {
 // Pre-condition: Passes in a node, representing the root of the tree, 
 // and a int called target that contains a number matching the value of the accountId of a client
 // Post-condition: A reference to the client that contains the clientID matching the int target is returned
-Client& BST::retrieve(BST::Node* subtree, int target) const {
+Client BST::retrieve(BST::Node* subtree, int target) const {
 
 	if (subtree == nullptr) {	// if we find an empty leaf
 		Client ret;
