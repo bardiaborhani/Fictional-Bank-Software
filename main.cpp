@@ -55,7 +55,7 @@ DESCRIPTION:
 #include <iostream>
 #include <fstream>
 
-#include "bankManager.h"
+#include "bankmanager.h"
 
 using namespace std;
 
