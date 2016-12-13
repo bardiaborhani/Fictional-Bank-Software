@@ -232,6 +232,7 @@ bool Transaction::move() {
 	bool success = false;
 
 	if (firstClient.getClientID() != -1) {
+
 		// in order to move money, money from one account must be withdrawed
 		// and then deposited into the account the money needs to move intop
 		success = firstClient.withdraw(firstAccountID, amount, description);
