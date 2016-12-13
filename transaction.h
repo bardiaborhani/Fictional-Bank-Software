@@ -50,7 +50,7 @@ private:
 
 public:
 
-	Transaction();
+	Transaction(); //default constructor
 
 	bool setData(const string type, ifstream& inFile); // Sets the transaction data from reading a filestream
 

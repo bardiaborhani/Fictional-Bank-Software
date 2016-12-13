@@ -158,7 +158,9 @@ void Client::deposit(const int clientID, const int amount, const string transact
 
 	// the transaction (that indicates that money should be deposited into one the accounts of this client)
 	// is added to the client's transactionHistory queue - this is done to keep track of what transactions the client has completed
-	transactionHistory.push(transaction); 
+	if (transaction != "-1") { //weed out transactions that should not be entered
+		transactionHistory.push(transaction);
+	}	
 }
 
 //--------------------------------------------------------------------------------------------

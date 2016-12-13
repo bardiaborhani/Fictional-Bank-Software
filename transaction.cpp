@@ -231,12 +231,32 @@ Post-condition: if possible, the correct amount determined by our private amount
 bool Transaction::move() {
 	bool success = false;
 
-	if (firstClient.getClientID() != -1) {
+	//check to make sure that we have valid clients on our hands
+	if (firstClient.getClientID() != -1 && secondClient.getClientID() != -1) {
 
 		// in order to move money, money from one account must be withdrawed
 		// and then deposited into the account the money needs to move intop
 		success = firstClient.withdraw(firstAccountID, amount, description);
-		if (success) secondClient.deposit(secondAccountID, amount, description);
+		if (success) {
+			
+			//if the second client is the exact same client as the first
+			//one, we're just moving among accounts, not clients.
+			//in that case we deposit via firstClient.
+			if (firstClient == secondClient) {
+				firstClient.deposit(secondAccountID, amount, "-1");
+
+				//for the sake of managing the BST correctly, we update the secondClient
+				//so they both share the same account values
+				secondClient = firstClient;
+			}
+
+			//otherwise we're moving between clients, so deposit into the
+			//secondClient's account.
+			else {
+				secondClient.deposit(secondAccountID, amount, description);
+			}
+
+		}
 	}
 
 	return success;
