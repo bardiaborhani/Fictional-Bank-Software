@@ -63,8 +63,11 @@ public:
 	int getFirstClientID(void) const; // Returns firstClient
 	int getSecondClientID(void) const; // Returns secondClient
 
-	void setFirstClient(Client& client); // Sets the account number for client one
-	void setSecondClient(Client& client); // Sets the account number for client two
+	void setFirstClient(const Client& client); // Sets the account number for client one
+	void setSecondClient(const Client& client); // Sets the account number for client two
+
+	Client getFirstClient() const;
+	Client getSecondClient() const;
 
 	bool transact(); //perform the specified transaction based on this Transaction's data members
 

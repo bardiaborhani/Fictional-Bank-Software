@@ -114,17 +114,27 @@ void BankManager::transact(void) {
 			if(secondSuccess) transaction.setSecondClient(clients.retrieve(client2));
 
 			// only push transaction into the completed stack of transactions if the transaction was able to be completed
-			bool successTrans; 
+			bool successfulTransaction; 
 
 			//tell the transaction to do its business (outside please, 
 			//goodness gracious)
-			successTrans = transaction.transact();
+			successfulTransaction = transaction.transact();
 			 
-			//put the transaction on the completed pile
-			if(successTrans){
+			//if the transaction was completed successfully
+			if(successfulTransaction){
+
+				//put the transaction on the completed pile
 				completed.push(transaction);
+
+				//insert whichever clients we affected back into the
+				//clients BST
+				clients.insert(transaction.getFirstClient());
+				if (secondSuccess) clients.insert(transaction.getSecondClient());
 			}
 			else {
+
+				//if the transaction was unsuccessful, print out an error message to
+				//indicate that fact.
 				cerr << "/////////////////////" << endl << "ERROR: The transaction:"  
 					<< endl << "\"" << transaction.getDescription() <<  "\"" << endl
 					<< "was not able to be completed due to insufficient funds" 

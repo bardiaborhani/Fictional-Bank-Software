@@ -140,10 +140,13 @@ BST::Node* BST::insert(Client client, BST::Node* subtree) {
 		// and when the node is inserted - this makes sure that the parent node is contected to this child node (the new node that is inserted) 
 		subtree->left = insert(client, subtree->left);
 	}
-	else {
+	else if (client > subtree->data) {
 		// if the client's account number is more than the account number of the client node being looked at, 
 		// then traverse through the right side of the parent node until you reach a leaf node to then reach the base case
 		subtree->right = insert(client, subtree->right);
+	}
+	else {
+		subtree->data = client;
 	}
 	return subtree;
 }
@@ -209,6 +212,7 @@ Client BST::retrieve(BST::Node* subtree, int target) const {
 		return ret;	// then return nullptr
 	}
 	else if (subtree->data.getClientID() == target) {	// if we found the node that contains the client whose clientID matches that int specfied by the parameter...
+
 		return subtree->data;	//.. then we need to return a pointer to that client (we are "retriving" the client)
 	}
 	else if (target > subtree->data.getClientID()) {	// traverse the right side of the parent node if the node's client clientID is smaller than the number indicated by "target"
@@ -262,13 +266,7 @@ bool BST::buildTree(ifstream& inFile) {   // creates the tree using the txt file
 	if (inFile.is_open()) {	// check if the file that the ifstream is reading is opened
 		while (inFile >> store) { // store the last name of the client into the variable store - later passed onto the Client's setData function
 			if (tempClient.setData(store, inFile)) {  //if we successfully create a Client, i.e. there was no bad data
-				if (!search(tempClient.getClientID())) {
-					insert(tempClient); //insert the Client, whom we are assured is composed of good data
-				}
-				else {
-					cerr << "//////////////////// " << endl << "duplicate client ID: " << tempClient.getClientID()
-						<< endl << "//////////////////" << endl << endl;
-				}
+				insert(tempClient); //insert the Client, whom we are assured is composed of good data
 			}
 			else {
 				cerr << "//////////////////// " << endl << "did not insert \"" << store << "\""
