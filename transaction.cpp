@@ -231,7 +231,7 @@ Post-condition: if possible, the correct amount determined by our private amount
 bool Transaction::move() {
 	bool success = false;
 
-	if (firstClient != nullptr) {
+	if (firstClient.getClientID() != -1) {
 		// in order to move money, money from one account must be withdrawed
 		// and then deposited into the account the money needs to move intop
 		success = firstClient.withdraw(firstAccountID, amount, description);

@@ -100,9 +100,9 @@ void BankManager::transact(void) {
 		bool success;
 		//find the clients involved in the operation, give them to the transaction
 		//so it can do its job
-		success = clients.retrieve(client1);
+		success = clients.search(client1);
 		if (success && transaction.getTransactionType() == 'M') {	// If the command is a Move command then it requires information about two accounts
-			success = clients.retrieve(client2);
+			success = clients.search(client2);
 		}
 
 		//take the transaction off the pending queue and throw it away
