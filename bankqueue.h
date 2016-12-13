@@ -21,13 +21,12 @@ using namespace std;
 class BankQueue {
 
 	struct Node {        	// the node in a linked list
-		Transaction* data;          	// pointer to actual data
+		Transaction data;          	// pointer to actual data
 		Node* next;	// pointer to the next node (the node that holds the next transaction)
 
-		Node(Transaction* d, Node* n) : data(d), next(n) {}
-
+		Node(Transaction& d, Node* n) : data(d), next(n) {}
+		 
 		Node() {
-			data = nullptr;
 			next = nullptr;
 		}
 	};
@@ -43,7 +42,7 @@ public:
 	void pop();	// takes off the newest node in the list
 	Transaction top() const;	// looks at the top most node in the list
 
-	void push(Transaction* toAdd); //adds a Transaction to the BankQueue
+	void push(Transaction& toAdd); //adds a Transaction to the BankQueue
 
 	bool isEmpty() const;	//checks if the BankQueue is empty (if therre are no transactions)
 	void makeEmpty();	// empties the BankQueue
