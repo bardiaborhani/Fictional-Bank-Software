@@ -43,6 +43,9 @@ will occur.
 A clientID can be 1-4 digits long - no more than 4 digits long
 Message for correctly outputted transactions are not outputted - only error messages for incorrect transactions are displayed
 
+In the client data file (hw5data.txt) two clients with the same clientID cannot be both inserted into the bank
+If one client has already been inserted into the bank then another client with the same clientID will not be inserted into the bank
+
 DESCRIPTION:
 
 Main for Homework 5. Creates new BankManager object and passes two file streams to this object.
