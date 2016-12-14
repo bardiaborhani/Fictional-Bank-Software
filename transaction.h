@@ -72,17 +72,17 @@ public:
 	bool transact(); //perform the specified transaction based on this Transaction's data members
 
 
-	/*
-		the three horsemen:
+					 /*
+					 the three horsemen:
 
-		depositOrWithdraw is a composite of both deposit and withdraw, with the
-		case specified within.
+					 depositOrWithdraw is a composite of both deposit and withdraw, with the
+					 case specified within.
 
-		move moves money between two clients or between a singular client's accounts. perhaps it might
-		find itself even moving money from the same account to itself.
+					 move moves money between two clients or between a singular client's accounts. perhaps it might
+					 find itself even moving money from the same account to itself.
 
-		history prints out a client's transaction history.
-	*/
+					 history prints out a client's transaction history.
+					 */
 	bool depositOrWithdraw();
 	bool move();
 	void history();

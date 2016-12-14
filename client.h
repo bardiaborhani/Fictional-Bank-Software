@@ -2,8 +2,8 @@
 
 The Client class represents a client in the bank. The bankManager uses a BST to store all the clients in the bank
 The BST stores and organizes the clients in order from small accountID to larger clientID. Every trasaction that
-occurs reads a clientID to identify which client to act upon. This class stores the first name, last name, clientID, 
-transaction history, and the ten types of accounts owned by a client (all information that belongs to a client) 
+occurs reads a clientID to identify which client to act upon. This class stores the first name, last name, clientID,
+transaction history, and the ten types of accounts owned by a client (all information that belongs to a client)
 
 ------------------------------------------------------------------------------------------------*/
 
