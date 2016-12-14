@@ -21,8 +21,8 @@ Client::Client() {
 	// The other six accounts are normal types of accounts
 	// We order it in this way so we know where the money market and bond accounts are in the array so we can later call them
 	accounts = { moneyMarket, primeMoneyMarket, longTerm, shortTerm,
-				indexFund, capitalValueFund, growthEquityFund, growthIndexFund,
-				valueFund, valueStockIndex };	
+		indexFund, capitalValueFund, growthEquityFund, growthIndexFund,
+		valueFund, valueStockIndex };
 
 	clientID = -1;
 }
@@ -56,10 +56,10 @@ the inorderWalk function outputs all the clients objects located in the BST (whi
 This function inputs the information about the client int a stringstream then the stringstream is inputted into the ostream variable
 which at the end of the function is returned
 
-Pre-condition: Two parameters are passed into the function - the ostream variable to store and return what needs to be outputted 
+Pre-condition: Two parameters are passed into the function - the ostream variable to store and return what needs to be outputted
 and the client whose information is sought to be outputted
 
-Post-condition: the ostream variable is returned containing the client's first name, last name, clientID and account balances 
+Post-condition: the ostream variable is returned containing the client's first name, last name, clientID and account balances
 */
 ostream& operator<<(ostream& stream, const Client& client) {
 
@@ -104,17 +104,17 @@ bool Client::setData(const string last, ifstream& inFile) {
 	// create a bool to keep track that everything in the line we are reading in client data file is read properly
 	// if something is not read properly then success is set to false and returned by the function
 	// if false is returned then the program will finish executing 
-	bool success = true;	
+	bool success = true;
 	int accountBalance;
 
 	// the first string read in a line in the client data file represents the last name of the client
 	// set the last name of this client to the first string read in the client data file
-	lastName = last;	
+	lastName = last;
 
 	// in the line read in the client data file, the next word in the string represents the first name of client
 	// and after the first name comes the clientID of the client
-	inFile >> firstName >> clientID;	
-	
+	inFile >> firstName >> clientID;
+
 	// after the clientID, the balance of the ten accounts owned by the client are displayed int the client data file
 	// we make a for loop to look at each balance and set the balance of each account for the client
 	for (int i = 0; i<10; i++) {
@@ -145,7 +145,7 @@ In addition, the transaction description is added to the client's transactionHis
 
 Pre-condition: Three parameters are passed into the function. The first is an int representing the clients clientID
 the second int represents the amount that must be despoited intothe clientID
-the third parameter is a string that represents the transaction that was read from the command data file 
+the third parameter is a string that represents the transaction that was read from the command data file
 
 Post-condition: the transactionHistory queue now holds another transaction done by the client
 and one of the client's accounts (indicated by the first parameter) has a new balance (according to how much was deposited into the account by the variable "amount")
@@ -160,7 +160,7 @@ void Client::deposit(const int clientID, const int amount, const string transact
 	// is added to the client's transactionHistory queue - this is done to keep track of what transactions the client has completed
 	if (transaction != "-1") { //weed out transactions that should not be entered
 		transactionHistory.push(transaction);
-	}	
+	}
 }
 
 //--------------------------------------------------------------------------------------------
@@ -170,11 +170,11 @@ The account that money is withdrawed from is indicated by the value of the first
 A bool variable named "success" indicates where the withdraw was able to be processed
 Within this function, the account class' withdraw function is called and money is subtracted from the balance of that account
 
-Pre-condition: Three parameters are passed into the function- the first one is a value between 0-9 indiciating which account money 
+Pre-condition: Three parameters are passed into the function- the first one is a value between 0-9 indiciating which account money
 must be withdrawed fmo - the second one is an int amount (0 or above) that indicates how much money to be subtracted from the balance
-and the third parameter is a string that represents the transaction that was read from the command data file  
+and the third parameter is a string that represents the transaction that was read from the command data file
 
-Post-condition: The function returns a true or false indicating whether the amount sought to be withdraw from an account 
+Post-condition: The function returns a true or false indicating whether the amount sought to be withdraw from an account
 was able to covered by the balance of the account
 */
 bool Client::withdraw(const int clientID, const int amount, const string transaction) {
@@ -206,7 +206,7 @@ void Client::displayHistory(const string transaction) {
 
 	// a copy of the transactionHistory queue is made for the purpose of popping the transactions (string form) out of the queue 
 	// and displaying them one by one without changing the structure of the transactionHistory queue
-	queue<string> copy = transactionHistory;	
+	queue<string> copy = transactionHistory;
 
 	// we output the first name and last name of the client whose transaction history is sought to be displayed
 	cout << firstName << " " << lastName << "'s history:" << endl;
@@ -224,9 +224,9 @@ void Client::displayHistory(const string transaction) {
 		cout << copy.front() << "." << endl;
 		copy.pop();
 	}
-	 
+
 	// displaying the transaction itself is a transaction - so it is also pushed into the transa
-	transactionHistory.push(transaction);	
+	transactionHistory.push(transaction);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -270,7 +270,7 @@ string Client::getFirstName() const {
 /*
 returns the clientID of the client
 
-Pre-condition: none 
+Pre-condition: none
 Post-condition: an int is returned containing the client's clientID
 */
 int Client::getClientID() const {
@@ -304,7 +304,7 @@ void Client::setLastName(string input) {
 
 //--------------------------------------------------------------------------------------------
 /*
-Assigns the private data member "firstName" to the value of the string parameter passed through 
+Assigns the private data member "firstName" to the value of the string parameter passed through
 
 Pre-condition: a string that is used to be assigned to the client's first name
 Post-condition: none
@@ -314,7 +314,7 @@ void Client::setFirstName(string input) {
 }
 
 //--------------------------------------------------------------------------------------------
-/* 
+/*
 Assigns the private data member "clientID" to the value of the int parameter passed through
 
 Pre-condition: a int that is used to be assigned to the client's clientID

@@ -24,7 +24,7 @@ int Account::getAccountBalance() const {
 }
 
 //----------------------------------------------------
-/* 
+/*
 Sets the account's balance variable to the value of the int variable passed in the parameter
 the parameter variable is set to const to make sure it is not changed within the function
 this sets the balance of a type of account owned by client
@@ -37,7 +37,7 @@ void Account::setAccountBalance(const int amount) {
 }
 
 //----------------------------------------------------
-/* 
+/*
 Deposits money into account
 the value of the balance variable is increased or stays the same - the amount cannot be less than 0- already handeled before
 Pre-condition: An int is passed into the function - the value of the int is 0 or higher
@@ -48,7 +48,7 @@ void Account::deposit(const int amount) {
 }
 
 //----------------------------------------------------
-/* 
+/*
 Removes funds from balance, returns true if account had enough
 money to cover withdraw. Returns false if it has insuffient funds.
 First tries to withdraw amount from the balance of the account
@@ -95,16 +95,16 @@ we check to see if the account we are dealing with is a Long-term Bond account (
 OR if it is a Short-term Bond account (Account Number 3)
 
 We identify which exact account this object is by comparing it to the first two parameters of the function
-By identifying the account, we can transfer money from the other account, of the same type (money market or bond), 
+By identifying the account, we can transfer money from the other account, of the same type (money market or bond),
 into this account to be withdrawn (as directed by the withdraw function which calls this function
 
-Pre-condition: The function passes in two const ints (value between 0-3), an int representing the amount to be withdrawen, and a reference of an array of accounts 
+Pre-condition: The function passes in two const ints (value between 0-3), an int representing the amount to be withdrawen, and a reference of an array of accounts
 Post-condition: If the other account has enough money to cover the amount sought to be withdrawen, then function will return a true (if not, then it will return false)
 */
 bool Account::transfer(const int accountID1, const int accountID2, int amount, array<Account, 10>& accounts) {
 	//we are either accountID1 or accountID2
 	if (accountID == accountID1) {	// This account is accountID1
-		
+
 		if (balance + accounts[accountID2].balance >= amount) {	// if the amount in the account is enough to pay the amount asked to be withdrawn...
 			accounts[accountID2].withdraw(amount - balance, accounts);	// then withdraw the amount to cover the balance of the other money market/bond
 			balance = 0; // the amount was covered by all the balance in this account and some in the other account of the same type - so we need to set the balance of this account to 0 
@@ -116,7 +116,7 @@ bool Account::transfer(const int accountID1, const int accountID2, int amount, a
 
 	}
 	else { //we are not accountID1, we must be accountID2
-		
+
 		if (balance + accounts[accountID1].balance >= amount) { // if the amount in the account is enough to pay the amount asked to be withdrawn...
 			accounts[accountID1].withdraw(amount - balance, accounts);	// then withdraw the amount to cover the balance of the other money market/bond
 			balance = 0;	// the amount was covered by all the balance in this account and some in the other account of the same type - so we need to set the balance of this account to 0 
@@ -176,7 +176,7 @@ string Account::getAccountType() const
 /*
 This function is used by another class to get access to the accountID of the account object
 Pre-condition: The object has to me made
-Post-condition: the accountID is returned 
+Post-condition: the accountID is returned
 */
 int Account::getAccountID() const {
 	return accountID;

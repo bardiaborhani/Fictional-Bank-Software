@@ -6,48 +6,48 @@ Bardia Borhani
 
 December 11th, 2016
 
-PURPOSE: 
+PURPOSE:
 
-	Write software to handle transactions for a local financial firm called Lots of Savings Earned (LOSE)
-	LOSE wishes to be able to display the contents of the firm at any time and allow clients to perfom transactions 
-	on their various accounts.
+Write software to handle transactions for a local financial firm called Lots of Savings Earned (LOSE)
+LOSE wishes to be able to display the contents of the firm at any time and allow clients to perfom transactions
+on their various accounts.
 
-ASSUMPTIONS: 
+ASSUMPTIONS:
 
-	It is assumed that all data text files are formatted correctly - all data files will be provided. All text files, if this program is being run
-	on the Windows OS, must contain a line after the data for EOF purposes.
+It is assumed that all data text files are formatted correctly - all data files will be provided. All text files, if this program is being run
+on the Windows OS, must contain a line after the data for EOF purposes.
 
-	For data files, the clients should be formatted as follows: 
+For data files, the clients should be formatted as follows:
 
-		* lastName firstName account1 account2 account3 account4 account5 account6 account7 account8 account9 account10
+* lastName firstName account1 account2 account3 account4 account5 account6 account7 account8 account9 account10
 
-		where all 10 accounts are accounted for, are integers and no chars occur after the client's first name and last name.
-		The accounts should be inli correct order as specified in the design document (i.e. account1 is Money Market, account2
-		is Prime Money Market, etc). All data for a single client should be one one line of the text file.
+where all 10 accounts are accounted for, are integers and no chars occur after the client's first name and last name.
+The accounts should be inli correct order as specified in the design document (i.e. account1 is Money Market, account2
+is Prime Money Market, etc). All data for a single client should be one one line of the text file.
 
-	For command files, the transactions should be formatted in one of the four ways:
-	NOTE that clientID and accountID are concatenated, such as 12341, where 1234 is the client ID, and 1 is the account ID.
+For command files, the transactions should be formatted in one of the four ways:
+NOTE that clientID and accountID are concatenated, such as 12341, where 1234 is the client ID, and 1 is the account ID.
 
-		* D clientIDaccountID amount
-	
-		* W clientIDaccountID amount
+* D clientIDaccountID amount
 
-		* M clientIDaccountID amount clientIDaccountID
+* W clientIDaccountID amount
 
-		* H clientIDaccountID
+* M clientIDaccountID amount clientIDaccountID
+
+* H clientIDaccountID
 
 
-	any ints used in the data files must not exceed 2147483647, which is the max of an integer. over this amount, erroneous behaviour
-	will occur.
+any ints used in the data files must not exceed 2147483647, which is the max of an integer. over this amount, erroneous behaviour
+will occur.
 
-	A clientID can be 1-4 digits long - no more than 4 digits long
-	Message for correctly outputted transactions are not outputted - only error messages for incorrect transactions are displayed
+A clientID can be 1-4 digits long - no more than 4 digits long
+Message for correctly outputted transactions are not outputted - only error messages for incorrect transactions are displayed
 
 DESCRIPTION:
 
-	Main for Homework 5. Creates new BankManager object and passes two file streams to this object.
-	Then displays the clients built by the BankManager as well as the transactions that have been
-	completed.
+Main for Homework 5. Creates new BankManager object and passes two file streams to this object.
+Then displays the clients built by the BankManager as well as the transactions that have been
+completed.
 
 ------------------------------------------------------------------------------------------------------*/
 

@@ -122,7 +122,7 @@ int BST::size(BST::Node* subtree) {
 void BST::insert(Client client) {
 	root = insert(client, root);	// the facade returns a pointer to a node representing the root of the tree
 };
- 
+
 // The insert function facade passes in a pointer to a clident object and the root of the tree
 // The function uses recursion to traverse through the tree and insert the client pointer into the tree
 // Once the leaf of the binary search tree is reached, a new node is created as a child to that leaf node and it contains the data of the client pointer
@@ -216,7 +216,7 @@ Client BST::retrieve(BST::Node* subtree, int target) const {
 		return subtree->data;	//.. then we need to return a pointer to that client (we are "retriving" the client)
 	}
 	else if (target > subtree->data.getClientID()) {	// traverse the right side of the parent node if the node's client clientID is smaller than the number indicated by "target"
-		return retrieve(subtree->right, target);	
+		return retrieve(subtree->right, target);
 	}
 	else if (target < subtree->data.getClientID()) { // traverse the left side of the parent node if the node's client clientID is bigger than the number indicated by "target"
 		return retrieve(subtree->left, target);
@@ -243,9 +243,9 @@ string BST::inorderWalk(BST::Node* subtree) {
 	stringstream ss;
 	if (subtree != nullptr) {
 		ss << inorderWalk(subtree->left);	// traverse through left side of tree
-		// the client pointer contained by the node in the tree is dereferenced 
-		// and the stringstream intakes the clientID of the client
-		ss << subtree->data << endl;	
+											// the client pointer contained by the node in the tree is dereferenced 
+											// and the stringstream intakes the clientID of the client
+		ss << subtree->data << endl;
 		ss << inorderWalk(subtree->right);	// traverse through right side of tree
 	}
 	return ss.str();

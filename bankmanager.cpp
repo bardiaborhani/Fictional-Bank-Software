@@ -54,12 +54,12 @@ void BankManager::readTransactions(ifstream& inFile) {
 	// True is returned if the commands were properly formatted and read
 	// false is returned if commands were not properly formatted - if there was something wrong with the command
 	// For example, if would return a false if the command, that is being read, did not state account number of the client 
-	bool success = pending.buildQueue(inFile);	
+	bool success = pending.buildQueue(inFile);
 
 	if (!success) exit(-1); // if the command was not read properly then exit the program
 
-	// the transactions were properly read and the bankmanager object now has a BankQueue filled with Transactions that are pending
-	// the transact function is called to complete all the Transactions in the transaction queue ("pending")
+							// the transactions were properly read and the bankmanager object now has a BankQueue filled with Transactions that are pending
+							// the transact function is called to complete all the Transactions in the transaction queue ("pending")
 	transact();
 }
 
@@ -92,8 +92,8 @@ void BankManager::transact(void) {
 	while (!pending.isEmpty()) {
 		Transaction transaction = pending.top();	// completes the transactions one by one in order that they were read from the command data file
 
-		//get all necessary information from the transaction
-		//class so we can do our job
+													//get all necessary information from the transaction
+													//class so we can do our job
 		int client1 = transaction.getFirstClientID();
 		int client2 = transaction.getSecondClientID();
 
@@ -111,17 +111,17 @@ void BankManager::transact(void) {
 
 		if (success) {
 			transaction.setFirstClient(clients.retrieve(client1));
-			if(secondSuccess) transaction.setSecondClient(clients.retrieve(client2));
+			if (secondSuccess) transaction.setSecondClient(clients.retrieve(client2));
 
 			// only push transaction into the completed stack of transactions if the transaction was able to be completed
-			bool successfulTransaction; 
+			bool successfulTransaction;
 
 			//tell the transaction to do its business (outside please, 
 			//goodness gracious)
 			successfulTransaction = transaction.transact();
-			 
+
 			//if the transaction was completed successfully
-			if(successfulTransaction){
+			if (successfulTransaction) {
 
 				//put the transaction on the completed pile
 				completed.push(transaction);
@@ -135,9 +135,9 @@ void BankManager::transact(void) {
 
 				//if the transaction was unsuccessful, print out an error message to
 				//indicate that fact.
-				cerr << "/////////////////////" << endl << "ERROR: The transaction:"  
-					<< endl << "\"" << transaction.getDescription() <<  "\"" << endl
-					<< "was not able to be completed due to insufficient funds" 
+				cerr << "/////////////////////" << endl << "ERROR: The transaction:"
+					<< endl << "\"" << transaction.getDescription() << "\"" << endl
+					<< "was not able to be completed due to insufficient funds"
 					<< endl << "//////////////////" << endl << endl;
 			}
 		}
@@ -176,13 +176,13 @@ void BankManager::displayTransactions(void) {
 
 	// stack created to be used to bring the transaction objects out of the completed stack to be displayed one by one
 	// after they are displayed, the transaction are put back into the completed stack
-	stack<Transaction> displayStack;	
+	stack<Transaction> displayStack;
 	while (!completed.empty()) {
 		Transaction store = completed.top();	// looks at the most recently completed transaction
 		cout << store << endl;	// that transaction is outputted to the console
 		displayStack.push(store); // the new stack now inserts the transaction that was just displayed	
 		completed.pop(); // the transaction is popped off so the next transaction can be seen in the completed stack
-	} 
+	}
 	while (!displayStack.empty()) {	// now the transactions are put back into the "completed" stack
 		completed.push(displayStack.top());
 		displayStack.pop();	// the transaction is popped off so the next transaction can be seen in the stack used to display the transactions

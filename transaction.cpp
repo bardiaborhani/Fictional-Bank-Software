@@ -30,7 +30,7 @@ Transaction::Transaction()
 
 	transactionType = 'N';	// N is not a real transaction type - it is just here to be initialized before reassigned
 
-	// Setting all of these variables to NULL so that they do not contain another value until they are reassigned
+							// Setting all of these variables to NULL so that they do not contain another value until they are reassigned
 	amount = NULL;
 	firstClientID = NULL;
 	firstAccountID = NULL;
@@ -46,29 +46,29 @@ SETDATA
 
 Program Flow:
 
-		the first char of the passed string transaction is copied into transactionType as an uppercase char.
+the first char of the passed string transaction is copied into transactionType as an uppercase char.
 
-		a store string is created in order to separate Client IDs and account IDs, which are combined
-		initially when read in from the ifstream.
+a store string is created in order to separate Client IDs and account IDs, which are combined
+initially when read in from the ifstream.
 
-		the first case that occurs is if the transactionType we just read in is 'H', signalling that it
-		is a history display operation. in this case all we receive is a Client ID, minus an account ID, as
-		it prints out all accounts. if this is not the case then we read in the basics of all three other
-		operations ('D', 'W', 'M'), which is a Client ID, account ID, and an amount. then, if we find that
-		we have 'M' as the transactionType, which simply means we have a second Client, which we read in.
+the first case that occurs is if the transactionType we just read in is 'H', signalling that it
+is a history display operation. in this case all we receive is a Client ID, minus an account ID, as
+it prints out all accounts. if this is not the case then we read in the basics of all three other
+operations ('D', 'W', 'M'), which is a Client ID, account ID, and an amount. then, if we find that
+we have 'M' as the transactionType, which simply means we have a second Client, which we read in.
 
-		if all data is good and within bounds, both upper and lower, then we return true to indicate
-		that all data was set without a problem.
+if all data is good and within bounds, both upper and lower, then we return true to indicate
+that all data was set without a problem.
 
 Pre-condition: the passed string transaction contains the data that we want to insert into this Transaction,
-				properly formatted.
+properly formatted.
 
 Post-condition: all data member fields that pertain to the transactionType, as well as the transactionType char
-				itself, have been set.
+itself, have been set.
 */
 bool Transaction::setData(const string type, ifstream& inFile) { // Sets the transaction data from reading a filestream
 
-	//get the first char of the transaction
+																 //get the first char of the transaction
 	transactionType = toupper(type[0]);
 
 	//create a string to temporarily store the 5 digit Client ID + account ID,
@@ -77,8 +77,8 @@ bool Transaction::setData(const string type, ifstream& inFile) { // Sets the tra
 
 	//first case is if we have a display history operation
 	//on our hands
-	if (transactionType == 'H'){
-		
+	if (transactionType == 'H') {
+
 		//if we just need to display the history of a client,
 		//then all we need to read in is the the client's ID
 		inFile >> firstClientID;
@@ -94,7 +94,7 @@ bool Transaction::setData(const string type, ifstream& inFile) { // Sets the tra
 		inFile >> amount;
 	}
 
-	if (transactionType == 'M'){
+	if (transactionType == 'M') {
 
 		//if our operation is to move money, we need a second client
 		inFile >> store;
@@ -110,8 +110,8 @@ bool Transaction::setData(const string type, ifstream& inFile) { // Sets the tra
 
 	//print an error message if we received any bad data, which
 	//will cause us to not store this transaction in BankManager.
-	if (!success) cerr << "/////////////////////" << endl << "ERROR: misformatted transaction data:" << endl  << endl
-		 << "\"" << transactionType << " " << firstClientID << " " << firstAccountID << " " <<
+	if (!success) cerr << "/////////////////////" << endl << "ERROR: misformatted transaction data:" << endl << endl
+		<< "\"" << transactionType << " " << firstClientID << " " << firstAccountID << " " <<
 		amount << " " << secondClientID << " " << secondAccountID << "\"" <<
 		endl << endl << "please try again with correct data" << endl << "/////////////////////" << endl << endl;
 
@@ -192,7 +192,7 @@ bool Transaction::depositOrWithdraw() {
 	//check the transaction type to see if we should withdraw or deposit
 	//the given amount.
 	if (transactionType == 'D') {
-		
+
 		if (firstClient.getClientID() != -1) {
 			//the type of this transaction is deposit, so do that.
 			firstClient.deposit(firstAccountID, amount, description);
@@ -203,8 +203,8 @@ bool Transaction::depositOrWithdraw() {
 	}
 
 	//the other case is withdraw.
-	else if (transactionType == 'W') { 
-		
+	else if (transactionType == 'W') {
+
 		//otherwise, though we still check, the transaction type must be withdraw.
 		bool success = firstClient.withdraw(firstAccountID, amount, description);
 
@@ -226,7 +226,7 @@ the third parameter of the withdraw and deposit methods.
 Pre-condition: none
 
 Post-condition: if possible, the correct amount determined by our private amount variable has been moved
-				from the first Client to the second Client.
+from the first Client to the second Client.
 */
 bool Transaction::move() {
 	bool success = false;
@@ -238,7 +238,7 @@ bool Transaction::move() {
 		// and then deposited into the account the money needs to move intop
 		success = firstClient.withdraw(firstAccountID, amount, description);
 		if (success) {
-			
+
 			//if the second client is the exact same client as the first
 			//one, we're just moving among accounts, not clients.
 			//in that case we deposit via firstClient.
@@ -273,7 +273,7 @@ pointer is not == nullptr.
 Pre-condition: none
 
 Post-condition: the history of the firstClient has been printed out via the displayHistory method
-				of that Client.
+of that Client.
 */
 void Transaction::history() {
 	if (firstClient.getClientID() != -1) {
@@ -281,7 +281,7 @@ void Transaction::history() {
 		// by calling the displayHistory function in the client class
 		// the functino displays the client's first and last name then prints all the 
 		// transactions that were succesfully completed by the client
-		firstClient.displayHistory(description);	
+		firstClient.displayHistory(description);
 		cout << endl;
 	}
 }
@@ -296,7 +296,7 @@ a simple getter function to return the transactionType char
 Pre-condition: none
 
 Post-condition: the char contained in transactionType, or the lack
-				thereof, has been returned to the user
+thereof, has been returned to the user
 */
 char Transaction::getTransactionType() const
 {
@@ -313,8 +313,8 @@ Pre-condition: none
 
 Post-condition: the string stored in description has been returned to the user
 */
-string Transaction::getDescription(void) const { 
-	
+string Transaction::getDescription(void) const {
+
 	// Returns a string of transaction description
 	return description;
 
@@ -330,8 +330,8 @@ Pre-condition: none
 
 Post-condition: the int contained in the amount data member has been returned to the user
 */
-int Transaction::getAmount(void) const { 
-	
+int Transaction::getAmount(void) const {
+
 	// Returns an int with transaction amount
 	return amount;
 
@@ -346,7 +346,7 @@ a simple setter function to set the firstClient Client.
 Pre-condition: none
 
 Post-condition: the firstClient Client object now points to
-				a client, or is nullptr, i.e. has been "unpointed"
+a client, or is nullptr, i.e. has been "unpointed"
 */
 void Transaction::setFirstClient(const Client& client)
 {
@@ -362,7 +362,7 @@ a simple setter function to set the secondClient Client.
 Pre-condition: none
 
 Post-condition: the secondClient Client object now points to
-				a client, or is nullptr, i.e. has been "unpointed"
+a client, or is nullptr, i.e. has been "unpointed"
 */
 void Transaction::setSecondClient(const Client& client)
 {
@@ -416,17 +416,17 @@ streams an English translation of a Transaction's function.
 
 Program Flow:
 
-	A switch statement based on the transactionType char of transaction decides how this
-	Transaction should be represented. Then, based on the passed reference to the Transaction
-	that needs to be displayed, a translation of the operation performed when doing this
-	Transaction is created and streamed to the referenced ostream stream.
+A switch statement based on the transactionType char of transaction decides how this
+Transaction should be represented. Then, based on the passed reference to the Transaction
+that needs to be displayed, a translation of the operation performed when doing this
+Transaction is created and streamed to the referenced ostream stream.
 
 Pre-condition: the passed transaction should have data members that have been filled by setData,
-				otherwise this method may not print a correct representation of the Transaction,
-				and formatting errors may occur.
+otherwise this method may not print a correct representation of the Transaction,
+and formatting errors may occur.
 
 Post-condition: the English representation of transaction has been streamed to the provided
-				ostream.
+ostream.
 */
 ostream & operator<<(ostream & stream, const Transaction& transaction)
 {
