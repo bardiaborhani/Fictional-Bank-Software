@@ -266,8 +266,9 @@ bool BST::buildTree(ifstream& inFile) {   // creates the tree using the txt file
 	if (inFile.is_open()) {	// check if the file that the ifstream is reading is opened
 		while (inFile >> store) { // store the last name of the client into the variable store - later passed onto the Client's setData function
 			if (tempClient.setData(store, inFile)) {  //if we successfully create a Client, i.e. there was no bad data
-				if (!search(tempClient.getClientID()))
-				insert(tempClient); //insert the Client, whom we are assured is composed of good data
+				if (!search(tempClient.getClientID())) {
+					insert(tempClient); //insert the Client, whom we are assured is composed of good data
+				}
 			}
 			else {
 				cerr << "//////////////////// " << endl << "did not insert \"" << store << "\""
